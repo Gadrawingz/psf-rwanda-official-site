@@ -1,0 +1,37 @@
+{
+  "name": "psf-official-site1",
+  "version": "1.0.0",
+  "description": "Official website for Private Sector Federation(PSF) rebuilt using Node.js(Express.js) for backend and Bootstrap on frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gadrawingz/psf-rwanda-official-site.git"
+  },
+  "keywords": [
+    "PSF",
+    "PSF Website",
+    "Rwanda",
+    "Node",
+    "Express"
+  ],
+  "author": "Gad Iradufasha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gadrawingz/psf-rwanda-official-site/issues"
+  },
+  "homepage": "https://github.com/Gadrawingz/psf-rwanda-official-site#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
