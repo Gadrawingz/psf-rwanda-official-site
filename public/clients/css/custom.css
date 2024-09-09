@@ -1,0 +1,87 @@
+/* For custom css @gadev */
+:root {
+    /*PSF green choice */
+    --green-light : #27A567;
+    --green-main : #0A5C36;
+    --green-dark: #14452F;
+    --green-darker: #18392B;
+
+    /*PSF orange choice */
+    --orange-higher : #FF7B00;
+    --orange-tangerine : #FA8128;
+    --orange-main: #FF8D21;
+    --orange-low: #FFA652;
+    --orange-lower: #FFB76B;
+    --orange-lowest: #FFCD90;
+    --orange-whiten: #FFF4DF;
+
+    /*PSF orange choice */
+    --white-pearl : #FBFCF8;
+    --white-alabaster: #FEF9F3;
+    --white-cotton: #FBFBF9;
+    --white-chiffon: #FBFAF2;
+    --white-powder: #FBFCFA;
+    --orange-frost: #FCFBFC;
+}
+
+.cst-footer-sm-box {
+    border: 1px solid var(--orange-main);
+    border-radius: 2px;
+    padding: 4px;
+    color: #FFF;
+    text-align:start
+}
+
+.cst-white-border1 {
+    color: var(--orange-frost)!important;
+    font-weight: 900;
+}
+
+/* Green backgrounds */
+.cst-bg-green-light {
+    background-color: var(--green-light)!important;
+}
+
+.cst-bg-green-main {
+    background-color: var(--green-main)!important;
+}
+
+.cst-bg-green-dark {
+    background-color: var(--green-dark)!important;
+}
+
+.cst-bg-green-darker {
+    background-color: var(--green-darker)!important;
+}
+
+/* Orange backgrounds */
+.cst-bg-orange-higher {
+    background-color: var(--orange-higher)!important;
+}
+
+.cst-bg-orange-tangerine {
+    font-weight: bolder!important;
+    background-color: var(--orange-tangerine)!important;
+}
+
+.cst-bg-orange-main {
+    background-color: var(--orange-main)!important;
+}
+
+.cst-bg-orange-low {
+    background-color: var(--orange-low)!important;
+}
+
+.cst-bg-orange-lower {
+    background-color: var(--orange-lower)!important;
+}
+
+.cst-bg-orange-lowest {
+    background-color: var(--orange-lowest)!important;
+}
+
+/*Footer */
+.cst-footer-left-border {
+    border-left: 2px solid var(--orange-low);
+    padding-left: 8px;
+}

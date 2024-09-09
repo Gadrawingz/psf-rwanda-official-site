@@ -1,0 +1,445 @@
+$flaticon_towngov-font: "flaticon_towngov";
+
+@font-face {
+    font-family: $flaticon_towngov-font;
+    src: url("./flaticon_towngov.ttf?28a3dad59748f4f234153a72e89b549d") format("truetype"),
+url("./flaticon_towngov.woff?28a3dad59748f4f234153a72e89b549d") format("woff"),
+url("./flaticon_towngov.woff2?28a3dad59748f4f234153a72e89b549d") format("woff2"),
+url("./flaticon_towngov.eot?28a3dad59748f4f234153a72e89b549d#iefix") format("embedded-opentype"),
+url("./flaticon_towngov.svg?28a3dad59748f4f234153a72e89b549d#flaticon_towngov") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_towngov !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon_towngov-map: (
+    "landscape": "\f101",
+    "coverage": "\f102",
+    "running-man": "\f103",
+    "well": "\f104",
+    "wind-farm": "\f105",
+    "barn": "\f106",
+    "mill": "\f107",
+    "barn-1": "\f108",
+    "farmer": "\f109",
+    "fire-extinguisher": "\f10a",
+    "free-wifi": "\f10b",
+    "placeholder": "\f10c",
+    "public-transport": "\f10d",
+    "card-payment": "\f10e",
+    "traffic-light": "\f10f",
+    "highway": "\f110",
+    "watering": "\f111",
+    "high-speed-train": "\f112",
+    "police": "\f113",
+    "police-badge": "\f114",
+    "security-camera": "\f115",
+    "barn-2": "\f116",
+    "professor": "\f117",
+    "file-download": "\f118",
+    "delivery-note": "\f119",
+    "envelope": "\f11a",
+    "envelope-1": "\f11b",
+    "envelope-2": "\f11c",
+    "team": "\f11d",
+    "helping-hand": "\f11e",
+    "education": "\f11f",
+    "book": "\f120",
+    "music-instrument": "\f121",
+    "earth-globe": "\f122",
+    "public-transport-1": "\f123",
+    "gas": "\f124",
+    "gym": "\f125",
+    "investment": "\f126",
+    "travel": "\f127",
+    "verification": "\f128",
+    "university": "\f129",
+    "medal": "\f12a",
+    "barn-3": "\f12b",
+    "windmill": "\f12c",
+    "tribune": "\f12d",
+    "police-badge-1": "\f12e",
+    "hospital": "\f12f",
+    "train": "\f130",
+    "train-1": "\f131",
+    "reading": "\f132",
+    "students": "\f133",
+    "search-interface-symbol": "\f134",
+    "magnifying-glass": "\f135",
+    "gardening": "\f136",
+    "terrace": "\f137",
+    "doctor": "\f138",
+    "cityscape": "\f139",
+    "government": "\f13a",
+    "temple": "\f13b",
+    "pagoda": "\f13c",
+    "chinese": "\f13d",
+    "temple-1": "\f13e",
+    "solar-panel": "\f13f",
+    "solar-panels": "\f140",
+    "lake": "\f141",
+    "lake-1": "\f142",
+    "travel-luggage": "\f143",
+    "road": "\f144",
+    "helmet": "\f145",
+    "oil-pump": "\f146",
+    "barrel": "\f147",
+    "valve": "\f148",
+    "oil-industry": "\f149",
+    "oil-mining": "\f14a",
+    "balance": "\f14b",
+    "auction": "\f14c",
+    "portfolio": "\f14d",
+    "briefcase": "\f14e",
+    "handshake": "\f14f",
+    "online-shop": "\f150",
+    "bank": "\f151",
+    "suitcase": "\f152",
+    "bus": "\f153",
+    "lotus": "\f154",
+    "balance-1": "\f155",
+    "agriculture": "\f156",
+    "factory": "\f157",
+    "businessman": "\f158",
+    "briefcase-1": "\f159",
+    "clinic": "\f15a",
+    "question": "\f15b",
+    "art": "\f15c",
+    "home": "\f15d",
+    "transportation": "\f15e",
+    "help": "\f15f",
+    "map": "\f160",
+    "location-pin": "\f161",
+    "file": "\f162",
+    "file-1": "\f163",
+    "industry": "\f164",
+    "quote": "\f165",
+    "email": "\f166",
+    "envelope-3": "\f167",
+    "parthenon": "\f168",
+    "pdf": "\f169",
+);
+
+.flaticon-landscape:before {
+    content: map-get($flaticon_towngov-map, "landscape");
+}
+.flaticon-coverage:before {
+    content: map-get($flaticon_towngov-map, "coverage");
+}
+.flaticon-running-man:before {
+    content: map-get($flaticon_towngov-map, "running-man");
+}
+.flaticon-well:before {
+    content: map-get($flaticon_towngov-map, "well");
+}
+.flaticon-wind-farm:before {
+    content: map-get($flaticon_towngov-map, "wind-farm");
+}
+.flaticon-barn:before {
+    content: map-get($flaticon_towngov-map, "barn");
+}
+.flaticon-mill:before {
+    content: map-get($flaticon_towngov-map, "mill");
+}
+.flaticon-barn-1:before {
+    content: map-get($flaticon_towngov-map, "barn-1");
+}
+.flaticon-farmer:before {
+    content: map-get($flaticon_towngov-map, "farmer");
+}
+.flaticon-fire-extinguisher:before {
+    content: map-get($flaticon_towngov-map, "fire-extinguisher");
+}
+.flaticon-free-wifi:before {
+    content: map-get($flaticon_towngov-map, "free-wifi");
+}
+.flaticon-placeholder:before {
+    content: map-get($flaticon_towngov-map, "placeholder");
+}
+.flaticon-public-transport:before {
+    content: map-get($flaticon_towngov-map, "public-transport");
+}
+.flaticon-card-payment:before {
+    content: map-get($flaticon_towngov-map, "card-payment");
+}
+.flaticon-traffic-light:before {
+    content: map-get($flaticon_towngov-map, "traffic-light");
+}
+.flaticon-highway:before {
+    content: map-get($flaticon_towngov-map, "highway");
+}
+.flaticon-watering:before {
+    content: map-get($flaticon_towngov-map, "watering");
+}
+.flaticon-high-speed-train:before {
+    content: map-get($flaticon_towngov-map, "high-speed-train");
+}
+.flaticon-police:before {
+    content: map-get($flaticon_towngov-map, "police");
+}
+.flaticon-police-badge:before {
+    content: map-get($flaticon_towngov-map, "police-badge");
+}
+.flaticon-security-camera:before {
+    content: map-get($flaticon_towngov-map, "security-camera");
+}
+.flaticon-barn-2:before {
+    content: map-get($flaticon_towngov-map, "barn-2");
+}
+.flaticon-professor:before {
+    content: map-get($flaticon_towngov-map, "professor");
+}
+.flaticon-file-download:before {
+    content: map-get($flaticon_towngov-map, "file-download");
+}
+.flaticon-delivery-note:before {
+    content: map-get($flaticon_towngov-map, "delivery-note");
+}
+.flaticon-envelope:before {
+    content: map-get($flaticon_towngov-map, "envelope");
+}
+.flaticon-envelope-1:before {
+    content: map-get($flaticon_towngov-map, "envelope-1");
+}
+.flaticon-envelope-2:before {
+    content: map-get($flaticon_towngov-map, "envelope-2");
+}
+.flaticon-team:before {
+    content: map-get($flaticon_towngov-map, "team");
+}
+.flaticon-helping-hand:before {
+    content: map-get($flaticon_towngov-map, "helping-hand");
+}
+.flaticon-education:before {
+    content: map-get($flaticon_towngov-map, "education");
+}
+.flaticon-book:before {
+    content: map-get($flaticon_towngov-map, "book");
+}
+.flaticon-music-instrument:before {
+    content: map-get($flaticon_towngov-map, "music-instrument");
+}
+.flaticon-earth-globe:before {
+    content: map-get($flaticon_towngov-map, "earth-globe");
+}
+.flaticon-public-transport-1:before {
+    content: map-get($flaticon_towngov-map, "public-transport-1");
+}
+.flaticon-gas:before {
+    content: map-get($flaticon_towngov-map, "gas");
+}
+.flaticon-gym:before {
+    content: map-get($flaticon_towngov-map, "gym");
+}
+.flaticon-investment:before {
+    content: map-get($flaticon_towngov-map, "investment");
+}
+.flaticon-travel:before {
+    content: map-get($flaticon_towngov-map, "travel");
+}
+.flaticon-verification:before {
+    content: map-get($flaticon_towngov-map, "verification");
+}
+.flaticon-university:before {
+    content: map-get($flaticon_towngov-map, "university");
+}
+.flaticon-medal:before {
+    content: map-get($flaticon_towngov-map, "medal");
+}
+.flaticon-barn-3:before {
+    content: map-get($flaticon_towngov-map, "barn-3");
+}
+.flaticon-windmill:before {
+    content: map-get($flaticon_towngov-map, "windmill");
+}
+.flaticon-tribune:before {
+    content: map-get($flaticon_towngov-map, "tribune");
+}
+.flaticon-police-badge-1:before {
+    content: map-get($flaticon_towngov-map, "police-badge-1");
+}
+.flaticon-hospital:before {
+    content: map-get($flaticon_towngov-map, "hospital");
+}
+.flaticon-train:before {
+    content: map-get($flaticon_towngov-map, "train");
+}
+.flaticon-train-1:before {
+    content: map-get($flaticon_towngov-map, "train-1");
+}
+.flaticon-reading:before {
+    content: map-get($flaticon_towngov-map, "reading");
+}
+.flaticon-students:before {
+    content: map-get($flaticon_towngov-map, "students");
+}
+.flaticon-search-interface-symbol:before {
+    content: map-get($flaticon_towngov-map, "search-interface-symbol");
+}
+.flaticon-magnifying-glass:before {
+    content: map-get($flaticon_towngov-map, "magnifying-glass");
+}
+.flaticon-gardening:before {
+    content: map-get($flaticon_towngov-map, "gardening");
+}
+.flaticon-terrace:before {
+    content: map-get($flaticon_towngov-map, "terrace");
+}
+.flaticon-doctor:before {
+    content: map-get($flaticon_towngov-map, "doctor");
+}
+.flaticon-cityscape:before {
+    content: map-get($flaticon_towngov-map, "cityscape");
+}
+.flaticon-government:before {
+    content: map-get($flaticon_towngov-map, "government");
+}
+.flaticon-temple:before {
+    content: map-get($flaticon_towngov-map, "temple");
+}
+.flaticon-pagoda:before {
+    content: map-get($flaticon_towngov-map, "pagoda");
+}
+.flaticon-chinese:before {
+    content: map-get($flaticon_towngov-map, "chinese");
+}
+.flaticon-temple-1:before {
+    content: map-get($flaticon_towngov-map, "temple-1");
+}
+.flaticon-solar-panel:before {
+    content: map-get($flaticon_towngov-map, "solar-panel");
+}
+.flaticon-solar-panels:before {
+    content: map-get($flaticon_towngov-map, "solar-panels");
+}
+.flaticon-lake:before {
+    content: map-get($flaticon_towngov-map, "lake");
+}
+.flaticon-lake-1:before {
+    content: map-get($flaticon_towngov-map, "lake-1");
+}
+.flaticon-travel-luggage:before {
+    content: map-get($flaticon_towngov-map, "travel-luggage");
+}
+.flaticon-road:before {
+    content: map-get($flaticon_towngov-map, "road");
+}
+.flaticon-helmet:before {
+    content: map-get($flaticon_towngov-map, "helmet");
+}
+.flaticon-oil-pump:before {
+    content: map-get($flaticon_towngov-map, "oil-pump");
+}
+.flaticon-barrel:before {
+    content: map-get($flaticon_towngov-map, "barrel");
+}
+.flaticon-valve:before {
+    content: map-get($flaticon_towngov-map, "valve");
+}
+.flaticon-oil-industry:before {
+    content: map-get($flaticon_towngov-map, "oil-industry");
+}
+.flaticon-oil-mining:before {
+    content: map-get($flaticon_towngov-map, "oil-mining");
+}
+.flaticon-balance:before {
+    content: map-get($flaticon_towngov-map, "balance");
+}
+.flaticon-auction:before {
+    content: map-get($flaticon_towngov-map, "auction");
+}
+.flaticon-portfolio:before {
+    content: map-get($flaticon_towngov-map, "portfolio");
+}
+.flaticon-briefcase:before {
+    content: map-get($flaticon_towngov-map, "briefcase");
+}
+.flaticon-handshake:before {
+    content: map-get($flaticon_towngov-map, "handshake");
+}
+.flaticon-online-shop:before {
+    content: map-get($flaticon_towngov-map, "online-shop");
+}
+.flaticon-bank:before {
+    content: map-get($flaticon_towngov-map, "bank");
+}
+.flaticon-suitcase:before {
+    content: map-get($flaticon_towngov-map, "suitcase");
+}
+.flaticon-bus:before {
+    content: map-get($flaticon_towngov-map, "bus");
+}
+.flaticon-lotus:before {
+    content: map-get($flaticon_towngov-map, "lotus");
+}
+.flaticon-balance-1:before {
+    content: map-get($flaticon_towngov-map, "balance-1");
+}
+.flaticon-agriculture:before {
+    content: map-get($flaticon_towngov-map, "agriculture");
+}
+.flaticon-factory:before {
+    content: map-get($flaticon_towngov-map, "factory");
+}
+.flaticon-businessman:before {
+    content: map-get($flaticon_towngov-map, "businessman");
+}
+.flaticon-briefcase-1:before {
+    content: map-get($flaticon_towngov-map, "briefcase-1");
+}
+.flaticon-clinic:before {
+    content: map-get($flaticon_towngov-map, "clinic");
+}
+.flaticon-question:before {
+    content: map-get($flaticon_towngov-map, "question");
+}
+.flaticon-art:before {
+    content: map-get($flaticon_towngov-map, "art");
+}
+.flaticon-home:before {
+    content: map-get($flaticon_towngov-map, "home");
+}
+.flaticon-transportation:before {
+    content: map-get($flaticon_towngov-map, "transportation");
+}
+.flaticon-help:before {
+    content: map-get($flaticon_towngov-map, "help");
+}
+.flaticon-map:before {
+    content: map-get($flaticon_towngov-map, "map");
+}
+.flaticon-location-pin:before {
+    content: map-get($flaticon_towngov-map, "location-pin");
+}
+.flaticon-file:before {
+    content: map-get($flaticon_towngov-map, "file");
+}
+.flaticon-file-1:before {
+    content: map-get($flaticon_towngov-map, "file-1");
+}
+.flaticon-industry:before {
+    content: map-get($flaticon_towngov-map, "industry");
+}
+.flaticon-quote:before {
+    content: map-get($flaticon_towngov-map, "quote");
+}
+.flaticon-email:before {
+    content: map-get($flaticon_towngov-map, "email");
+}
+.flaticon-envelope-3:before {
+    content: map-get($flaticon_towngov-map, "envelope-3");
+}
+.flaticon-parthenon:before {
+    content: map-get($flaticon_towngov-map, "parthenon");
+}
+.flaticon-pdf:before {
+    content: map-get($flaticon_towngov-map, "pdf");
+}

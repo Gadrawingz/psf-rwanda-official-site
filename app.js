@@ -8,7 +8,7 @@ const app = express();
 const PORT = 5005 || process.env.PORT;
 
 // Middleware section
-app.use(express.static('public'));
+app.use(express.static('public/'));
 
 // Render with EJS
 app.use(expressLayout);
@@ -17,7 +17,6 @@ app.set('view engine', 'ejs');
 
 // Main Routing Point
 app.use('/', require('./server/routes/clients'))
-
 
 // Running
 app.listen(PORT, ()=> {

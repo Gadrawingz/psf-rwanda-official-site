@@ -3,7 +3,7 @@ const router = express.Router()
 
 // Routes
 // Home page
-router.get('', (req, res) => {
+router.get(['', '/home'], (req, res) => {
     const internals = {
         title: "Home page",
         description: "Welcome official website for PSF Rwanda"

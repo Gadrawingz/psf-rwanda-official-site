@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%- internals.title %> </title>
-    <meta name="description" content="<%- internals.description %>">
-    <link rel="stylesheet" href="/clients/css/">
-    <script defer src="/clients/js/"></script>
-</head>
+<%- include('../partials/clients/headin.ejs') %> 
 <body>
-    <%- body %> 
-</body>
-</html>
+    <!-- pre-loader -->
+    <div id="pre-loader">
+        <div id="loader-logo"></div>
+        <div id="loader-circle"></div>
+        <!-- loader-sections -->
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+<head>
+<!--header-->
+<header class="header">
+    <!-- topbar and nav bar sections -->
+    <%- include('../partials/clients/topbar.ejs') %>
+    <%- include('../partials/clients/navbar.ejs') %>
+</header>
+<!--page-wrapper-->
+<div class="page-wrapper">
+    <%- body %>
+</div>
+<%- include('../partials/clients/footer.ejs') %>

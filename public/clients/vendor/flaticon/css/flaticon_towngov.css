@@ -1,0 +1,335 @@
+@font-face {
+    font-family: "flaticon_towngov";
+    src: url("./flaticon_towngov.ttf?28a3dad59748f4f234153a72e89b549d") format("truetype"),
+url("./flaticon_towngov.woff?28a3dad59748f4f234153a72e89b549d") format("woff"),
+url("./flaticon_towngov.woff2?28a3dad59748f4f234153a72e89b549d") format("woff2"),
+url("./flaticon_towngov.eot?28a3dad59748f4f234153a72e89b549d#iefix") format("embedded-opentype"),
+url("./flaticon_towngov.svg?28a3dad59748f4f234153a72e89b549d#flaticon_towngov") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_towngov !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-landscape:before {
+    content: "\f101";
+}
+.flaticon-coverage:before {
+    content: "\f102";
+}
+.flaticon-running-man:before {
+    content: "\f103";
+}
+.flaticon-well:before {
+    content: "\f104";
+}
+.flaticon-wind-farm:before {
+    content: "\f105";
+}
+.flaticon-barn:before {
+    content: "\f106";
+}
+.flaticon-mill:before {
+    content: "\f107";
+}
+.flaticon-barn-1:before {
+    content: "\f108";
+}
+.flaticon-farmer:before {
+    content: "\f109";
+}
+.flaticon-fire-extinguisher:before {
+    content: "\f10a";
+}
+.flaticon-free-wifi:before {
+    content: "\f10b";
+}
+.flaticon-placeholder:before {
+    content: "\f10c";
+}
+.flaticon-public-transport:before {
+    content: "\f10d";
+}
+.flaticon-card-payment:before {
+    content: "\f10e";
+}
+.flaticon-traffic-light:before {
+    content: "\f10f";
+}
+.flaticon-highway:before {
+    content: "\f110";
+}
+.flaticon-watering:before {
+    content: "\f111";
+}
+.flaticon-high-speed-train:before {
+    content: "\f112";
+}
+.flaticon-police:before {
+    content: "\f113";
+}
+.flaticon-police-badge:before {
+    content: "\f114";
+}
+.flaticon-security-camera:before {
+    content: "\f115";
+}
+.flaticon-barn-2:before {
+    content: "\f116";
+}
+.flaticon-professor:before {
+    content: "\f117";
+}
+.flaticon-file-download:before {
+    content: "\f118";
+}
+.flaticon-delivery-note:before {
+    content: "\f119";
+}
+.flaticon-envelope:before {
+    content: "\f11a";
+}
+.flaticon-envelope-1:before {
+    content: "\f11b";
+}
+.flaticon-envelope-2:before {
+    content: "\f11c";
+}
+.flaticon-team:before {
+    content: "\f11d";
+}
+.flaticon-helping-hand:before {
+    content: "\f11e";
+}
+.flaticon-education:before {
+    content: "\f11f";
+}
+.flaticon-book:before {
+    content: "\f120";
+}
+.flaticon-music-instrument:before {
+    content: "\f121";
+}
+.flaticon-earth-globe:before {
+    content: "\f122";
+}
+.flaticon-public-transport-1:before {
+    content: "\f123";
+}
+.flaticon-gas:before {
+    content: "\f124";
+}
+.flaticon-gym:before {
+    content: "\f125";
+}
+.flaticon-investment:before {
+    content: "\f126";
+}
+.flaticon-travel:before {
+    content: "\f127";
+}
+.flaticon-verification:before {
+    content: "\f128";
+}
+.flaticon-university:before {
+    content: "\f129";
+}
+.flaticon-medal:before {
+    content: "\f12a";
+}
+.flaticon-barn-3:before {
+    content: "\f12b";
+}
+.flaticon-windmill:before {
+    content: "\f12c";
+}
+.flaticon-tribune:before {
+    content: "\f12d";
+}
+.flaticon-police-badge-1:before {
+    content: "\f12e";
+}
+.flaticon-hospital:before {
+    content: "\f12f";
+}
+.flaticon-train:before {
+    content: "\f130";
+}
+.flaticon-train-1:before {
+    content: "\f131";
+}
+.flaticon-reading:before {
+    content: "\f132";
+}
+.flaticon-students:before {
+    content: "\f133";
+}
+.flaticon-search-interface-symbol:before {
+    content: "\f134";
+}
+.flaticon-magnifying-glass:before {
+    content: "\f135";
+}
+.flaticon-gardening:before {
+    content: "\f136";
+}
+.flaticon-terrace:before {
+    content: "\f137";
+}
+.flaticon-doctor:before {
+    content: "\f138";
+}
+.flaticon-cityscape:before {
+    content: "\f139";
+}
+.flaticon-government:before {
+    content: "\f13a";
+}
+.flaticon-temple:before {
+    content: "\f13b";
+}
+.flaticon-pagoda:before {
+    content: "\f13c";
+}
+.flaticon-chinese:before {
+    content: "\f13d";
+}
+.flaticon-temple-1:before {
+    content: "\f13e";
+}
+.flaticon-solar-panel:before {
+    content: "\f13f";
+}
+.flaticon-solar-panels:before {
+    content: "\f140";
+}
+.flaticon-lake:before {
+    content: "\f141";
+}
+.flaticon-lake-1:before {
+    content: "\f142";
+}
+.flaticon-travel-luggage:before {
+    content: "\f143";
+}
+.flaticon-road:before {
+    content: "\f144";
+}
+.flaticon-helmet:before {
+    content: "\f145";
+}
+.flaticon-oil-pump:before {
+    content: "\f146";
+}
+.flaticon-barrel:before {
+    content: "\f147";
+}
+.flaticon-valve:before {
+    content: "\f148";
+}
+.flaticon-oil-industry:before {
+    content: "\f149";
+}
+.flaticon-oil-mining:before {
+    content: "\f14a";
+}
+.flaticon-balance:before {
+    content: "\f14b";
+}
+.flaticon-auction:before {
+    content: "\f14c";
+}
+.flaticon-portfolio:before {
+    content: "\f14d";
+}
+.flaticon-briefcase:before {
+    content: "\f14e";
+}
+.flaticon-handshake:before {
+    content: "\f14f";
+}
+.flaticon-online-shop:before {
+    content: "\f150";
+}
+.flaticon-bank:before {
+    content: "\f151";
+}
+.flaticon-suitcase:before {
+    content: "\f152";
+}
+.flaticon-bus:before {
+    content: "\f153";
+}
+.flaticon-lotus:before {
+    content: "\f154";
+}
+.flaticon-balance-1:before {
+    content: "\f155";
+}
+.flaticon-agriculture:before {
+    content: "\f156";
+}
+.flaticon-factory:before {
+    content: "\f157";
+}
+.flaticon-businessman:before {
+    content: "\f158";
+}
+.flaticon-briefcase-1:before {
+    content: "\f159";
+}
+.flaticon-clinic:before {
+    content: "\f15a";
+}
+.flaticon-question:before {
+    content: "\f15b";
+}
+.flaticon-art:before {
+    content: "\f15c";
+}
+.flaticon-home:before {
+    content: "\f15d";
+}
+.flaticon-transportation:before {
+    content: "\f15e";
+}
+.flaticon-help:before {
+    content: "\f15f";
+}
+.flaticon-map:before {
+    content: "\f160";
+}
+.flaticon-location-pin:before {
+    content: "\f161";
+}
+.flaticon-file:before {
+    content: "\f162";
+}
+.flaticon-file-1:before {
+    content: "\f163";
+}
+.flaticon-industry:before {
+    content: "\f164";
+}
+.flaticon-quote:before {
+    content: "\f165";
+}
+.flaticon-email:before {
+    content: "\f166";
+}
+.flaticon-envelope-3:before {
+    content: "\f167";
+}
+.flaticon-parthenon:before {
+    content: "\f168";
+}
+.flaticon-pdf:before {
+    content: "\f169";
+}
