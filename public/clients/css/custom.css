@@ -21,11 +21,11 @@
     --white-cotton: #FBFBF9;
     --white-chiffon: #FBFAF2;
     --white-powder: #FBFCFA;
-    --orange-frost: #FCFBFC;
+    --white-frost: #FCFBFC;
 }
 
 .cst-footer-sm-box {
-    border: 1px solid var(--orange-main);
+    border: 1px solid var(--orange-lower);
     border-radius: 2px;
     padding: 4px;
     color: #FFF;
@@ -85,4 +85,5 @@
 .cst-footer-left-border {
     border-left: 2px solid var(--orange-low);
     padding-left: 8px;
+    color: var(--white-powder);
 }

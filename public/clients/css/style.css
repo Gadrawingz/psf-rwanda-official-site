@@ -2942,7 +2942,7 @@ a.search-toggler{
 * Page banner
 ***********************/
 .page-banner{
-	background-image: url("../image/bg/page-banner.png");
+	background-image: url("/clients/images/banner/banner-bg3.webp");
 	background-repeat: no-repeat;
 	background-color: var(--thm-black);
 	background-size: cover;
