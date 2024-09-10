@@ -78,7 +78,7 @@ router.get('/services', (req, res) => {
         title: "Services",
         description: "PSF Offers various services including Advocacy, Membership, Market linkage, IBI..."
     }
-    res.render('clients/services', { internals });
+    res.render('clients/services/index', { internals });
 });
 
 

@@ -1,12 +1,12 @@
 /* For custom css @gadev */
 :root {
-    /*PSF green choice */
+    /*gadir green choice */
     --green-light : #27A567;
     --green-main : #0A5C36;
     --green-dark: #14452F;
     --green-darker: #18392B;
 
-    /*PSF orange choice */
+    /*gadir orange choice */
     --orange-higher : #FF7B00;
     --orange-tangerine : #FA8128;
     --orange-main: #FF8D21;
@@ -15,7 +15,7 @@
     --orange-lowest: #FFCD90;
     --orange-whiten: #FFF4DF;
 
-    /*PSF orange choice */
+    /*@gadir white choice */
     --white-pearl : #FBFCF8;
     --white-alabaster: #FEF9F3;
     --white-cotton: #FBFBF9;
@@ -34,7 +34,22 @@
 }
 
 .cst-white-border1 {
-    color: var(--orange-frost)!important;
+    color: var(--white-frost)!important;
+    font-weight: 900;
+}
+
+.cst-orange-border3 {
+    border: 3px solid var(--orange-main)!important;
+    border-radius: 4px;
+}
+
+.cst-partner-1-border {
+    border-left: 2px solid var(--green-main);
+    border-bottom: 2px solid var(--green-main);
+}
+
+.cst-white-border1 {
+    color: var(-)!important;
     font-weight: 900;
 }
 
@@ -79,6 +94,11 @@
 
 .cst-bg-orange-lowest {
     background-color: var(--orange-lowest)!important;
+}
+
+/*White colors */
+.cst-bg-white-full {
+    background-color: #FFF!important;
 }
 
 /*Footer */

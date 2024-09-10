@@ -42,11 +42,13 @@
 * Variable
 ***********************/
 :root{
+	/*gadir green choice */
     --green-light : #27A567;
     --green-main : #0A5C36;
     --green-dark: #14452F;
     --green-darker: #18392B;
 
+    /*gadir orange choice */
     --orange-higher : #FF7B00;
     --orange-tangerine : #FA8128;
     --orange-main: #FF8D21;
@@ -54,6 +56,14 @@
     --orange-lower: #FFB76B;
     --orange-lowest: #FFCD90;
     --orange-whiten: #FFF4DF;
+
+    /*@gadir white choice */
+    --white-pearl : #FBFCF8;
+    --white-alabaster: #FEF9F3;
+    --white-cotton: #FBFBF9;
+    --white-chiffon: #FBFAF2;
+    --white-powder: #FBFCFA;
+    --white-frost: #FCFBFC;
 
 	--thm-primary: #2dcd7c;
 	--thm-primary-rgb: 45, 205, 124;
@@ -108,7 +118,7 @@ p{
 }
 .btn-primary{
 	padding: 18px 40px;
-	background-color: var(--thm-primary);
+	background-color: var(--green-light);
 	border: 0;
 	color: var(--thm-white);
 	border-radius: 0;
@@ -116,6 +126,7 @@ p{
 	font-weight: 600;
 	transition: all 500ms ease;
 	letter-spacing: 0.3px;
+	font-weight: bolder;
 }
 .btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:active, .btn-primary:focus, .show>.btn-primary.dropdown-toggle:focus{
 	box-shadow: none;
@@ -126,7 +137,7 @@ p{
 	background:var(--thm-black);
 }
 .btn-primary:hover {
-	background-color: var(--thm-black);
+	background-color: var(--orange-higher);
 }
 a{
 	text-decoration: none;
@@ -181,11 +192,11 @@ a{
 }
 .section-tagline {
 	position: relative;
-	font-size: 14px;
-	color: var(--thm-primary);
+	font-size: 20px;
+	color: var(--green-light);
 	font-family: var(--thm-font);
 	text-transform: uppercase;
-	font-weight: 700;
+	font-weight: bolder;
 	letter-spacing: 1px;
 }
 .section-tagline:before {
@@ -525,7 +536,7 @@ a{
 	}
 }
 .topbar-icon i{
-	color: var(--orange-tangerine);
+	color: var(--orange-low);
 	font-size: 14px;
 }
 .topbar-text a{
@@ -2144,11 +2155,12 @@ a.search-toggler{
 ***********************/
 .service-section{
 	padding-top: 120px;
-	background-image: url("../image/bg/service-bg-1.jpg");
+	background-image: url("/clients/images/bg/service-bg-1.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-color: var(--thm-dark-black);
+	background-color: var(--green-dark);
 }
+
 @media(max-width: 991px){
 	.service-section{
 		padding-top: 80px;
@@ -2186,7 +2198,7 @@ a.search-toggler{
 	transform-origin: top left;
 }
 .service-card{
-	background-image: url("../image/bg/service-3.jpg");
+	background-image: url("/clients/images/bg/service-3.jpg");
 	position: relative;
 	z-index: 1;
 	background-position: bottom center;
@@ -2218,9 +2230,9 @@ a.search-toggler{
 	}
 }
 .service-card-video a{
-	color: var(--thm-primary);
+	color: var(--orange-lower);
 	font-size: 20px;
-	background-color: var(--thm-black);
+	background-color: var(--green-main);
 	height: 80px;
 	width: 80px;
 	display: flex;
@@ -2230,6 +2242,7 @@ a.search-toggler{
 	box-shadow: 0 0 0 0 rgba(255, 255, 255, 1);
 	animation: ripple 2000ms infinite;
 }
+
 .service-card-video a:hover {
 	background-color: var(--thm-primary);
 	color: #fff;
@@ -2272,12 +2285,12 @@ a.search-toggler{
 	font-size: 18px;
 	justify-content: space-between;
 	padding: 15px 20px;
-	color: var(--thm-gray);
+	color: var(--green-dark);
 	transition: all 500ms ease;
 }
 .service-card li a:hover {
 	background-color: var(--thm-light-bg);
-	color:var(--thm-primary);
+	color:var(--green-light);
 }
 .service-card li a i {
 	font-size: 12px;
@@ -2301,15 +2314,16 @@ a.search-toggler{
 	padding: 120px 0px;
 }
 .service-one-card{
-	padding:40px 40px;
-	border: 1px solid var(--thm-border);
+	padding:30px 30px;
+	border: 1px solid var(--orange-higher);
 	overflow: hidden;
-  position: relative;
-  transition: .4s;
-  min-height: 310px;
+	position: relative;
+	transition: .4s;
+	min-height: 310px;
+	background-color: var(--white-powder);
 }
 .service-one-card:hover{
-	border: 1px solid var(--thm-primary);
+	border: 1px solid var(--green-light);
 }
 .service-one-card:before{
 	content: '';
@@ -2323,14 +2337,14 @@ a.search-toggler{
 	z-index: -1;
 }
 .service-one-card:hover:before{
-	box-shadow: 0 0 0px 2px var(--thm-primary);	
+	box-shadow: 0 0 0px 2px var(--green-light);	
 }
 .service-one-card:after{
 	content: '';
 	position: absolute;
 	height: 70px;
 	width: 70px;
-	background-color: var(--thm-light-bg);
+	background-color: var(--orange-main);
 	top: 0;
 	right: 0;
 	border-radius: 0px 0px 0px 100%;
@@ -2367,7 +2381,7 @@ a.search-toggler{
   transform-origin: center left;
 }
 .service-one-card-content > h3 > a{
-	color: var(--thm-black);
+	color: var(--green-main);
 	font-size: 23px;
 	transition: all 500ms ease;
 }
@@ -2736,10 +2750,10 @@ a.search-toggler{
 * Funfact
 ***********************/
 .funfact-section {
-	padding-top: 120px;
-	padding-bottom: 111px;
-	background-color: var(--thm-primary);
-	background-image: url(../image/bg/funfact-bg-1.png);
+	padding-top: 50px;
+	padding-bottom: 50px;
+	background-color: var(--green-light);
+	background-image: url("/clients/images/bg/funfact-bg-1.png");
 	background-position: top center;
 	background-repeat: no-repeat;
 }
@@ -2764,6 +2778,7 @@ a.search-toggler{
 	align-items: center;
 	margin-bottom: 15px;
 }
+
 .funfact-counter-icon {
 	display: flex;
 	align-items: center;
