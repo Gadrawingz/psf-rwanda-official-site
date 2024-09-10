@@ -64,6 +64,22 @@ router.get('/regular', (req, res) => {
 });
 
 
+// Routes for Events
+router.get('/exhibitions', (req, res) => {
+    const internals = {
+        title: "Events - Exhibitions",
+        description: ""
+    }
+    res.render('clients/events/exhibitions', { internals });
+});
+
+router.get('/gbf', (req, res) => {
+    const internals = {
+        title: "Events - GBF",
+        description: ""
+    }
+    res.render('clients/events/gbf', { internals });
+});
 
 
 
