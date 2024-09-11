@@ -43,14 +43,34 @@
     border-radius: 4px;
 }
 
+.cst-orange-border-0 {
+    border: 1px solid var(--green-light)!important;
+    border-radius: 2px;
+    padding: 0!important;
+    margin: 0!important;
+}
+
+.cst-orange-border-sm {
+    border: 0.6px solid var(--orange-main)!important;
+}
+
 .cst-partner-1-border {
     border-left: 2px solid var(--green-main);
     border-bottom: 2px solid var(--green-main);
 }
 
 .cst-white-border1 {
-    color: var(-)!important;
+    /*border: 1px solid var(--white-frost)!important;*/
     font-weight: 900;
+}
+
+.cst-contact-orange-box {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid var(--orange-higher)!important;
+    border-radius: 4px;
+    color: var(--green-darker);
+    padding: 20px 5px;
 }
 
 /* Green backgrounds */

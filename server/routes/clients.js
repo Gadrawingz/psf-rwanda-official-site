@@ -82,19 +82,65 @@ router.get('/gbf', (req, res) => {
 });
 
 
+// Routes for Teams
+router.get('/team-board', (req, res) => {
+    const internals = {
+        title: "PSF Board",
+        description: ""
+    }
+    res.render('clients/teams/board', { internals });
+});
+
+router.get('/team-management', (req, res) => {
+    const internals = {
+        title: "PSF Management Team",
+        description: ""
+    }
+    res.render('clients/teams/management', { internals });
+});
+
+router.get('/team-staff', (req, res) => {
+    const internals = {
+        title: "PSF Staff",
+        description: ""
+    }
+    res.render('clients/teams/staff', { internals });
+});
 
 
+// Routes for Media
+router.get('/press', (req, res) => {
+    const internals = {
+        title: "Press Releases",
+        description: ""
+    }
+    res.render('clients/media/articles', { internals });
+});
+
+router.get('/gallery', (req, res) => {
+    const internals = {
+        title: "PSF Gallery",
+        description: ""
+    }
+    res.render('clients/media/gallery', { internals });
+});
 
 
-
-
-// Services
+// Routes (Misc.)
 router.get('/services', (req, res) => {
     const internals = {
         title: "Services",
         description: "PSF Offers various services including Advocacy, Membership, Market linkage, IBI..."
     }
     res.render('clients/services/index', { internals });
+});
+
+router.get('/contact', (req, res) => {
+    const internals = {
+        title: "Contact Us ",
+        description: ""
+    }
+    res.render('clients/about/contact', { internals });
 });
 
 
