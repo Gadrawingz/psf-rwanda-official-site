@@ -143,6 +143,14 @@ router.get('/contact', (req, res) => {
     res.render('clients/about/contact', { internals });
 });
 
+router.get('/support', (req, res) => {
+    const internals = {
+        title: "Suppport/FAQs ",
+        description: ""
+    }
+    res.render('clients/about/support', { internals });
+});
+
 
 // Export this router
 module.exports = router;
