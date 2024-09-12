@@ -6,7 +6,8 @@ const router = express.Router()
 router.get(['', '/home'], (req, res) => {
     const internals = {
         title: "Home page",
-        description: "Welcome official website for PSF Rwanda"
+        description: "Welcome official website for PSF Rwanda",
+        hasFullFooter: true,
     }
     res.render('clients/home', { internals });
 });
@@ -16,7 +17,8 @@ router.get(['', '/home'], (req, res) => {
 router.get('/background', (req, res) => {
     const internals = {
         title: "Our Background",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/about/background', { internals });
 });
@@ -24,7 +26,8 @@ router.get('/background', (req, res) => {
 router.get('/psf-25', (req, res) => {
     const internals = {
         title: "PSF 25",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/about/psf-25', { internals });
 });
@@ -32,7 +35,8 @@ router.get('/psf-25', (req, res) => {
 router.get('/strategies', (req, res) => {
     const internals = {
         title: "Strategies",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/about/strategies', { internals });
 });
@@ -42,7 +46,8 @@ router.get('/strategies', (req, res) => {
 router.get('/association', (req, res) => {
     const internals = {
         title: "Clusters - Association",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/membership/assoc', { internals });
 });
@@ -50,7 +55,8 @@ router.get('/association', (req, res) => {
 router.get('/golden-circle', (req, res) => {
     const internals = {
         title: "Golden Circle",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/membership/golden-circle', { internals });
 });
@@ -58,7 +64,8 @@ router.get('/golden-circle', (req, res) => {
 router.get('/regular', (req, res) => {
     const internals = {
         title: "Regular",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/membership/regular', { internals });
 });
@@ -68,7 +75,8 @@ router.get('/regular', (req, res) => {
 router.get('/exhibitions', (req, res) => {
     const internals = {
         title: "Events - Exhibitions",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/events/exhibitions', { internals });
 });
@@ -76,7 +84,8 @@ router.get('/exhibitions', (req, res) => {
 router.get('/gbf', (req, res) => {
     const internals = {
         title: "Events - GBF",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/events/gbf', { internals });
 });
@@ -86,7 +95,8 @@ router.get('/gbf', (req, res) => {
 router.get('/team-board', (req, res) => {
     const internals = {
         title: "PSF Board",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/teams/board', { internals });
 });
@@ -94,7 +104,8 @@ router.get('/team-board', (req, res) => {
 router.get('/team-management', (req, res) => {
     const internals = {
         title: "PSF Management Team",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/teams/management', { internals });
 });
@@ -102,7 +113,8 @@ router.get('/team-management', (req, res) => {
 router.get('/team-staff', (req, res) => {
     const internals = {
         title: "PSF Staff",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/teams/staff', { internals });
 });
@@ -112,7 +124,8 @@ router.get('/team-staff', (req, res) => {
 router.get('/press', (req, res) => {
     const internals = {
         title: "Press Releases",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/media/articles', { internals });
 });
@@ -120,7 +133,8 @@ router.get('/press', (req, res) => {
 router.get('/gallery', (req, res) => {
     const internals = {
         title: "PSF Gallery",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/media/gallery', { internals });
 });
@@ -130,7 +144,8 @@ router.get('/gallery', (req, res) => {
 router.get('/services', (req, res) => {
     const internals = {
         title: "Services",
-        description: "PSF Offers various services including Advocacy, Membership, Market linkage, IBI..."
+        description: "PSF Offers various services including Advocacy, Membership, Market linkage, IBI...",
+        hasFullFooter: true,
     }
     res.render('clients/services/index', { internals });
 });
@@ -138,7 +153,8 @@ router.get('/services', (req, res) => {
 router.get('/contact', (req, res) => {
     const internals = {
         title: "Contact Us ",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/about/contact', { internals });
 });
@@ -146,9 +162,19 @@ router.get('/contact', (req, res) => {
 router.get('/support', (req, res) => {
     const internals = {
         title: "Suppport/FAQs ",
-        description: ""
+        description: "",
+        hasFullFooter: true,
     }
     res.render('clients/about/support', { internals });
+});
+
+router.get('/login', (req, res) => {
+    const internals = {
+        title: "Staff Login",
+        description: "PSF Staff member login page",
+        hasFullFooter: false,
+    }
+    res.render('clients/login', { internals });
 });
 
 

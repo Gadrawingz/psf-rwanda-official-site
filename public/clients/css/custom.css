@@ -127,3 +127,19 @@
     padding-left: 8px;
     color: var(--white-powder);
 }
+
+/*Login container*/
+.cst-login-container {
+    padding: 0px!important;
+    display: flex;
+    justify-content: center;
+}
+
+.cst-login-content{
+	margin-top: 50px;
+	margin-bottom: 50px;
+	padding: 40px 40px;
+	color: var(--thm-white);
+	box-shadow: 0px 0px 12px 4px var(--green-main);
+    border-radius: 4px;
+}

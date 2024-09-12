@@ -19,4 +19,10 @@
 <div class="page-wrapper">
     <%- body %>
 </div>
-<%- include('../partials/clients/footer.ejs') %>
+
+
+<% if (internals.hasFullFooter == true) { %>
+    <%- include('../partials/clients/footer.ejs'); %>
+<% } else { %>
+    <%- include('../partials/clients/foot_script.ejs'); %>
+<% } %>
