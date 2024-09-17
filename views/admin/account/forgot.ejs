@@ -1,0 +1,37 @@
+<form action="/panel/forgot-password-post" method="POST">
+    <div class="login-box">
+        <div class="login-form">
+            <a href="/" class="login-logo">
+                <img src="../admin/images/logo.svg" alt="PSF Logo" />
+            </a>
+            <h2><%- internals.title %></h2><hr>
+            <div class="login-welcome">
+                In order to access your PSF account,<br />Please enter the email id you provided during the registration
+                process. or contact IT department.
+            </div>
+
+            <% if(internals.message.length != 0) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-x-circle alert-icon"></i>
+                <%- internals.message %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="login-form-actions">
+                <button type="submit" class="btn"><span class="icon"><i class="bi bi-arrow-right-circle"></i></span>Submit</button>
+
+                <button type="reset" class="btn"><span class="icon bg-danger"><i class="bi bi-arrow-right-circle"></i></span class="">Cancel</button>
+            </div>
+            <div class="login-form-footer">
+                <div class="additional-link" style="float: right!important;">
+                    <a href="/panel/login">Back To Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

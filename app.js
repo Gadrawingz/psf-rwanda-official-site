@@ -21,7 +21,7 @@ app.use(session({
     resave : true,
     saveUninitialized : true,
     cookie: {
-        maxAge: 3600000, 
+        maxAge: 21600000, // 6hrs
     }
 }))
 
@@ -36,6 +36,7 @@ app.use(eLayout);
 app.use('/', require('./server/routes/clients'))
 
 // For admin Panel
+app.use('/panel', require('./server/routes/access'))
 app.use('/panel', require('./server/routes/admin'))
 
 

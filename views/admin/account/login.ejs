@@ -1,0 +1,50 @@
+<form action="/panel/login-auth" method="POST">
+    <div class="login-box">
+        <div class="login-form">
+            <a href="/" class="login-logo">
+                <img src="../admin/images/logo.svg" alt="PSF Logos" />
+            </a>
+            <h2><%- internals.title %></h2><hr>
+            <div class="login-welcome">
+                Hi, Please login to your admin account.
+            </div>
+
+            <% if(internals.message.length != 0) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-x-circle alert-icon"></i>
+                <%- internals.message %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+
+            <div class="mb-3">
+                <label class="form-label"><strong>Staff Role</strong></label>
+                <select id="role" class="select-single js-states form-control" name="role" title="Select Product Category">
+                    <option value="">Select your role</option>
+                    <option value="Author">Author</option>
+                    <option value="IT">IT</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"><strong>Email Address</strong></label>
+                <input type="email" class="form-control" name="email">
+            </div>
+
+            <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label"><strong>Password</strong></label>
+                    <a href="/panel/forgot-password" class="btn-link ml-auto">Forgot password?</a>
+                </div>
+                <input type="password" class="form-control" name="password">
+            </div>
+
+            <div class="login-form-actions">
+                <button type="submit" class="btn">
+                    <span class="icon"><i class="bi bi-arrow-right-circle"></i></span>Login
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</form>

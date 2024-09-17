@@ -190,15 +190,6 @@ router.get('/support', (req, res) => {
     res.render('clients/about/support', { internals });
 });
 
-router.get('/login', (req, res) => {
-    const internals = {
-        title: "Staff Login",
-        description: "PSF Staff member login page",
-        hasFullFooter: false,
-        message: req.flash('flashError')
-    }
-    res.render('clients/login', { internals });
-});
 
 
 
