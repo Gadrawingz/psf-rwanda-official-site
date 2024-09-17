@@ -1,7 +1,16 @@
+/**********************************
+This page shows all the routes for the
+clients who interacts with website
+***********************************/
 const express = require('express')
 const router = express.Router()
 
-// Routes
+// To be able to send flash...
+const flash = require('express-flash')
+router.use(flash())
+
+
+
 // Home page
 router.get(['', '/home'], (req, res) => {
     const internals = {
@@ -11,7 +20,6 @@ router.get(['', '/home'], (req, res) => {
     }
     res.render('clients/home', { internals });
 });
-
 
 // Routes for for about us
 router.get('/background', (req, res) => {
@@ -40,6 +48,16 @@ router.get('/strategies', (req, res) => {
     }
     res.render('clients/about/strategies', { internals });
 });
+
+router.get('/psf-business-in-rwanda', (req, res) => {
+    const internals = {
+        title: "Doing Business in Rwanda",
+        description: "",
+        hasFullFooter: true,
+    }
+    res.render('clients/about/psf-business', { internals });
+});
+
 
 
 // Routes for Membership
@@ -71,6 +89,7 @@ router.get('/regular', (req, res) => {
 });
 
 
+
 // Routes for Events
 router.get('/exhibitions', (req, res) => {
     const internals = {
@@ -89,6 +108,7 @@ router.get('/gbf', (req, res) => {
     }
     res.render('clients/events/gbf', { internals });
 });
+
 
 
 // Routes for Teams
@@ -120,6 +140,7 @@ router.get('/team-staff', (req, res) => {
 });
 
 
+
 // Routes for Media
 router.get('/press', (req, res) => {
     const internals = {
@@ -138,6 +159,7 @@ router.get('/gallery', (req, res) => {
     }
     res.render('clients/media/gallery', { internals });
 });
+
 
 
 // Routes (Misc.)
@@ -173,9 +195,11 @@ router.get('/login', (req, res) => {
         title: "Staff Login",
         description: "PSF Staff member login page",
         hasFullFooter: false,
+        message: req.flash('flashError')
     }
     res.render('clients/login', { internals });
 });
+
 
 
 // Export this router

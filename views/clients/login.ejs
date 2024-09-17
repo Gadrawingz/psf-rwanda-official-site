@@ -5,14 +5,29 @@
                 <div class="cst-login-content">
                     <h2>PSF Staff Login</h2>
                     <p>This login is for dedicated staff member. Fill in correct credentials</p>
-                    <form action="" class="contact-form" method="POST">
+
+                    <% if (internals.message.length != 0) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%- internals.message %>
+                    </div>
+                    <% } %>
+                    
+                    <form action="/panel/login-auth" class="contact-form" method="POST">
                         <div class="row row-gutter-10">
                             <div class="col-12 col-lg-12">
-                                <input type="email" id="email" class="input-text" placeholder="Email address" name="email" aria-required="true" required/>
+                                <select id="role" class="input-text" name="role">
+                                    <option value="">Select your role</option>
+                                    <option value="Author">Author</option>
+                                    <option value="IT">IT</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-12 col-lg-12">
+                                <input type="email" id="email" class="input-text" placeholder="Email address" name="email" aria-required="true"/>
                             </div>
                          
                             <div class="col-12 col-lg-12">
-                                <input type="password" id="password" class="input-text" placeholder="Password" name="password" aria-required="true" required/>
+                                <input type="password" id="password" class="input-text" placeholder="Password" name="password" aria-required="true" />
                             </div>
 
                             <div class="col-12 col-lg-12">
