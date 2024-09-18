@@ -87,7 +87,7 @@ router.post('/login-auth', (req, res) => {
 
 
 // 05. Admin dashboard view
-router.get('/dashboard', (req, res) => {
+router.get(['', '/dashboard'], (req, res) => {
     if(req.session.loggedin) {
         // Local stuffs:
         const internals = {
@@ -118,6 +118,24 @@ router.get('/logout', (req, res) => {
         console.log('Successfully signed out!');
         res.redirect('/panel/login')
     })
+})
+
+
+// 06. Edit Admin (Profile Update)
+// By using Admin Template????????
+router.get('/profile', (req, res) => {
+    if(req.session.loggedin) {
+        const internals = {
+            title: `Edit your profile (${req.session.username})`,
+        }
+
+        res.render('admin/account/profile', {
+            layout: './layouts/LAdmin', internals
+        });
+    } else {
+        req.flash('flashError', "Login to access your profile!");
+        res.redirect('/panel/login');
+    }
 })
 
 

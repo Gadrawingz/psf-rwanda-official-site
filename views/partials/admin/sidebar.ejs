@@ -2,7 +2,7 @@
 
     <!-- Sidebar brand starts -->
     <div class="sidebar-brand">
-        <a href="#" class="logo">
+        <a href="/panel/dashboard" class="logo">
             <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
         </a>
     </div>
@@ -11,26 +11,41 @@
         <div class="sidebarMenuScroll">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="/panel/dashboard">
                         <i class="bi bi-house"></i>
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </li>
 
-                <li>
-                    <a href="#">
-                        <i class="bi bi-book"></i>
-                        <span class="menu-text">PSF Releases</span>
-                    </a>
-                </li>
 
                 <li class="sidebar-dropdown">
                     <a href="#">
-                        <i class="bi bi-handbag"></i>
+                        <i class="bi bi-journal-check"></i>
+                        <span class="menu-text">PSF Releases</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="#">All Posts</a>
+                            </li>
+                            <li>
+                                <a href="#">New Post</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
+                <li class="sidebar-dropdown">
+                    <a href="#">
+                        <i class="bi bi-book"></i>
                         <span class="menu-text">Pages</span>
                     </a>
                     <div class="sidebar-submenu">
                         <ul>
+                            <li>
+                                <a href="#">All Pages</a>
+                            </li>
                             <li>
                                 <a href="#">View Pages</a>
                             </li>
@@ -38,12 +53,32 @@
                     </div>
                 </li>
 
-                <li>
+
+                <li class="sidebar-dropdown">
                     <a href="#">
                         <i class="bi bi-card-image"></i>
                         <span class="menu-text">Gallery</span>
                     </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="#">Add Section</a>
+                            </li>
+                            <li>
+                                <a href="#">Manage Gallery</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+
+
+                <li>
+                    <a href="#">
+                        <i class="bi bi-person-lines-fill"></i>
+                        <span class="menu-text">Users</span>
+                    </a>
+                </li>
+
 
                 <li>
                     <a href="#">
@@ -51,6 +86,7 @@
                         <span class="menu-text">Settings</span>
                     </a>
                 </li>
+
 
                 <li>
                     <a href="/panel/logout">
