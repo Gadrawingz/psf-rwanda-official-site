@@ -1,0 +1,85 @@
+<!-- Row start -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><h3><%- internals.title %></h3></div>
+            </div>
+            <div class="card-body">
+                <div class="custom-btn-group">
+                    <a href="/panel/register" class="btn btn-info"><i class="bi bi-plus-square"></i> Add new</a>
+                </div>
+            </div>
+
+            <% if(messages.flashError) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-x-circle alert-icon"></i>
+                    <%- internals.message %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+            
+            <% if(messages.success) { %>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="bi bi-x-circle alert-icon"></i>
+                        <%- internals.message %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <% if(internals.data.length) { %>
+                    <table class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th>N<sup>o</sup></th>
+                                <th>Full Name</th>
+                                <th>Username</th>
+                                <th>Gender</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th colspan="2" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% for( let g = 0; g < internals.data.length; g++ ) { %>
+                            <tr>
+                                <td>
+                                    <i class="bi bi-check2-circle"></i><%= (g+1) %> 
+                                </td>
+                                <td><%= internals.data[g].firstname %> <%= internals.data[g].lastname %></td>
+                                <td><%= internals.data[g].username %></td>
+                                <td><%= internals.data[g].gender %></td>
+                                <td><%= internals.data[g].telephone %></td>
+                                <td><strong><%= internals.data[g].email %></strong></td>
+                                <td class="text-green">
+                                    <strong><%= internals.data[g].role %></strong></td>
+                                <td class="text-center">
+                                    <a href="/panel/edit-user/<%= internals.data[g].admin_id %>" class="btn btn-primary">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="/panel/del-admin/<%= internals.data[g].admin_id %>" class="btn btn-danger" onclick="return confirm('Do you really want to delete this record?')">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </a>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    <% } else { %>
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <i class="bi bi-bullseye alert-icon"></i>No data found!
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Row end -->

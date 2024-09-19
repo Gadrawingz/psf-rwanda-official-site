@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}))
 
 app.use(session({
-    secret : 'secret',
+    secret : 'psf-secret1',
     resave : true,
     saveUninitialized : true,
     cookie: {
