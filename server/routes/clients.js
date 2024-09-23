@@ -191,6 +191,15 @@ router.get('/support', (req, res) => {
 });
 
 
+router.get('/membership-benefits', (req, res) => {
+    const internals = {
+        title: "PSF Membership Benefits",
+        description: "",
+        hasFullFooter: true,
+    }
+    res.render('clients/membership/benefits', { internals });
+});
+
 
 
 // Export this router

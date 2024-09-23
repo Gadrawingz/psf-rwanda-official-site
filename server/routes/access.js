@@ -56,18 +56,16 @@ router.post("/login-auth", (req, res) => {
     const sql = "SELECT * FROM admin WHERE email=? AND role=? AND password=?";
 
     DBConn.query(sql, [email, role, password], (err, results, fields) => {
+      req.session.loggedin = true;
+      req.session.role = results[0].role;
+      req.session.adminId = results[0].admin_id;
+      req.session.username = results[0].username;
+      req.session.firstname = results[0].firstname;
+      req.session.lastname = results[0].lastname;
+
       if (err) throw err;
       if (results.length > 0) {
         // Authenticate:
-        req.session.loggedin = true;
-        req.session.role = results[0].role;
-        req.session.adminId = results[0].admin_id;
-        req.session.username = results[0].username;
-        req.session.firstname = results[0].firstname;
-        req.session.lastname = results[0].lastname;
-        req.session.gender = results[0].username;
-
-        req.flash("flashSuccess", "Login is successful");
         res.redirect("/panel/dashboard");
       } else {
         req.flash("flashError", "Wrong email, role or password!");
@@ -124,11 +122,16 @@ router.get("/register", (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
     const internals = {
       title: "Register new admin",
+      breadcrumbL1: "Admin",
+      breadcrumbL2: "Registration",
       role: req.session.role,
       adminId: req.session.adminId,
       username: req.session.username,
       telephone: req.session.telephone,
+      fullName: `${req.session.firstname} ${req.session.lastname}`,
+      message: req.flash("flashMessage")
     };
+
     res.render("admin/account/register", {
       layout: "./layouts/LAdmin",
       internals,
@@ -138,6 +141,60 @@ router.get("/register", (req, res) => {
     res.redirect("/panel/login");
   }
 });
+
+
+// 07.B. POST register admin
+router.post('/register-admin', (req, res) => {
+  let fn = req.body.firstname;
+  let ln = req.body.lastname;
+  let un = req.body.username;
+  let gd = req.body.gender;
+  let te = req.body.telephone;
+  let em = req.body.email;
+  let ro = req.body.role;
+  let pw = req.body.password;
+  let errors = false;
+
+  let adminData = {
+    firstname: fn, lastname: ln, username: un, gender: gd, 
+    telephone: te, email: em, role: ro, password: pw,
+  }
+
+  const internals = {
+    title: "Register new admin",
+    breadcrumbL1: "Admin",
+    breadcrumbL2: "Registration",
+    role: req.session.role,
+    adminId: req.session.adminId,
+    username: req.session.username,
+    telephone: req.session.telephone,
+    fullName: `${req.session.firstname} ${req.session.lastname}`,
+    message: req.flash("flashMessage")
+  };
+
+  if(fn.length === 0 || ln.length === 0 || un.length === 0 || gd.length === 0 || te.length === 0 || em.length === 0 || ro.length === 0 || pw.length === 0) {
+    req.flash("flashMessage", "Please fill all fields");
+    res.render("admin/account/register", {
+      layout: "./layouts/LAdmin",
+      internals,
+      firstname: fn, lastname: ln, username: un, 
+      gender: gd, telephone: te, email: em, role: ro,
+      password: pw
+    });
+  }
+
+  DBConn.query('INSERT INTO `admin` SET ?', adminData, (err, result) => {
+    if(err) {
+      console.log("Error")
+    } else {
+      console.log("Successful insertion!")
+      res.redirect('/panel/admins');
+    }
+  })
+
+})
+
+
 
 // 08. Retrieve all system users.
 router.get("/admins", (req, res) => {
@@ -185,10 +242,7 @@ router.get('/del-admin/(:theId)', (req, res) => {
             res.redirect('/panel/admins');
         } 
     })
-
 })
-
-
 
 
 

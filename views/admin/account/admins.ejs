@@ -18,14 +18,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <% } %>
-            
-            <% if(messages.success) { %>
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <i class="bi bi-x-circle alert-icon"></i>
-                        <%- internals.message %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <% } %>
 
             <div class="card-body">
                 <div class="table-responsive">
@@ -58,7 +50,7 @@
                                 <td class="text-green">
                                     <strong><%= internals.data[g].role %></strong></td>
                                 <td class="text-center">
-                                    <a href="/panel/edit-user/<%= internals.data[g].admin_id %>" class="btn btn-primary">
+                                    <a href="/panel/edit-user/<%= internals.data[g].admin_id %>" class="btn btn-primary" onclick="return alert('Not ready yet')">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </a>
                                 </td>
