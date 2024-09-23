@@ -190,7 +190,7 @@ router.get('/support', (req, res) => {
     res.render('clients/about/support', { internals });
 });
 
-
+// Membership benefits page:
 router.get('/membership-benefits', (req, res) => {
     const internals = {
         title: "PSF Membership Benefits",
@@ -198,6 +198,16 @@ router.get('/membership-benefits', (req, res) => {
         hasFullFooter: true,
     }
     res.render('clients/membership/benefits', { internals });
+});
+
+// Member Join page
+router.get('/join', (req, res) => {
+    const internals = {
+        title: "Join Membership",
+        description: "",
+        hasFullFooter: true,
+    }
+    res.render('clients/membership/join', { internals });
 });
 
 

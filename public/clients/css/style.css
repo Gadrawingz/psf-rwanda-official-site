@@ -2865,7 +2865,7 @@ a.search-toggler{
 	margin-bottom: 30px;
 }
 .mayor-box p{
-	margin-bottom: 0px;
+	margin-bottom: 6px;
 }
 .mayor-icon-box {
 	display: flex;
@@ -6264,7 +6264,7 @@ label {
 	align-items: center;
 }
 .list-style-one > li >i{
-	color: var(--thm-primary);
+	color: var(--green-main);
 	font-size: 14px;
 }
 .list-style-one > li > h5{
