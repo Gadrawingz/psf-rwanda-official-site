@@ -68,4 +68,21 @@ router.post('/publish', upload1.single('file'), (req, res, next) => {
 })
 
 
+// 03. View all publications
+router.get('/publications', (req, res) => {
+    const internals = {
+        title : "View all publications",
+        description: "",
+    }
+
+    res.render('admin/media/publications', {
+        layout: "./layouts/LAdmin",
+        internals,
+        message: req.flash('fmessage')
+    })
+})
+
+
+
+
 module.exports = router;
