@@ -1,20 +1,27 @@
 // Main imports and definition
 require('dotenv').config();
 
+const connect = require('connect')
 const express = require('express');
 const session = require('express-session');
 const eLayout = require('express-ejs-layouts');
+const cors = require('cors')
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 5005 || process.env.PORT;
+
 
 // Setting up custom default layout
 app.set('layout', './layouts/LClients');
 app.set('view engine', 'ejs');
 
 // Enabling express-session and flash
+app.use(cors())
 app.use(express.json());
-app.use(express.urlencoded({ extended: true}))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
+//app.use(express.urlencoded({ extended: true}))
 app.use(session({
     secret : 'psf-secret1',
     resave : false,
@@ -23,15 +30,9 @@ app.use(session({
         maxAge: 21600000, // 6hrs
     }
 }))
-
-// Keep me logged in, Even when I change code
-let connect = require('connect') , 
-RedisStore = require('connect-redis');
-
-
-// Usage1
 app.use(express.static('public/'));
 app.use(eLayout);
+
 
 
 // Routes 
@@ -42,6 +43,7 @@ app.use('/', require('./server/routes/clients'))
 app.use('/panel', require('./server/routes/access'))
 app.use('/panel', require('./server/routes/admin'))
 app.use('/posts', require('./server/routes/posts'));
+app.use('/media', require('./server/routes/media'));
 
 
 // Running

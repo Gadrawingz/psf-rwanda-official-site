@@ -1,7 +1,7 @@
 /**********************************
 This page shows all the routes specific to posts, 
 registration, updates, removal, etc.
-This page will use: layout: 'layouts/LAccess'
+This page will use: layout: 'layouts/LAdmin'
 ***********************************/
 
 const express = require("express");

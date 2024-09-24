@@ -1,0 +1,70 @@
+<div class="content-wrapper">
+    <!-- Row start -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3><%- internals.title %> </h3>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <form action="/media/publish" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-xxl-8 col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12">
+                                
+                                <% if (message.length!=0) { %>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-x-circle alert-icon"></i>
+                                    <%- message %> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                                <% } %>
+                            
+                                <div class="row">
+                                    <div class="col-xxl-6 col-xl-12 col-sm-12 col-12">
+                                        <div class="mb-3">
+                                            <label for="title" class="form-label">
+                                                <strong>Publication Title</strong>
+                                            </label>
+                                            <input type="text" class="form-control" id="title" name="title" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-6 col-xl-12 col-sm-12 col-12">
+                                        <div class="mb-3">
+                                            <label for="file" class="form-label">
+                                                <strong>Document (File)</strong>
+                                            </label>
+                                            <div class="was-validated">
+                                                <input type="file" class="form-control" id="file" aria-label="Document" name="file"/>
+                                                <div class="invalid-feedback">Please select pdf document</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-6 col-xl-12 col-sm-12 col-12">
+                                        <div class="mb-3">
+                                            <div class="was-validated">
+                                                <div class="was-validated">
+                                                    <label for="describe" class="form-label"><strong>Add description (Optional)</strong></label>
+                                                    <textarea class="form-control is-invalid" id="describe" name="description"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-12">
+                                <button class="btn btn-info" type="submit">Upload</button>
+                                <button class="btn btn-danger" type="reset">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
