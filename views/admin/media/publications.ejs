@@ -6,33 +6,57 @@
                 <div class="card-title"><h3><%- internals.title %></h3></div>
             </div>
             <div class="card-body">
-                <div class="custom-btn-group">
+                <div class="custom-btn-group mb-2">
                     <a href="/media/publish" class="btn btn-info"><i class="bi bi-plus-square"></i> Add new</a>
                 </div>
-            </div>
-
-
-            <div class="card-body">
                 <div class="table-responsive">
-                    
+                    <% if (message.length!=0) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-x-circle alert-icon"></i>
+                        <%- message %> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
+                    <% } if (internals.data.length != 0) { %>
                     <table class="table table-bordered m-0">
                         <thead>
                             <tr>
                                 <th>N<sup>o</sup></th>
                                 <th>Document Title</th>
                                 <th>Description</th>
-                                <th>Document</th>
+                                <th>File</th>
+                                <th>Date Uploaded</th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
                         </thead>
 
-
+                        <tbody>
+                            <% for(let g = 0; g < internals.data.length; g++) { %> 
+                            <tr>
+                                <td><i class="bi bi-check2-circle"></i><%= (g+1) %></td>
+                                <td><%= internals.data[g].title %></td>
+                                <td><%= internals.data[g].description %></td>
+                                <td class="text-center">
+                                    <a href="../uploads/media/<%= internals.data[g].pub_file %>" target="_blank">
+                                        <img src="../admin/images/thumbnail/pdf-thumbnail-lg.jpg" style="height: 30px; width: auto;"/>
+                                    </a>                                    
+                                </td>
+                                <td><%= internals.data[0].pub_date.toLocaleDateString() %></td>
+                                <td class="text-center">
+                                    <a href="../uploads/media/<%= internals.data[g].pub_file %>" class="btn btn-secondary" title="View file"><i class="bi bi-eye"></i></a>&nbsp;
+                                    <a href="/media/edit-user/<%= internals.data[g].pub_id %>" class="btn btn-primary"  title="Edit this row"><i class="bi bi-pencil-square"></i></a>&nbsp;
+                                    <a href="/media/del-publica/<%= internals.data[g].pub_id %>" class="btn btn-danger" onclick="return confirm('Do you want to delete this row?')"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
                     </table>
-                    
+                    <% } else { %>
                     <div class="alert alert-primary alert-dismissible fade show" role="alert">
                         <i class="bi bi-bullseye alert-icon"></i>No data found!
                     </div>
-                    
+                    <% } %>
                 </div>
             </div>
         </div>

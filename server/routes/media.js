@@ -28,7 +28,7 @@ router.get('/publish', (req, res) => {
 // 02. Publish post view
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "uploads/media");
+      cb(null, "public/uploads/media");
     },
     
     filename: function (req, file, cb) {
@@ -45,12 +45,13 @@ router.post('/publish', upload1.single('file'), (req, res, next) => {
         if(title.length != 0 && description.length != 0) {
             if(file.mimetype==='application/pdf') {
                 // IF SUCCESSFUL
-                let sql = "INSERT INTO `publication`(`title`, `description2`, `pub_file`) VALUES ('"+title+"', '"+description+"', '"+req.file.filename+"')";
-                
+                let sql = "INSERT INTO `publication`(`title`, `description`, `pub_file`) VALUES ('"+title+"', '"+description+"', '"+req.file.filename+"')";
                 con.query(sql, function(err, result) {
                     if(err) {
                         req.flash('fmessage', 'Error occurred in database!')
                         res.redirect('/media/publish');
+                    } else {
+                        res.redirect('/media/publications'); // When
                     }
                 })
             } else {
@@ -70,19 +71,51 @@ router.post('/publish', upload1.single('file'), (req, res, next) => {
 
 // 03. View all publications
 router.get('/publications', (req, res) => {
-    const internals = {
-        title : "View all publications",
-        description: "",
-    }
+    con.query("SELECT * FROM publication ORDER BY pub_date DESC", (error, rows) => {
+        const internals = {
+            title : "View all publications",
+            adminId: req.session.adminId,
+            username: req.session.username,
+            telephone: req.session.telephone,
+            data: rows
+        }
 
-    res.render('admin/media/publications', {
-        layout: "./layouts/LAdmin",
-        internals,
-        message: req.flash('fmessage')
+        if(!error) {
+            // @gadira
+            res.render('admin/media/publications', {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: ''
+            })
+        } else {
+            req.flash("fmessage", "There is an error occured");
+            res.render('admin/media/publications', {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash('fmessage')
+            })
+        }
+    })
+})
+
+
+// 04. Remove media record
+router.get('/del-publica/(:id)', (req, res) => {
+    let id = req.params.id;
+    let sql = `DELETE FROM publication WHERE pub_id = ${id}`;
+    con.query(sql, (error, result) => {
+        if(error) {
+            req.flash('fmessage', `Cannot remove a record with ID: ${id}!`);
+            res.redirect('/media/publications');
+        } else {
+            req.flash('fmessage', `The record with ID: ${id} removed!`);
+            res.redirect('/media/publications');
+        } 
     })
 })
 
 
 
 
+// Export this...
 module.exports = router;

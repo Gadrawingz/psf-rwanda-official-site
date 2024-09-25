@@ -5,11 +5,6 @@
             <div class="card-header">
                 <div class="card-title"><h3><%- internals.title %></h3></div>
             </div>
-            <div class="card-body">
-                <div class="custom-btn-group">
-                    <a href="/panel/register" class="btn btn-info"><i class="bi bi-plus-square"></i> Add new</a>
-                </div>
-            </div>
 
             <% if(messages.flashError) { %>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -20,6 +15,10 @@
             <% } %>
 
             <div class="card-body">
+                <div class="custom-btn-group mb-2">
+                    <a href="/panel/register" class="btn btn-info"><i class="bi bi-plus-square"></i> Add new</a>
+                </div>
+
                 <div class="table-responsive">
                     <% if(internals.data.length) { %>
                     <table class="table table-bordered m-0">
