@@ -7,7 +7,7 @@
             </div>
             <div class="card-body">
                 <div class="custom-btn-group mb-2">
-                    <a href="/media/publish" class="btn btn-info"><i class="bi bi-plus-square"></i> Add new</a>
+                    <a href="/publica/add" class="btn btn-info"><i class="bi bi-plus-square"></i> Add new</a>
                 </div>
                 <div class="table-responsive">
                     <% if (message.length!=0) { %>
@@ -25,7 +25,7 @@
                                 <th>Document Title</th>
                                 <th>Description</th>
                                 <th>File</th>
-                                <th>Date Uploaded</th>
+                                <th class="text-center">Date Published</th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -37,15 +37,15 @@
                                 <td><%= internals.data[g].title %></td>
                                 <td><%= internals.data[g].description %></td>
                                 <td class="text-center">
-                                    <a href="../uploads/media/<%= internals.data[g].pub_file %>" target="_blank">
+                                    <a href="../uploads/publica/<%= internals.data[g].pub_file %>" target="_blank">
                                         <img src="../admin/images/thumbnail/pdf-thumbnail-lg.jpg" style="height: 30px; width: auto;"/>
                                     </a>                                    
                                 </td>
-                                <td><%= internals.data[0].pub_date.toLocaleDateString() %></td>
+                                <td class="text-center"><%= internals.data[0].pub_date.toLocaleDateString() %></td>
                                 <td class="text-center">
-                                    <a href="../uploads/media/<%= internals.data[g].pub_file %>" class="btn btn-secondary" title="View file"><i class="bi bi-eye"></i></a>&nbsp;
-                                    <a href="/media/edit-user/<%= internals.data[g].pub_id %>" class="btn btn-primary"  title="Edit this row"><i class="bi bi-pencil-square"></i></a>&nbsp;
-                                    <a href="/media/del-publica/<%= internals.data[g].pub_id %>" class="btn btn-danger" onclick="return confirm('Do you want to delete this row?')"><i class="bi bi-trash"></i></a>
+                                    <a href="../uploads/publica/<%= internals.data[g].pub_file %>" target="_blank" class="btn btn-secondary" title="View file"><i class="bi bi-eye"></i></a>&nbsp;
+                                    <a href="/publica/edit/<%= internals.data[g].pub_id %>" class="btn btn-primary"  title="Edit this row"><i class="bi bi-pencil-square"></i></a>&nbsp;
+                                    <a href="/publica/delete/<%= internals.data[g].pub_id %>" class="btn btn-danger" onclick="return confirm('Do you want to delete this row?')"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </td>
                             </tr>

@@ -43,7 +43,7 @@ app.use('/', require('./server/routes/clients'))
 app.use('/panel', require('./server/routes/access'))
 app.use('/panel', require('./server/routes/admin'))
 app.use('/posts', require('./server/routes/posts'));
-app.use('/media', require('./server/routes/media'));
+app.use('/publica', require('./server/routes/publica'));
 
 
 // Running

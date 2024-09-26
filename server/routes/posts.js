@@ -40,6 +40,9 @@ router.get("/add", (req, res) => {
 
 
 
+
+
+
 router.get(['/all'], (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
     // Local stuffs:

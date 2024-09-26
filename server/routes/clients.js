@@ -3,12 +3,15 @@ This page shows all the routes for the
 clients who interacts with website
 ***********************************/
 const express = require('express')
+const multer = require('multer')
+const path = require('path')
 const router = express.Router()
+const con = require("../config/database");
+
 
 // To be able to send flash...
 const flash = require('express-flash')
 router.use(flash())
-
 
 
 // Home page
@@ -151,6 +154,8 @@ router.get('/press', (req, res) => {
     res.render('clients/media/articles', { internals });
 });
 
+
+
 router.get('/gallery', (req, res) => {
     const internals = {
         title: "PSF Gallery",
@@ -160,6 +165,23 @@ router.get('/gallery', (req, res) => {
     res.render('clients/media/gallery', { internals });
 });
 
+
+// Media (Publication fetch)
+router.get('/publications', (req, res) => {
+
+    con.query("SELECT * FROM publication ORDER BY pub_date DESC", (error, rows) => {
+        const internals = {
+            title : "View all publications",
+            description: "",
+            hasFullFooter: true,
+            adminId: req.session.adminId,
+            username: req.session.username,
+            telephone: req.session.telephone,
+            data: rows
+        }
+        res.render('clients/media/publicas', { internals });
+    });
+});
 
 
 // Routes (Misc.)

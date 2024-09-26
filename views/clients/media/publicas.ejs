@@ -1,0 +1,45 @@
+<!--page-banner-->
+<section class="page-banner">
+    <div class="container">
+        <div class="page-breadcrumbs">
+            <ul class="list-unstyled">
+                <li><a href="#">Media</a></li>
+                <li>Publications</li>
+            </ul>
+        </div>
+        <div class="page-banner-title">
+            <h3>Published documents</h3>
+        </div>
+    </div>			
+</section>
+
+<!-- document-section  -->
+<section class="document-section">
+    <div class="container">
+        <!-- nav nav-pills -->
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
+                <div class="row row-gutter-30">                    
+                    <% for(let g = 0; g < internals.data.length; g++) { %> 
+                    <div class="col-xxl-4 col-xl-6">
+                        <div class="service-three-card">
+                            <div class="service-three-icon">
+                                <i class="flaticon-pdf"></i>
+                            </div>
+                            <div class="service-three-card-content">
+                                <h3><a href="../uploads/publica/<%= internals.data[g].pub_file %>" download><%= internals.data[0].title %></a></h3>
+                                <p><%= internals.data[g].description %></p>
+                                <div class="service-three-detail">
+                                    <a href="../uploads/publica/<%= internals.data[g].pub_file %>" download><span>View + Download</span><i class="fa-solid fa-arrow-right-long"></i></a>
+                                    <i class="flaticon-pdf"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

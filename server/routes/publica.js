@@ -1,23 +1,22 @@
 /**********************************
 This page shows all the routes related 
-to media pages.
+to publication pages.
 ***********************************/
 const express = require('express')
 const multer = require('multer')
 const path = require('path')
-const sql = require("mysql");
 const router = express.Router()
 const con = require("../config/database");
 
 
 // 01. Publish get view
-router.get('/publish', (req, res) => {
+router.get('/add', (req, res) => {
     const internals = {
         title : "Add new publication",
         description: "",
     }
 
-    res.render('admin/media/add-pub', {
+    res.render('admin/publica/add-pub', {
         layout: "./layouts/LAdmin",
         internals,
         message: req.flash('fmessage')
@@ -28,16 +27,16 @@ router.get('/publish', (req, res) => {
 // 02. Publish post view
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "public/uploads/media");
+      cb(null, "public/uploads/publica");
     },
     
     filename: function (req, file, cb) {
-        cb(null,`media-${Date.now()}${path.extname(file.originalname)}`);
+        cb(null,`pdoc-${Date.now()}${path.extname(file.originalname)}`);
     },
 });
 
 let upload1 = multer({ storage: storage })
-router.post('/publish', upload1.single('file'), (req, res, next) => {
+router.post('/add-post', upload1.single('file'), (req, res, next) => {
     const file = req.file;
     const title = req.body.title;
     const description = req.body.description;
@@ -49,28 +48,28 @@ router.post('/publish', upload1.single('file'), (req, res, next) => {
                 con.query(sql, function(err, result) {
                     if(err) {
                         req.flash('fmessage', 'Error occurred in database!')
-                        res.redirect('/media/publish');
+                        res.redirect('/publica/add');
                     } else {
-                        res.redirect('/media/publications'); // When
+                        res.redirect('/publica/all'); // When
                     }
                 })
             } else {
                 req.flash('fmessage', 'Only PDF documents are allowed!')
-                res.redirect('/media/publish');
+                res.redirect('/publica/add');
             }
         } else {
             req.flash('fmessage', 'Please fill all required fields!')
-            res.redirect('/media/publish');
+            res.redirect('/publica/add');
         }
     } else {
         req.flash('fmessage', 'Please upload a file!')
-        res.redirect('/media/publish');
+        res.redirect('/publica/add');
     }
 })
 
 
 // 03. View all publications
-router.get('/publications', (req, res) => {
+router.get('/all', (req, res) => {
     con.query("SELECT * FROM publication ORDER BY pub_date DESC", (error, rows) => {
         const internals = {
             title : "View all publications",
@@ -82,14 +81,14 @@ router.get('/publications', (req, res) => {
 
         if(!error) {
             // @gadira
-            res.render('admin/media/publications', {
+            res.render('admin/publica/all-publicas', {
                 layout: "./layouts/LAdmin",
                 internals,
                 message: ''
             })
         } else {
             req.flash("fmessage", "There is an error occured");
-            res.render('admin/media/publications', {
+            res.render('admin/publica/all-publicas', {
                 layout: "./layouts/LAdmin",
                 internals,
                 message: req.flash('fmessage')
@@ -99,22 +98,48 @@ router.get('/publications', (req, res) => {
 })
 
 
-// 04. Remove media record
-router.get('/del-publica/(:id)', (req, res) => {
+// 04. Remove publication record
+router.get('/delete/(:id)', (req, res) => {
     let id = req.params.id;
-    let sql = `DELETE FROM publication WHERE pub_id = ${id}`;
-    con.query(sql, (error, result) => {
-        if(error) {
-            req.flash('fmessage', `Cannot remove a record with ID: ${id}!`);
-            res.redirect('/media/publications');
+    // Get the item to remove
+    let sql3 = `SELECT * FROM publication WHERE pub_id = ${id}`;
+    con.query(sql3, (err, rows, fields) => {
+        if(err) throw err
+        if(rows.length > 0) {
+            // Remove the file 1st
+            let fs = require('fs')
+            let path2file = "public/uploads/publica/"+rows[0].pub_file;
+            if (fs.existsSync(path2file)) {
+                fs.unlinkSync(path2file);
+                // Remove file from DB
+                let sql4 = `DELETE FROM publication WHERE pub_id = ${id}`;
+                con.query(sql4, (error, result) => {
+                    if(!error) {
+                        req.flash('fmessage', `The record with ID: ${id} removed!`);
+                        res.redirect('/publica/all');
+                    } else {
+                        req.flash('fmessage', `Cannot remove a record with ID: ${id}!`);
+                        res.redirect('/publica/all');  
+                    }
+                })
+            } else {
+                req.flash('fmessage', "No file to remove found!");
+                res.redirect('/publica/all');
+                console.log("No file to remove found!");
+            }
         } else {
-            req.flash('fmessage', `The record with ID: ${id} removed!`);
-            res.redirect('/media/publications');
-        } 
+            req.flash('error', `Record was not found!`)
+            console.log("Record was not found")   
+        }
     })
 })
 
 
+
+
+
+
+let upload4Edit = multer({ storage: storage })
 
 
 // Export this...
