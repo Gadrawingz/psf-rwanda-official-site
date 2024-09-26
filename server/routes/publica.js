@@ -36,7 +36,7 @@ const storage = multer.diskStorage({
 });
 
 let upload1 = multer({ storage: storage })
-router.post('/add-post', upload1.single('file'), (req, res, next) => {
+router.post('/insert', upload1.single('file'), (req, res, next) => {
     const file = req.file;
     const title = req.body.title;
     const description = req.body.description;
@@ -136,6 +136,30 @@ router.get('/delete/(:id)', (req, res) => {
 
 
 
+// 05. Edit published document view:
+router.get('/edit/(:id)', (req, res, next) => {
+    let id = req.params.id;
+    let sql = `SELECT * FROM publication WHERE pub_id= ${id}`;
+    con.query(sql, (err, rows, fields) => {
+        if(err) throw err;
+        const internals = {
+            title : "Update existing publication",
+            pub_id: rows[0].pub_id,
+            title: rows[0].title,
+            description: rows[0].description
+        }
+        if(rows.length <=0) {
+            req.flash('error', `Publication not found id ${id}`)
+            res.redirect('/users')      
+        } else {
+            res.render('admin/publica/edit-pub', {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash('fmessage'),
+            })
+        }
+    })
+})
 
 
 

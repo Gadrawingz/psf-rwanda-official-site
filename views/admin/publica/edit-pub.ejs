@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="/publica/insert" method="post" enctype="multipart/form-data">
+                    <form action="/publica/update/<%= internals.pub_id %>" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-xxl-8 col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12">
 
@@ -29,7 +29,7 @@
                                             <label for="title" class="form-label">
                                                 <strong>Publication Title</strong>
                                             </label>
-                                            <input type="text" class="form-control" id="title" name="title" />
+                                            <input type="text" class="form-control" id="title" name="title" value="<%= internals.title %>" />
                                         </div>
                                     </div>
 
@@ -39,7 +39,7 @@
                                                 <strong>Document (File)</strong>
                                             </label>
                                             <div class="was-validated">
-                                                <input type="file" class="form-control" id="file" aria-label="Document" name="file"/>
+                                                <input type="file" class="form-control" id="file" aria-label="Document" name="file" value="<%= internals.pub_file %>"/>
                                                 <div class="invalid-feedback">Please select pdf document</div>
                                             </div>
                                         </div>
@@ -50,7 +50,7 @@
                                             <div class="was-validated">
                                                 <div class="was-validated">
                                                     <label for="describe" class="form-label"><strong>Add description (Optional)</strong></label>
-                                                    <textarea class="form-control is-invalid" id="describe" name="description"></textarea>
+                                                    <textarea class="form-control is-invalid" id="describe" name="description"><%= internals.description %></textarea>
                                                 </div>
                                             </div>
                                         </div>
