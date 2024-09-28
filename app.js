@@ -30,7 +30,9 @@ app.use(session({
         maxAge: 21600000, // 6hrs
     }
 }))
+
 app.use(express.static('public/'));
+
 app.use(eLayout);
 
 

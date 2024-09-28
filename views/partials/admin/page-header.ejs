@@ -7,7 +7,7 @@
 
     <!-- Logo sm starts -->
     <a href="#" class="d-lg-none d-md-block">
-      <img src="../admin/images/logo.svg" class="logo-sm" alt="Logo">
+      <img src="<%= internals.has3RouteSegments === true ? '../':'' %>../admin/images/logo.svg" class="logo-sm" alt="Logo">
     </a>
     <!-- Logo sm ends -->
 
@@ -39,7 +39,7 @@
           <a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
             <span class="user-name d-none d-md-block">Hi, <%- internals.username %></span>
             <span class="avatar">
-              <img src="../admin/images/profile/user-avatar.jpg" alt="Admin">
+              <img src="<%= internals.has3RouteSegments === true ? '../':'' %>../admin/images/profile/user-avatar.jpg" alt="Admin">
               <span class="status online"></span>
             </span>
           </a>

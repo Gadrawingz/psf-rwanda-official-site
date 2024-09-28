@@ -195,7 +195,6 @@ router.post('/register-admin', (req, res) => {
 })
 
 
-
 // 08. Retrieve all system users.
 router.get("/admins", (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {

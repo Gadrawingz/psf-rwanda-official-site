@@ -10,9 +10,9 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="/publica/update/<%= internals.pub_id %>" method="post" enctype="multipart/form-data">
+                    <form action="/publica/update/<%= internals.pub_id %>" method="post">
                         <div class="row">
-                            <div class="col-xxl-8 col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12">
+                            <div class="col-xl-6 col-md-6 col-6">
 
                                 <% if (message.length!=0) { %>
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -24,33 +24,21 @@
                                 <% } %>
                             
                                 <div class="row">
-                                    <div class="col-xxl-6 col-xl-12 col-sm-12 col-12">
+                                    <div class="col-xl-12 col-sm-12 col-12">
                                         <div class="mb-3">
                                             <label for="title" class="form-label">
                                                 <strong>Publication Title</strong>
                                             </label>
-                                            <input type="text" class="form-control" id="title" name="title" value="<%= internals.title %>" />
+                                            <input type="text" class="form-control" id="title" name="title" value="<%= internals.p_title %>" />
                                         </div>
                                     </div>
 
-                                    <div class="col-xxl-6 col-xl-12 col-sm-12 col-12">
-                                        <div class="mb-3">
-                                            <label for="file" class="form-label">
-                                                <strong>Document (File)</strong>
-                                            </label>
-                                            <div class="was-validated">
-                                                <input type="file" class="form-control" id="file" aria-label="Document" name="file" value="<%= internals.pub_file %>"/>
-                                                <div class="invalid-feedback">Please select pdf document</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxl-6 col-xl-12 col-sm-12 col-12">
+                                    <div class="col-xl-12 col-sm-12 col-12">
                                         <div class="mb-3">
                                             <div class="was-validated">
                                                 <div class="was-validated">
                                                     <label for="describe" class="form-label"><strong>Add description (Optional)</strong></label>
-                                                    <textarea class="form-control is-invalid" id="describe" name="description"><%= internals.description %></textarea>
+                                                    <textarea class="form-control is-invalid" id="describe" name="description"><%= internals.p_description %></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -58,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-12">
-                                <button class="btn btn-info" type="submit">Upload</button>
+                                <button class="btn btn-info" type="submit">Save</button>
                                 <button class="btn btn-danger" type="reset">Cancel</button>
                             </div>
                         </div>
