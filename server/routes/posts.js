@@ -72,7 +72,7 @@ router.post("/insert", upload4posts.single("post_image"), (req, res, next) => {
           "', '" +
           req.session.adminId +
           "', '" +
-          fun.slugify(post_title) +
+          "p-"+fun.slugify(post_title) +
           "', '" +
           post_category +
           "')";

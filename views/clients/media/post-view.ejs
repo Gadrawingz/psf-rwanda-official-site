@@ -1,5 +1,5 @@
 <!--page-banner-->
-<!--
+
 <section class="page-banner">
     <div class="container">
         <div class="page-breadcrumbs">
@@ -13,7 +13,7 @@
         </div>
     </div>
 </section>
--->
+
 <section class="news-details-section pt-4">
     <div class="container pt-0">
         <div class="row">
@@ -22,7 +22,7 @@
             <div class="col-lg-8">
                 <div class="news-details-box-image">
                     <div class="news-details-box-image-inner">
-                    <img src="uploads/posts/<%= internals.data[0].post_image %>" class="img-fluid" alt="img-193">
+                    <img src="../../uploads/posts/<%= internals.data[0].post_image %>" class="img-fluid" alt="img-193">
                         <a href="#" class="news-details-box-date"><%= internals.data[0].post_category %></a>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                                 <a href="#"><i class="fa-brands fa-twitter"></i></a>
                                 <a href="#"><i class="fa-brands fa-facebook"></i></a>
                                 <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
-                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
                             </div><!-- news-details-socials -->
                         </div><!-- news-details-list -->
                     </div>
@@ -63,68 +63,35 @@
             </div>
             <% } %>
 
+
             <!-- post sidebar -->
             <div class="col-lg-4">
                 <div class="sidebar">
                     <div class="sidebar-widget sidebar-widget-recent-post">
-                        <h4>Other Post Releases</h4>
+                        <% if(internals.asideData.length > 0) { %>
+                        <h4 title="Blog">Related Press Releases</h4>
+                        <% for (let g = 0; g < internals.asideData.length; g++) { %>
                         <div class="sidebar-recent-post">
                             <div class="sidebar-recent-post-img">
-                                <img src="assets/image/blog/blog-details-2.jpg" alt="img-197">
+                                <img src="../../clients/images/blog/blog-details-2.jpg" alt="<%= internals.asideData[g].post_title %>">
                             </div>
                             <div class="sidebar-recent-post-content">
                                 <div class="sidebar-meta">
                                     <div class="sidebar-meta-item">
                                         <div class="sidebar-meta-icon">
                                             <span class="author">
-                                                by<a href="news-details.html">Admin</a>
-                                            </span><!-- author -->
-                                        </div><!-- sidebar-meta-icon -->
-                                    </div><!-- sidebar-meta-item -->
+                                                <a href="#">(<%= internals.asideData[g].post_category %>)</a>
+                                            </span>
+                                        </div>
+                                    </div>
                                     <div class="sidebar-post-title">
-                                        <h5><a href="#">Learn how access to municipal council</a></h5>
-                                    </div><!-- sidebar-post-title -->
-                                </div><!-- sidebar-meta -->
-                            </div><!-- sidebar-recent-post-content -->
+                                        <h5><a href="/view/post/<%= internals.asideData[g].post_slug %>"><%= internals.asideData[g].post_title %></a></h5>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="sidebar-recent-post">
-                            <div class="sidebar-recent-post-img">
-                                <img src="assets/image/blog/blog-details-3.jpg" alt="img-198">
-                            </div><!-- sidebar-recent-post-img -->
-                            <div class="sidebar-recent-post-content">
-                                <div class="sidebar-meta">
-                                    <div class="sidebar-meta-item">
-                                        <div class="sidebar-meta-icon">
-                                            <span class="author">
-                                                by<a href="news-details.html">Admin</a>
-                                            </span><!-- author -->
-                                        </div><!-- sidebar-meta-icon -->
-                                    </div><!-- sidebar-meta-item -->
-                                    <div class="sidebar-post-title">
-                                        <h5><a href="#">Learn how access to municipal council</a></h5>
-                                    </div><!-- sidebar-post-title -->
-                                </div><!-- sidebar-meta -->
-                            </div><!-- sidebar-recent-post-content -->
-                        </div>
-                        <div class="sidebar-recent-post">
-                            <div class="sidebar-recent-post-img">
-                                <img src="assets/image/blog/blog-details-4.jpg" alt="img-199">
-                            </div><!-- sidebar-recent-post-img -->
-                            <div class="sidebar-recent-post-content">
-                                <div class="sidebar-meta">
-                                    <div class="sidebar-meta-item">
-                                        <div class="sidebar-meta-icon">
-                                            <span class="author">
-                                                by<a href="news-details.html">Admin</a>
-                                            </span><!-- author -->
-                                        </div><!-- sidebar-meta-icon -->
-                                    </div><!-- sidebar-meta-item -->
-                                    <div class="sidebar-post-title">
-                                        <h5><a href="#">Learn how access to municipal council</a></h5>
-                                    </div><!-- sidebar-post-title -->
-                                </div><!-- sidebar-meta -->
-                            </div><!-- sidebar-recent-post-content -->
-                        </div>
+                        <% }} else { %>
+                        <% }%>
                     </div>
                 </div>
             </div>
