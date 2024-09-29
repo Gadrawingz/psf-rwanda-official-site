@@ -136,7 +136,7 @@ router.get("/delete/(:id)", (req, res) => {
         res.redirect("/publica/all");
       }
     } else {
-      req.flash("error", `Record was not found!`);
+      req.flash("fmessage", `Record was not found!`);
       res.redirect("/publica/all");
     }
   });

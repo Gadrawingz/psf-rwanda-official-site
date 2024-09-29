@@ -5571,7 +5571,8 @@ border-radius: 100px;
 }
 .news-details-box-image {
 	position: relative;
-	padding: 0px 30px;
+	/*padding: 0px 60px;*/
+	padding: 0px 0px;
 }
 .news-details-box-image img{
 	width: 100%;

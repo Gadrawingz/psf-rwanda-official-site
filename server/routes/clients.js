@@ -7,6 +7,8 @@ const multer = require('multer')
 const path = require('path')
 const router = express.Router()
 const con = require("../config/database");
+const fun = require("../config/functions");
+
 
 
 // To be able to send flash...
@@ -143,7 +145,6 @@ router.get('/team-staff', (req, res) => {
 });
 
 
-
 // Routes for Media
 router.get('/press', (req, res) => {
     const internals = {
@@ -153,7 +154,6 @@ router.get('/press', (req, res) => {
     }
     res.render('clients/media/articles', { internals });
 });
-
 
 
 router.get('/gallery', (req, res) => {
@@ -168,7 +168,7 @@ router.get('/gallery', (req, res) => {
 
 // Media (Publication fetch)
 router.get('/publications', (req, res) => {
-
+    
     con.query("SELECT * FROM publication ORDER BY pub_date DESC", (error, rows) => {
         const internals = {
             title : "View all publications",

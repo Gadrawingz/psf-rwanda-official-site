@@ -1,0 +1,133 @@
+<!--page-banner-->
+<!--
+<section class="page-banner">
+    <div class="container">
+        <div class="page-breadcrumbs">
+            <ul class="list-unstyled">
+                <li><a href="/home">Home</a></li>
+                <li>Posts </li>
+            </ul>
+        </div>
+        <div class="page-banner-title">
+            <h3>PSF POST article</h3>
+        </div>
+    </div>
+</section>
+-->
+<section class="news-details-section pt-4">
+    <div class="container pt-0">
+        <div class="row">
+            <!-- real post -->
+            <% if(internals.data.length != 0) { %>
+            <div class="col-lg-8">
+                <div class="news-details-box-image">
+                    <div class="news-details-box-image-inner">
+                    <img src="uploads/posts/<%= internals.data[0].post_image %>" class="img-fluid" alt="img-193">
+                        <a href="#" class="news-details-box-date"><%= internals.data[0].post_category %></a>
+                    </div>
+                </div>
+                <div class="news-details-meta-box">
+                    <div class="news-details-meta-box-inner">
+                        <span class="author">
+                            Posted by<a href="#"><%= internals.data[0].author_fn %> <%= internals.data[0].author_ln %></a>
+                        </span>
+                        <span class="text-dark"><i class="fa-calendar"></i><%= internals.data[0].post_date.toLocaleDateString() %></span>
+                    </div>
+                </div>
+                <div class="news-details-content-box">
+                    <h2><%= internals.data[0].post_title %></h2>
+                    <p>
+                        <%= internals.data[0].post_text %>
+                    </p>
+                </div>
+                <div class="news-details-share-box">
+                    <div class="news-details-inner">
+                        <div class="news-details-list">
+                            <div class="news-details-list-title">
+                                <h4>Categorized in:</h4>
+                            </div>
+                            <div class="news-details-list-button">
+                                <a href="#" class="btn btn-primary"><%= internals.data[0].post_category %></a>
+                            </div>
+                        </div>
+                        <div class="news-details-list">
+                            <div class="news-details-socials">
+                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                                <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
+                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            </div><!-- news-details-socials -->
+                        </div><!-- news-details-list -->
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <!-- post sidebar -->
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <div class="sidebar-widget sidebar-widget-recent-post">
+                        <h4>Other Post Releases</h4>
+                        <div class="sidebar-recent-post">
+                            <div class="sidebar-recent-post-img">
+                                <img src="assets/image/blog/blog-details-2.jpg" alt="img-197">
+                            </div>
+                            <div class="sidebar-recent-post-content">
+                                <div class="sidebar-meta">
+                                    <div class="sidebar-meta-item">
+                                        <div class="sidebar-meta-icon">
+                                            <span class="author">
+                                                by<a href="news-details.html">Admin</a>
+                                            </span><!-- author -->
+                                        </div><!-- sidebar-meta-icon -->
+                                    </div><!-- sidebar-meta-item -->
+                                    <div class="sidebar-post-title">
+                                        <h5><a href="#">Learn how access to municipal council</a></h5>
+                                    </div><!-- sidebar-post-title -->
+                                </div><!-- sidebar-meta -->
+                            </div><!-- sidebar-recent-post-content -->
+                        </div>
+                        <div class="sidebar-recent-post">
+                            <div class="sidebar-recent-post-img">
+                                <img src="assets/image/blog/blog-details-3.jpg" alt="img-198">
+                            </div><!-- sidebar-recent-post-img -->
+                            <div class="sidebar-recent-post-content">
+                                <div class="sidebar-meta">
+                                    <div class="sidebar-meta-item">
+                                        <div class="sidebar-meta-icon">
+                                            <span class="author">
+                                                by<a href="news-details.html">Admin</a>
+                                            </span><!-- author -->
+                                        </div><!-- sidebar-meta-icon -->
+                                    </div><!-- sidebar-meta-item -->
+                                    <div class="sidebar-post-title">
+                                        <h5><a href="#">Learn how access to municipal council</a></h5>
+                                    </div><!-- sidebar-post-title -->
+                                </div><!-- sidebar-meta -->
+                            </div><!-- sidebar-recent-post-content -->
+                        </div>
+                        <div class="sidebar-recent-post">
+                            <div class="sidebar-recent-post-img">
+                                <img src="assets/image/blog/blog-details-4.jpg" alt="img-199">
+                            </div><!-- sidebar-recent-post-img -->
+                            <div class="sidebar-recent-post-content">
+                                <div class="sidebar-meta">
+                                    <div class="sidebar-meta-item">
+                                        <div class="sidebar-meta-icon">
+                                            <span class="author">
+                                                by<a href="news-details.html">Admin</a>
+                                            </span><!-- author -->
+                                        </div><!-- sidebar-meta-icon -->
+                                    </div><!-- sidebar-meta-item -->
+                                    <div class="sidebar-post-title">
+                                        <h5><a href="#">Learn how access to municipal council</a></h5>
+                                    </div><!-- sidebar-post-title -->
+                                </div><!-- sidebar-meta -->
+                            </div><!-- sidebar-recent-post-content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

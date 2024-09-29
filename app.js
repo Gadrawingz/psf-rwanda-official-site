@@ -32,14 +32,14 @@ app.use(session({
 }))
 
 app.use(express.static('public/'));
-
 app.use(eLayout);
-
 
 
 // Routes 
 // For clients
 app.use('/', require('./server/routes/clients'))
+app.use('/view/', require('./server/routes/clients-view'))
+
 
 // For admin Panel
 app.use('/panel', require('./server/routes/access'))
