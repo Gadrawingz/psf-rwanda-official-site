@@ -37,7 +37,7 @@
                 <div class="news-details-content-box">
                     <h2><%= internals.data[0].post_title %></h2>
                     <p>
-                        <%= internals.data[0].post_text %>
+                        <%= internals.stripTags(internals.data[0].post_text) %>
                     </p>
                 </div>
                 <div class="news-details-share-box">

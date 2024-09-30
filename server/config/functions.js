@@ -17,8 +17,7 @@ module.exports = {
     trancateStr: (title, len) => {
         if (title.length > len) {
             title = title.substring(0, len)+'...';
-        }
-        return title;
+        } return title;
     },
 
     removeAllHTMLs: (str) => {
@@ -36,4 +35,3 @@ module.exports = {
     },
     currentYear: new Date().getFullYear()
 }
-

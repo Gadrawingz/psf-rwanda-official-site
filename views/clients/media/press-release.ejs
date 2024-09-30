@@ -1,0 +1,79 @@
+<script>
+const onClick = evt => {
+  const link = document.querySelector('a');
+  const range = document.createRange();
+  range.selectNode(link);
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+
+  const successful = document.execCommand('copy');
+};
+
+document.querySelector('button').addEventListener('click', onClick);
+
+</script>
+<!--page-banner-->
+<section class="page-banner">
+    <div class="container">
+        <div class="page-breadcrumbs">
+            <ul class="list-unstyled">
+                <li><a href="/home">Home</a></li>
+                <li>Press </li>
+            </ul>
+        </div>
+        <div class="page-banner-title">
+            <h3>Press Releases</h3>
+        </div>
+    </div>			
+</section>
+
+<section class="blog-section blog-section-two">
+    <div class="container">
+        <!--If post found here -->
+        <% if(internals.data.length > 0) { %>
+        <div class="row row-gutter-y-155">
+            <% for (let g = 0; g < internals.data.length; g++) { %>
+            <div class="col-lg-6 col-xl-4">
+                <div class="blog-card">
+                    <div class="blog-card-image">
+                        <img src="clients/images/blog/blog-1.jpg" class="img-fluid" alt="img-184">
+                        <a href="/view/post/<%= internals.data[g].post_slug %>"></a>
+                    </div>
+                    <div class="blog-card-date">
+                        <a href="#" title="<%= internals.moment(internals.data[g].post_date).format('DD-MM-YYYY'); %>"><%= internals.moment(internals.data[g].post_date).startOf('day').fromNow(); %></a>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <span class="tagged">
+                                <a href="#"><%= internals.data[g].post_category %></a>
+                            </span>
+                        </div>
+                        <h4><a href="/view/post/<%= internals.data[g].post_slug %>"><%= internals.data[g].post_title %></a></h4>
+                        <p><%= internals.funs.trancateStr(internals.data[g].post_text, 100).replace(/<[^>]*>?/gm, '') %></p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <% } else { } %>
+
+        <!-- pagination -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="blog-pagination-outer">
+                    <div class="blog-pagination">
+                            <a class="prev page-numbers" href="#">
+                                <b><i class="fa-solid fa-chevron-left"></i></b>
+                            </a>
+                            <span class="page-numbers current"><b>01</b></span>
+                            <a class="page-numbers" href="#"><b>02</b></a>
+                            <a class="page-numbers" href="#"><b>03</b></a>
+                            <a class="page-numbers" href="#"><b>04</b></a>
+                            <a class="next page-numbers" href="#"><b><i class="fa-solid fa-chevron-right"></i></b></a>
+                    </div>
+                </div>
+            </div>	
+        </div>
+    </div>
+</section>

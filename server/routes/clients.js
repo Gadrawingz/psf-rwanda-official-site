@@ -8,11 +8,11 @@ const path = require('path')
 const router = express.Router()
 const con = require("../config/database");
 const fun = require("../config/functions");
-
-
+const moment = require('moment/moment');
 
 // To be able to send flash...
-const flash = require('express-flash')
+const flash = require('express-flash');
+
 router.use(flash())
 
 
@@ -147,12 +147,26 @@ router.get('/team-staff', (req, res) => {
 
 // Routes for Media
 router.get('/press', (req, res) => {
-    const internals = {
-        title: "Press Releases",
-        description: "",
-        hasFullFooter: true,
-    }
-    res.render('clients/media/articles', { internals });
+    let slug = req.params.slug;
+    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN admin ad ON ad.admin_id = po.post_author ORDER BY po.post_date DESC LIMIT 12", (error, rows) => {
+        let internals = {
+            title: "All recent press Releases",
+            description: "",
+            hasFullFooter: true,
+            has3RouteSegments: false,
+            data: rows,
+            funs: fun, // 2use fx in ejs
+            moment: moment
+        };
+
+        if (!error) {
+            // @gadira
+            res.render("clients/media/press-release", { internals });
+        } else {
+            req.flash("fmessage", "There is an error occured");
+            res.render("clients/media/press-release", { internals });
+        }
+    });
 });
 
 

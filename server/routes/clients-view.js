@@ -4,6 +4,7 @@ clients who interacts with website
 ***********************************/
 const express = require('express')
 const multer = require('multer')
+const stripTags = require('striptags')
 const router = express.Router()
 const con = require("../config/database");
 const fun = require("../config/functions");
@@ -21,7 +22,9 @@ router.get("/post/(:slug)", (req, res) => {
                 hasFullFooter: true,
                 has3RouteSegments: true,
                 data: rows,
-                asideData: rows2
+                asideData: rows2,
+                stripTags: stripTags,
+                funs: fun // 2use fx in ejs
             };
 
             if (!error) {
