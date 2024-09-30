@@ -31,14 +31,14 @@
                         <span class="author">
                             Posted by<a href="#"><%= internals.data[0].author_fn %> <%= internals.data[0].author_ln %></a>
                         </span>
-                        <span class="text-dark"><i class="fa-calendar"></i><%= internals.data[0].post_date.toLocaleDateString() %></span>
+                        <span class="published-date">On: <%= internals.data[0].post_date.toLocaleDateString() %></span>
                     </div>
-                </div>
+                </div><hr>
                 <div class="news-details-content-box">
                     <h2><%= internals.data[0].post_title %></h2>
-                    <p>
-                        <%= internals.stripTags(internals.data[0].post_text) %>
-                    </p>
+                    <div style="line-height: 30px!important; color: black;">
+                        <%- internals.data[0].post_text %>
+                    </div>
                 </div>
                 <div class="news-details-share-box">
                     <div class="news-details-inner">
@@ -52,12 +52,13 @@
                         </div>
                         <div class="news-details-list">
                             <div class="news-details-socials">
-                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                                <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
-                                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                            </div><!-- news-details-socials -->
-                        </div><!-- news-details-list -->
+                                <a target="_blank" href="https://twitter.com/intent/tweet?text=<%= internals.data[0].post_title %>&url=https://psf.org.rw/view/post/<%= internals.data[0].post_slug %>"><i class="fa-brands fa-twitter"></i></a>
+                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://psf.org.rw/view/post/<%= internals.data[0].post_slug %>"><i class="fa-brands fa-facebook"></i></a>
+                                <a target="_blank" href="https://pinterest.com/pin/create/button/?url=https://psf.org.rw/view/post/<%= internals.data[0].post_slug %>"><i class="fa-brands fa-pinterest-p"></i></a>
+                                <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=https://psf.org.rw/view/post/<%= internals.data[0].post_slug %>"><i class="fa-brands fa-linkedin"></i></a>
+                                <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=https://psf.org.rw/view/post/<%= internals.data[0].post_slug %>"><i class="fa-brands fa-mail"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

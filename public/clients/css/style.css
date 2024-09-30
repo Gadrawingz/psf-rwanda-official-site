@@ -5627,6 +5627,15 @@ border-radius: 100px;
 	color: var(--thm-primary);
 	margin-left: 3px;
 }
+
+.news-details-meta-box-inner .published-date{
+	color: var(--green-main);
+	font-weight: bolder;
+	float: right;
+	padding: 3px;
+	border-bottom: 1px solid var(--thm-dark-black);
+}
+
 .news-details-meta-box-inner .comment:before{
 		content: "\f086";
     font-family: "Font Awesome 6 Free";
