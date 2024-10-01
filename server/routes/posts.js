@@ -110,6 +110,7 @@ router.get(["/all"], (req, res) => {
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
       data: rows,
+      funs: fun,
     };
 
     if (!error) {

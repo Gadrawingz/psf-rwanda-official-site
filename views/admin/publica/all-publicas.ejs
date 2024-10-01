@@ -39,7 +39,12 @@
                                 <td class="text-center">
                                     <a href="../uploads/publica/<%= internals.data[g].pub_file %>" target="_blank">
                                         <img src="../admin/images/thumbnail/pdf-thumbnail-lg.jpg" style="height: 30px; width: auto;"/>
-                                    </a>                                    
+                                    </a>
+                                    <!--
+                                    <a type="button" data-bs-toggle="modal" href="../uploads/publica/<%= internals.data[g].pub_file %>" data-bs-target="#modalXl">
+                                        <img src="../admin/images/thumbnail/pdf-thumbnail-lg.jpg" style="height: 30px; width: auto;"/>
+                                    </a>
+                                    -->                                   
                                 </td>
                                 <td class="text-center"><%= internals.data[g].pub_date.toLocaleDateString() %></td>
                                 <td class="text-center">
@@ -64,3 +69,21 @@
     </div>
 </div>
 <!-- Row end -->
+<!-- Modal popup -->
+<div class="modal fade" id="modalXl" tabindex="-1" aria-labelledby="modalXlLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalXlLabel">View this document</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <iframe src="../uploads/publica/pdoc-1727519220232.pdf" style="width:100%; height:500px;" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
