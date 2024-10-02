@@ -99,6 +99,8 @@ router.post("/insert", upload4posts.single("post_image"), (req, res, next) => {
   }
 });
 
+
+// 03. View All Posts
 router.get(["/all"], (req, res) => {
   con.query("SELECT * FROM posts ORDER BY post_date DESC", (error, rows) => {
     const internals = {
@@ -168,7 +170,6 @@ router.get("/delete/(:id)", (req, res) => {
 });
 
 
-
 // 05. Edit published posts view:
 router.get("/edit/(:id)", (req, res, next) => {
   let id = req.params.id;
@@ -187,7 +188,7 @@ router.get("/edit/(:id)", (req, res, next) => {
 
     if (rows.length <= 0) {
       req.flash("error", `Post not found id ${id}`);
-      res.redirect("/all");
+      res.redirect("/posts/all");
     } else {
 
       res.render("admin/posts/edit-post", {
@@ -200,7 +201,7 @@ router.get("/edit/(:id)", (req, res, next) => {
 });
 
 
-// Update Posts, Through POST Method:
+// 06. Update Posts, Through POST Method:
 router.post("/update/:id", (req, res, next) => {
   let id = req.params.id;
   let post_title = req.body.post_title;
@@ -264,6 +265,62 @@ router.post("/update/:id", (req, res, next) => {
   }
 });
 
+
+// 07. Get page view to update image:
+router.get("/edit-image/(:id)", (req, res, next) => {
+  let id = req.params.id;
+  let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
+  con.query(sql, (err, rows, fields) => {
+    if (err) throw err;
+    const internals = {
+      title: "Update post image",
+      post_id: rows[0].post_id,
+      post_image: rows[0].post_image,
+      has3RouteSegments: true,
+    };
+
+    if (rows.length <= 0) {
+      req.flash("error", `Post not found id ${id}`);
+      res.redirect("/posts/all");
+    } else {
+
+      res.render("admin/posts/edit-post-img", {
+        layout: "./layouts/LAdmin",
+        internals,
+        message: req.flash("fmessage"),
+      });
+    }
+  });
+});
+
+
+
+// 08. Update Image HTML view:
+router.post("/update-image/(:id)", upload4posts.single("post_image"), (req, res, next) => {
+  let id = req.params.id;
+  let file = req.file;
+  let post_image = req.file.filename;
+
+  if (file) {
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/webp" || file.mimetype === "image/png") {
+      let sql = `UPDATE posts SET post_image ='${post_image}' WHERE post_id=${id}`;
+      con.query(sql, (err, result) => {
+        if (err) {
+          req.flash("fmessage", "Error occurred in database!");
+          res.redirect("/posts/add");
+        } else {
+          res.redirect("/posts/all");
+        }
+      });
+    } else {
+      req.flash("fmessage", "Only PNG, JPG and WEBP images are allowed!");
+      res.redirect(`/posts/edit/${id}`);
+    }
+  } else {
+    req.flash("fmessage", "Please upload a new picture!");
+    res.redirect(`/posts/edit/${id}`);
+  }
+});
 
 
 

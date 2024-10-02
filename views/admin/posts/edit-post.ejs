@@ -4,6 +4,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title"><%- internals.title %> </div>
+                <div><a class="btn btn-info" href="/posts/edit-image/<%= internals.post_id %>">Edit Post Image</a></div>
             </div>
             <div class="card-body">
                 <!-- Row start -->
@@ -14,6 +15,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <% } %>
+
                 <form action="/posts/update/<%= internals.post_id %>" method="post">
                     <div class="row">
                         <div class="col-xl-6 col-sm-6 col-12 mt-3">

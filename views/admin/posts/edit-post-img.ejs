@@ -1,0 +1,39 @@
+<!-- Row start -->
+<div class="row">
+    <div class="col-sm-12 col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><%- internals.title %> </div>
+            </div>
+            <div class="card-body">
+                <!-- Row start -->
+                <% if (message.length!=0) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle alert-icon"></i>
+                    <%- message %> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>
+                <form action="/posts/update-image/<%= internals.post_id %>" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        
+                        <div class="col-xl-12 col-sm-12 col-12 mt-3 mb-4">
+                            <div class="was-validated">
+                                <label for="post_image" class="form-label"><strong>Cover Image</strong></label>
+                                <input type="file" class="form-control" aria-label="file" name="post_image" required="" id="post_image">
+                                <div class="invalid-feedback">Please upload 710x414 image(png or jpg)</div>
+                            </div>
+                        </div>
+
+                        <div class="custom-btn-group flex-start">
+                            <button class="btn btn-info" type="submit">Save Changes</button>
+                            <button class="btn btn-danger" type="reset">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->
