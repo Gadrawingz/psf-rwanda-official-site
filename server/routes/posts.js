@@ -29,6 +29,7 @@ router.get("/add", (req, res) => {
       internals,
       message: req.flash("fmessage"),
     });
+
   } else {
     req.flash("flashError", "Login to register user!");
     res.redirect("/panel/login");
@@ -55,7 +56,7 @@ router.post("/insert", upload4posts.single("post_image"), (req, res, next) => {
   let post_category = req.body.post_category;
 
   if (file) {
-    if (post_title.length >= 5 || post_text.length >= 100) {
+    if (post_title.length >= 10 && post_text.length >= 100) {
       if (
         file.mimetype === "image/jpeg" ||
         file.mimetype === "image/webp" ||
@@ -165,6 +166,105 @@ router.get("/delete/(:id)", (req, res) => {
     }
   });
 });
+
+
+
+// 05. Edit published posts view:
+router.get("/edit/(:id)", (req, res, next) => {
+  let id = req.params.id;
+  let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
+  con.query(sql, (err, rows, fields) => {
+    if (err) throw err;
+    const internals = {
+      title: "Update existing post",
+      post_id: rows[0].post_id,
+      post_title: rows[0].post_title,
+      post_text: rows[0].post_text,
+      post_image: rows[0].post_image,
+      post_category: rows[0].post_category,
+      has3RouteSegments: true,
+    };
+
+    if (rows.length <= 0) {
+      req.flash("error", `Post not found id ${id}`);
+      res.redirect("/all");
+    } else {
+
+      res.render("admin/posts/edit-post", {
+        layout: "./layouts/LAdmin",
+        internals,
+        message: req.flash("fmessage"),
+      });
+    }
+  });
+});
+
+
+// Update Posts, Through POST Method:
+router.post("/update/:id", (req, res, next) => {
+  let id = req.params.id;
+  let post_title = req.body.post_title;
+  let post_text = req.body.post_text;
+  let post_category = req.body.post_category;
+  
+  if (post_title.length != 0 && post_text.length != 0 && post_category.length != 0) {
+    if (post_title.length >= 10 && post_text.length >= 100) {
+    // IF SUCCESSFUL
+    let upData = { post_title: post_title, post_text: post_text, post_category: post_category };
+    let sql = `UPDATE posts SET ? WHERE post_id=${id}`;
+    con.query(sql, upData, (err, result) => {
+      if (err) {
+        let sql3 = `SELECT * FROM posts WHERE post_id= ${id}`;
+        con.query(sql3, (err, rows, fields) => {
+            if (err) throw err;
+            let internals = {
+                title: "Update existing post",
+                post_id: rows[0].post_id,
+                post_title: rows[0].post_title,
+                post_text: rows[0].post_text,
+                post_category: rows[0].post_category,
+                has3RouteSegments: true,
+            };
+            
+            req.flash("fmessage", "Error occurred in database!");
+            res.render("admin/posts/edit-post", {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash("fmessage"),
+            });
+        });
+      } else {
+        res.redirect("/posts/all");
+      }
+    });
+    } else {
+      req.flash("fmessage", "Post title or text is too short!");
+      res.redirect(`/posts/edit/${id}`);
+    }
+  } else {
+    let sql3 = `SELECT * FROM posts WHERE post_id= ${id}`;
+    con.query(sql3, (err, rows, fields) => {
+        if (err) throw err;
+        let internals = {
+          title: "Update existing post",
+          post_id: rows[0].post_id,
+          post_title: rows[0].post_title,
+          post_text: rows[0].post_text,
+          post_category: rows[0].post_category,
+          has3RouteSegments: true,
+      };
+            
+        req.flash("fmessage", "Please fill all required fields!");
+        res.render("admin/publica/edit-post", {
+            layout: "./layouts/LAdmin",
+            internals,
+            message: req.flash("fmessage"),
+        });
+    });
+  }
+});
+
+
 
 
 // Export this

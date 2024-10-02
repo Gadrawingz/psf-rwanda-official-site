@@ -1,0 +1,61 @@
+<!-- Row start -->
+<div class="row">
+    <div class="col-sm-12 col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><%- internals.title %> </div>
+            </div>
+            <div class="card-body">
+                <!-- Row start -->
+                <% if (message.length!=0) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle alert-icon"></i>
+                    <%- message %> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>
+                <form action="/posts/update/<%= internals.post_id %>" method="post">
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6 col-12 mt-3">
+                            <div class="was-validated">
+                                <label for="post_category" class="form-label"><strong>Category of Press Release</strong></label>
+                                <select class="form-select" id="post_category" required="" name="post_category">
+                                    <option selected value="<%= internals.post_category %>"><%= internals.post_category %></option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Exhibition">Exhibition</option>
+                                    <option value="E-Commerce">E-Commerce</option>
+                                    <option value="I.B.I">I.B.I</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a category that matchs the post.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-sm-6 col-12 mt-3">
+                            <div class="was-validated">
+                                <label for="post_title" class="form-label"><strong>Title of Press Release</strong></label>
+                                <input type="text" class="form-control" id="post_title" name="post_title"
+                                    required value="<%= internals.post_title %>">
+                                <div class="invalid-feedback">Please add meaningful post title.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="was-validated mb-2">
+                                <label for="post_text" class="form-label"><strong>Post</strong></label>
+                                <textarea class="summernote" name="post_text" id="post_text" required><%- internals.post_text %></textarea>
+                                <div class="invalid-feedback">Please write the post in the textarea.</div>
+                            </div>
+                        </div>
+
+                        <div class="custom-btn-group flex-end">
+                            <button class="btn btn-dark" type="reset">Clear</button>
+                            <button class="btn btn-info" type="submit">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Row end -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->

@@ -157,7 +157,7 @@ router.get("/edit/(:id)", (req, res, next) => {
     };
     if (rows.length <= 0) {
       req.flash("error", `Publication not found id ${id}`);
-      res.redirect("/users");
+      res.redirect("/all");
     } else {
       res.render("admin/publica/edit-pub", {
         layout: "./layouts/LAdmin",
