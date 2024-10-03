@@ -95,6 +95,13 @@ router.post("/insert", (req, res) => {
                 } else {
                     req.flash("fmessage", "The title or description is too short!");
                     res.redirect("/gallery/add");
+                    // Remove the recent file uploaded.
+                    // let fs = require("fs");
+                    // let path2file = "public/uploads/gallery/" + rows[0].pub_file;
+                    // if (fs.existsSync(path2file)) {
+                    //    fs.unlinkSync(path2file);
+                    //} 
+                    // Then handle dashboard dynamic data             
                 }
             } else {
                 req.flash("fmessage", "No file uploaded");
