@@ -50,8 +50,8 @@ const postsImageStorage = multer.diskStorage({
 let upload4posts = multer({ storage: postsImageStorage });
 router.post("/insert", upload4posts.single("post_image"), (req, res, next) => {
   let file = req.file;
-  let post_title = req.body.post_title;
-  let post_text = req.body.post_text;
+  let post_title = fun.addSlashes(req.body.post_title);
+  let post_text = fun.addSlashes(req.body.post_text);
   let post_image = req.file.filename;
   let post_category = req.body.post_category;
 
@@ -67,7 +67,7 @@ router.post("/insert", upload4posts.single("post_image"), (req, res, next) => {
           "INSERT INTO posts(post_title, post_text, post_image, post_author, post_slug, post_category) VALUES ('" +
           post_title +
           "', '" +
-          fun.addSlashes(post_text) +
+          post_text +
           "', '" +
           post_image +
           "', '" +

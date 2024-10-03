@@ -1,0 +1,65 @@
+<!-- Row start -->
+<div class="row">
+    <div class="col-sm-12 col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><%- internals.title %> </div>
+            </div>
+            <div class="card-body">
+                <!-- Row start -->
+                <% if (message.length!=0) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle alert-icon"></i>
+                    <%- message %> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>
+                <form action="/gallery/insert" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6 col-12 mt-3">
+                            <div class="was-validated">
+                                <label for="file_name" class="form-label"><strong>Select a gallery file</strong></label>
+                                <input type="file" class="form-control" aria-label="file" name="file_name" id="file_name">
+                                <div class="invalid-feedback">Please upload 555x525 image(png or jpg)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-xl-6 col-sm-6 col-12 mt-3">
+                            <div class="was-validated">
+                                <label for="content_type" class="form-label"><strong>Category</strong></label>
+                                <select class="form-select" id="content_type" name="content_type">
+                                    <option value="Picture">Picture</option>
+                                </select>
+                                <div class="invalid-feedback">Please select the correct category.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-sm-6 col-12 mt-3 mb-3">
+                            <div class="was-validated">
+                                <label for="img_title" class="form-label"><strong>The title</strong></label>
+                                <input type="text" class="form-control" id="img_title" name="img_title"
+                                    />
+                                <div class="invalid-feedback">Please add meaningful title.</div>
+                            </div>
+                        </div> 
+
+                        <div class="col-xl-6 col-sm-6 col-6 mt-3 mb-3">
+                            <div class="was-validated">
+                                <label for="img_description" class="form-label"><strong>Description</strong></label>
+                                <input type="text" class="form-control" id="img_description" name="img_description" >
+                                <div class="invalid-feedback">Please describe the file.</div>
+                            </div>
+                        </div>
+
+                        <div class="custom-btn-group flex-start">
+                            <button class="btn btn-success" type="submit">Save Changes</button>
+                            <button class="btn btn-dark" type="reset">Clear</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Row end -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->
