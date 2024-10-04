@@ -14,30 +14,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <% } %>
-                <form action="/gallery/insert" method="post" enctype="multipart/form-data">
+                <form action="/gallery/update/<%= internals.gallery_id %>" method="post">
                     <div class="row">
-                        <div class="col-xl-6 col-sm-6 col-12 mt-3">
-                            <div class="was-validated">
-                                <label for="file_name" class="form-label"><strong>Select a gallery file</strong></label>
-                                <input type="file" class="form-control" aria-label="file" name="file_name" id="file_name">
-                                <div class="invalid-feedback">Please upload 555x525 image(png or jpg)</div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-xl-6 col-sm-6 col-12 mt-3">
-                            <div class="was-validated">
-                                <label for="content_type" class="form-label"><strong>Category</strong></label>
-                                <select class="form-select" id="content_type" name="content_type">
-                                    <option value="Picture">Picture</option>
-                                </select>
-                                <div class="invalid-feedback">Please select the correct category.</div>
-                            </div>
-                        </div>
-
                         <div class="col-xl-6 col-sm-6 col-12 mt-3 mb-3">
                             <div class="was-validated">
                                 <label for="img_title" class="form-label"><strong>The title</strong></label>
-                                <input type="text" class="form-control" id="img_title" name="img_title"/>
+                                <input type="text" class="form-control" id="img_title" name="img_title" value="<%- internals.img_title %>"/>
                                 <div class="invalid-feedback">Please add meaningful title.</div>
                             </div>
                         </div> 
@@ -45,7 +27,7 @@
                         <div class="col-xl-6 col-sm-6 col-12 mt-3 mb-3">
                             <div class="was-validated">
                                 <label for="img_description" class="form-label"><strong>Description</strong></label>
-                                <input type="text" class="form-control" id="img_description" name="img_description"/>
+                                <input type="text" class="form-control" id="img_description" name="img_description" value="<%- internals.img_description %>"/>
                                 <div class="invalid-feedback">Please describe the file in short.</div>
                             </div>
                         </div>

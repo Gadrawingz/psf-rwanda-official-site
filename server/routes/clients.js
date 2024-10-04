@@ -147,7 +147,6 @@ router.get('/team-staff', (req, res) => {
 
 // Routes for Media
 router.get('/press', (req, res) => {
-    let slug = req.params.slug;
     con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN admin ad ON ad.admin_id = po.post_author ORDER BY po.post_date DESC LIMIT 12", (error, rows) => {
         let internals = {
             title: "All recent press Releases",
@@ -171,12 +170,25 @@ router.get('/press', (req, res) => {
 
 
 router.get('/gallery', (req, res) => {
-    const internals = {
-        title: "PSF Gallery",
-        description: "",
-        hasFullFooter: true,
-    }
-    res.render('clients/media/gallery', { internals });
+    con.query("SELECT * FROM gallery ORDER BY created_at DESC LIMIT 18", (error, rows) => {
+        let internals = {
+            title: "All recent images from PSF gallery",
+            description: "",
+            hasFullFooter: true,
+            has3RouteSegments: false,
+            data: rows,
+            funs: fun, // 2use fx in ejs
+            moment: moment
+        };
+
+        if (!error) {
+            // @gadira
+            res.render("clients/media/gallery", { internals });
+        } else {
+            req.flash("fmessage", "There is an error occured");
+            res.render("clients/media/gallery", { internals });
+        }
+    });
 });
 
 

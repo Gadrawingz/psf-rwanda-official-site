@@ -63,7 +63,7 @@ function gadCheckFileType(file, cb) {
 // C. Add file type validation
 const upload4gallery = multer({
     storage: imageStorage,
-    limits: { fileSize: (1024 * 1024) * 5 }, // size is limited to 5MB
+    limits: { fileSize: (1024 * 1024) * 3 }, // size is limited to 3 MB
     fileFilter: (req, file, cb) => {
         gadCheckFileType(file, cb);
     }
@@ -181,6 +181,96 @@ router.get("/delete/(:id)", (req, res) => {
         res.redirect("/gallery/all");
     }
 });
+});
+
+
+// 05. Edit gallery item:
+router.get("/edit/(:id)", (req, res, next) => {
+    let id = req.params.id;
+    let sql = `SELECT * FROM gallery WHERE gallery_id= ${id}`;
+    con.query(sql, (err, rows, fields) => {
+        if (err) throw err;
+        const internals = {
+            title: "Update this record",
+            gallery_id: rows[0].gallery_id,
+            img_title: rows[0].img_title,
+            img_description: rows[0].img_description,
+            has3RouteSegments: true,
+        };
+        
+        if (rows.length <= 0) {
+            req.flash("error", `No ID:${id} is found`);
+            res.redirect("/gallery/all");
+        } else {
+            res.render("admin/gallery/edit-gallery", {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash("fmessage"),
+            });
+        }
+    });
+});
+
+
+// 06. Update Gallery item, Through POST Method:
+router.post("/update/:id", (req, res, next) => {
+    let id = req.params.id;
+    let img_title = req.body.img_title;
+    let img_description = req.body.img_description;
+    
+    if (img_title.length != 0 && img_description.length != 0) {
+      if (img_title.length >= 5 && img_description.length >= 10) {
+      // IF OK...
+      let upData = { img_title: img_title, img_description: img_description};
+      let sql = `UPDATE gallery SET ? WHERE gallery_id=${id}`;
+      con.query(sql, upData, (err, result) => {
+        if (err) {
+          let sql3 = `SELECT * FROM gallery WHERE gallery_id= ${id}`;
+          con.query(sql3, (err, rows, fields) => {
+              if (err) throw err;
+              let internals = {
+                  title: "Update existing gallery row",
+                  gallery_id: rows[0].gallery_id,
+                  img_title: rows[0].img_title,
+                  img_description: rows[0].img_description,
+                  has3RouteSegments: true,
+              };
+              
+              req.flash("fmessage", "Error occurred in database!");
+              res.render("admin/gallery/edit-gallery", {
+                  layout: "./layouts/LAdmin",
+                  internals,
+                  message: req.flash("fmessage"),
+              });
+          });
+        } else {
+          res.redirect("/gallery/all");
+        }
+      });
+      } else {
+        req.flash("fmessage", "The title or text is too short!");
+        res.redirect(`/gallery/edit/${id}`);
+      }
+    } else {
+      let sql3 = `SELECT * FROM gallery WHERE gallery_id= ${id}`;
+      con.query(sql3, (err, rows, fields) => {
+          if (err) throw err;
+          let internals = {
+            title: "Update existing gallery row",
+            gallery_id: rows[0].gallery_id,
+            img_title: rows[0].img_title,
+            img_description: rows[0].img_description,
+            has3RouteSegments: true,
+        };
+              
+          req.flash("fmessage", "Please fill all required fields!");
+          res.render("admin/gallery/edit-gallery", {
+              layout: "./layouts/LAdmin",
+              internals,
+              message: req.flash("fmessage"),
+          });
+      });
+    }
 });
 
 

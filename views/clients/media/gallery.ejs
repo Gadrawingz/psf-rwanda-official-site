@@ -14,71 +14,28 @@
 </section>
 
 <!-- Gallery section -->
-<div class="portfolio-section">
+<div class="portfolio-section pt-6">
     <div class="section-title-box text-center">
-        <div class="section-tagline">recent photos from gallery</div>
+        <div class="section-tagline"><%- internals.title %> </div>
     </div><hr>
 
     <div class="container">
+        <% if(internals.data.length > 0) { %>
         <div class="row row-gutter-30">
+            <%# Loop of gallery records %>
+            <% for(let g=0; g < internals.data.length; g++ ) { %>
             <div class="col-lg-4 col-md-4">
-                <div class="portfolio-card">
-                    <img src="clients/images/gallery/psf-gallery-img1.jpg" class="img-fluid" alt="img-97" />
+                <div class="portfolio-card" title="<%= internals.moment(internals.data[g].created_at).format('DD-MM-YYYY'); %>">
+                    <img src="../uploads/gallery/<%= internals.data[g].file_name %>" class="img-fluid" alt="img-97" />
                     <div class="portfolio-card-meta">
-                        <div class="portfolio-card-text"><a href="#">Category 01</a></div>
-                        <div class="portfolio-card-title"><a href="#">Image 01</a></div>
+                        <div class="portfolio-card-text"><a href="#"><%= internals.data[g].img_title %></a></div>
+                        <div class="portfolio-card-title"><a href="#"><%= internals.data[g].img_description %></a></div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-lg-4 col-md-4">
-                <div class="portfolio-card">
-                    <img src="clients/images/gallery/psf-01.jpg" class="img-fluid" alt="img-98" />
-                    <div class="portfolio-card-meta">
-                        <div class="portfolio-card-text"><a href="#">Category 02</a></div>
-                        <div class="portfolio-card-title"><a href="#">Image 02</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-4">
-                <div class="portfolio-card">
-                    <img src="clients/images/portfolio/portfolio-7.jpg" class="img-fluid" alt="img-99" />
-                    <div class="portfolio-card-meta">
-                        <div class="portfolio-card-text"><a href="#">Category 03</a></div>
-                        <div class="portfolio-card-title"><a href="#">Image 03</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-4">
-                <div class="portfolio-card">
-                    <img src="clients/images/portfolio/portfolio-1.jpg" class="img-fluid" alt="img-103" />
-                    <div class="portfolio-card-meta">
-                        <div class="portfolio-card-text"><a href="#">Category 04</a></div>
-                        <div class="portfolio-card-title"><a href="#">Image 04</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <div class="portfolio-card">
-                    <img src="clients/images/portfolio/portfolio-2.jpg" class="img-fluid" alt="img-104" />
-                    <div class="portfolio-card-meta">
-                        <div class="portfolio-card-text"><a href="#">Category 05</a></div>
-                        <div class="portfolio-card-title"><a href="#">Image 05</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <div class="portfolio-card">
-                    <img src="clients/images/portfolio/portfolio-4.jpg" class="img-fluid" alt="img-105" />
-                    <div class="portfolio-card-meta">
-                        <div class="portfolio-card-text"><a href="#">Category 06</a></div>
-                        <div class="portfolio-card-title"><a href="#">Image 06</a></div>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
+        <% } else { } %>
 
         <div class="row">
             <div class="col-lg-12">

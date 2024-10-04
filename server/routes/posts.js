@@ -181,7 +181,6 @@ router.get("/edit/(:id)", (req, res, next) => {
       post_id: rows[0].post_id,
       post_title: rows[0].post_title,
       post_text: rows[0].post_text,
-      post_image: rows[0].post_image,
       post_category: rows[0].post_category,
       has3RouteSegments: true,
     };
