@@ -96,12 +96,11 @@ router.post("/insert", (req, res) => {
                     req.flash("fmessage", "The title or description is too short!");
                     res.redirect("/gallery/add");
                     // Remove the recent file uploaded.
-                    // let fs = require("fs");
-                    // let path2file = "public/uploads/gallery/" + rows[0].pub_file;
-                    // if (fs.existsSync(path2file)) {
-                    //    fs.unlinkSync(path2file);
-                    //} 
-                    // Then handle dashboard dynamic data             
+                    let fs = require("fs");
+                    let path2file = "public/uploads/gallery/" + file_name;
+                    if (fs.existsSync(path2file)) {
+                        fs.unlinkSync(path2file);
+                    }           
                 }
             } else {
                 req.flash("fmessage", "No file uploaded");
@@ -113,6 +112,41 @@ router.post("/insert", (req, res) => {
         }
     })
 });
+
+
+// 03. View all images
+router.get(["/all"], (req, res) => {
+    con.query("SELECT * FROM gallery ORDER BY created_at DESC", (error, rows) => {
+        const internals = {
+            title: "Gallery view",
+            breadcrumbL1: "Gallery",
+            breadcrumbL2: "All",
+            role: req.session.role,
+            adminId: req.session.adminId,
+            username: req.session.username,
+            telephone: req.session.telephone,
+            fullName: `${req.session.firstname} ${req.session.lastname}`,
+            data: rows,
+            funs: fun,
+        };
+        
+        if (!error) {
+            // @gadira
+            res.render("admin/gallery/view-gallery", {
+                layout: "./layouts/LAdmin",internals,
+                message: "",
+            });
+        } else {
+            req.flash("fmessage", "There is an error occured");
+            res.render("admin/gallery/view-gallery", {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash("fmessage"),
+            });
+        }
+    });
+});
+
 
 
 
