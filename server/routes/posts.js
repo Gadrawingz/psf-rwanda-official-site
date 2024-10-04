@@ -145,7 +145,7 @@ router.get("/delete/(:id)", (req, res) => {
       // Remove the file 1st
       let fs = require("fs");
       let path2file = "public/uploads/posts/" + rows[0].post_image;
-      let newPath44 = "public/uploads/deleted/" + rows[0].post_image;
+      let newPath44 = "public/uploads/trash/posts/" + rows[0].post_image;
       if (fs.existsSync(path2file)) {
         fs.renameSync(path2file, newPath44);
         let sql4 = `DELETE FROM posts WHERE post_id = ${id}`;

@@ -1,35 +1,80 @@
 <!-- Row start -->
 <div class="row">
-    <% if(message.length !=0) { %>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <i class="bi bi-x-circle alert-icon"></i>
-            <%- message %> 
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title"><%- internals.title %></h5>
         </div>
-    <% } if(internals.data.length > 0) { %>
-    <% for (let g = 0; g < internals.data.length; g++) { %>
-    <div class="col-xl-4 col-sm-6 col-12">
-        <div class="product-card">
-            <img class="product-card-img-top" src="../../../uploads/posts/<%= internals.data[g].post_image %>" alt="<%= internals.data[g].post_title %>" style="max-height: 225px;">
-            <div class="product-card-body">
-                <h5 class="product-title"><%= internals.funs.trancateStr(internals.data[g].post_title, 30) %></h5>
+        <div class="card-body">
 
-                <div class="product-description" id="post_texto">
-                    <%= internals.funs.trancateStr(internals.data[g].post_text, 100).replace(/<[^>]*>?/gm, '') %>
+            <div class="row">
+                <% if(message.length !=0) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle alert-icon"></i>
+                    <%- message %> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-
-                <div class="d-flex justify-content-between my-4">
-                    <a href="/posts/edit/<%= internals.data[g].post_id %>" class="btn btn-success">Update</a>
-                    <a href="/posts/delete/<%= internals.data[g].post_id %>" class="btn btn-danger" onclick="return confirm('Do you really want to delete this row?')">Delete</a>
+                <% } if(internals.data.length > 0) { %>
+                <% for (let g = 0; g < internals.data.length; g++) { %>
+                <div class="col-xl-4 col-sm-6 col-12">
+                    <div class="product-card">
+                        <img class="product-card-img-top" src="../../../uploads/posts/<%= internals.data[g].post_image %>" alt="<%= internals.data[g].post_title %>" style="max-height: 225px;">
+                        <div class="product-card-body">
+                            <h5 class="product-title"><%= internals.funs.trancateStr(internals.data[g].post_title, 30) %></h5>
+            
+                            <div class="product-description" id="post_texto">
+                                <%= internals.funs.trancateStr(internals.data[g].post_text, 100).replace(/<[^>]*>?/gm, '') %>
+                            </div>
+            
+                            <div class="d-flex justify-content-between my-4">
+                                <a href="/posts/edit/<%= internals.data[g].post_id %>" class="btn btn-success">Update</a>
+                                <a href="/posts/delete/<%= internals.data[g].post_id %>" class="btn btn-danger" onclick="return confirm('Do you really want to delete this row?')">Delete</a>
+                            </div>
+            
+                        </div>
+                    </div>
                 </div>
-
+                <% }} else { %> 
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <i class="bi bi-bullseye alert-icon"></i>No data found!
+                </div>
+                <% }%> 
             </div>
+            
+            <!-- Pagination start -->
+            <div class="d-flex justify-content-start">
+                <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">
+                        <i class="bi bi-arrow-left"></i>
+                    </span>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">4</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">
+                        <i class="bi bi-arrow-right"></i>
+                    </span>
+                    </a>
+                </li>
+                </ul>
+            </div>
+            <!-- Pagination end -->
         </div>
+      </div>
     </div>
-    <% }} else { %> 
-    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        <i class="bi bi-bullseye alert-icon"></i>No data found!
-    </div>
-    <% }%> 
 </div>
-<!-- Row end -->
+<!-- Row ends -->

@@ -118,7 +118,7 @@ router.post("/insert", (req, res) => {
 router.get(["/all"], (req, res) => {
     con.query("SELECT * FROM gallery ORDER BY created_at DESC", (error, rows) => {
         const internals = {
-            title: "Gallery view",
+            title: "View all gallery items",
             breadcrumbL1: "Gallery",
             breadcrumbL2: "All",
             role: req.session.role,
@@ -147,6 +147,41 @@ router.get(["/all"], (req, res) => {
     });
 });
 
+
+// 04. Remove gallery item
+router.get("/delete/(:id)", (req, res) => {
+    let id = req.params.id;
+    let sql3 = `SELECT * FROM gallery WHERE gallery_id = ${id}`;
+    
+    con.query(sql3, (err, rows, fields) => {
+        if (err) throw err;
+        if (rows.length > 0) {
+        // Remove the file 1st
+        let fs = require("fs");
+        let path2file = "public/uploads/gallery/" + rows[0].file_name;
+        let newPath44 = "public/uploads/trash/gallery/" + rows[0].file_name;
+        if (fs.existsSync(path2file)) {
+            fs.renameSync(path2file, newPath44);
+            let sql4 = `DELETE FROM gallery WHERE gallery_id = ${id}`;
+            con.query(sql4, (error, result) => {
+                if (!error) {
+                    req.flash("fmessage", `The record with ID: ${id} removed!`);
+                    res.redirect("/gallery/all");
+                } else {
+                    req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
+                    res.redirect("/gallery/all");
+                }
+            });
+        } else {
+          req.flash("fmessage", "No file to remove found!");
+          res.redirect("/gallery/all");
+        }
+    } else {
+        req.flash("fmessage", `Record was not found!`);
+        res.redirect("/gallery/all");
+    }
+});
+});
 
 
 
