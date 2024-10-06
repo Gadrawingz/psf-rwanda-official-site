@@ -25,6 +25,7 @@ router.get("/forgot-password", (req, res) => {
   });
 });
 
+
 // 02. Forgot admin post
 router.post("/forgot-password-post", (req, res) => {
   let email = req.body.email;
@@ -165,15 +166,47 @@ router.post('/register-admin', (req, res) => {
   let em = req.body.email;
   let ro = req.body.role;
   let pw = req.body.password;
-  let errors = false;
 
   let adminData = {
     firstname: fn, lastname: ln, username: un, gender: gd, 
     telephone: te, email: em, role: ro, password: pw,
   }
 
-  // .... More codes to be written
-
+  if (fn.length != 0 && ln.length != 0 && un.length != 0 && gd.length != 0 && te.length != 0 && em.length != 0 && ro.length != 0 && pw.length != 0) {
+    if(te.length >= 10) {
+      if(pw.length > 4) {
+        con.query('INSERT INTO `admin` SET ?', adminData, (err, result) => {
+          if(err) {
+            req.flash("fmessage", "Internal Error!");
+            res.redirect("/panel/register");
+          } else {
+            res.redirect('/panel/admins');
+          }
+        })
+      } else {
+        req.flash("fmessage", "Phone number cannot go below 10 numbers!");
+        res.render("admin/account/register", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: req.flash("fmessage"),
+        })
+      }
+    } else {
+      req.flash("fmessage", "Phone number cannot go below 10 numbers!");
+      res.render("admin/account/register", {
+      layout: "./layouts/LAdmin",
+      internals,
+      message: req.flash("fmessage"),
+    });
+    }
+  } else {
+    req.flash("fmessage", "Please fill all required fields!");
+    res.render("admin/account/register", {
+      layout: "./layouts/LAdmin",
+      internals,
+      message: req.flash("fmessage"),
+    });
+  }
 })
 
 
