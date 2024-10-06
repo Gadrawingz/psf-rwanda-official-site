@@ -1,7 +1,6 @@
 // Main imports and definition
 require('dotenv').config();
 
-const connect = require('connect')
 const express = require('express');
 const session = require('express-session');
 const eLayout = require('express-ejs-layouts');
@@ -40,14 +39,12 @@ app.use(eLayout);
 app.use('/', require('./server/routes/clients'))
 app.use('/view/', require('./server/routes/clients-view'))
 
-
 // For admin Panel
 app.use('/panel', require('./server/routes/access'))
 app.use('/panel', require('./server/routes/admin'))
 app.use('/posts', require('./server/routes/posts'));
 app.use('/publica', require('./server/routes/publica'));
 app.use('/gallery', require('./server/routes/gallery'));
-
 
 // Running
 app.listen(PORT, ()=> {

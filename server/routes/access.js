@@ -1,14 +1,13 @@
 /**********************************
 This page shows all the routes specific to accounts, 
-registration, application, login and authentication
+registration, app dashboard, login and authentication
 This page will use: layout: 'layouts/LAccess'
 ***********************************/
 
 const express = require("express");
-let session = require("express-session");
 const router = express.Router();
-const sql = require("mysql");
-const DBConn = require("../config/database");
+const con = require("../config/database");
+
 
 // To be able to send flash
 const flash = require("express-flash");
@@ -33,6 +32,7 @@ router.post("/forgot-password-post", (req, res) => {
   res.redirect("/panel/forgot-password");
 });
 
+
 // 03. Admin Login view
 router.get("/login", (req, res) => {
   const internals = {
@@ -55,7 +55,7 @@ router.post("/login-auth", (req, res) => {
   if (email && role && password) {
     const sql = "SELECT * FROM admin WHERE email=? AND role=? AND password=?";
 
-    DBConn.query(sql, [email, role, password], (err, results, fields) => {
+    con.query(sql, [email, role, password], (err, results, fields) => {
       req.session.loggedin = true;
       req.session.role = results[0].role;
       req.session.adminId = results[0].admin_id;
@@ -81,6 +81,7 @@ router.post("/login-auth", (req, res) => {
   }
 });
 
+
 // 05. Admin dashboard view
 router.get(["", "/dashboard"], (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
@@ -96,7 +97,16 @@ router.get(["", "/dashboard"], (req, res) => {
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
     };
-    res.render("admin/dashboard", { layout: "./layouts/LAdmin", internals });
+
+    let publiCount = 30;
+    let postsCount = 20;
+    let galleryNum = 18;
+    let appManagers = 4;
+
+    res.render("admin/dashboard", { 
+      layout: "./layouts/LAdmin", 
+      internals, publiCount, postsCount, galleryNum, appManagers
+    });
   } else {
     // Please get back here and login
     req.flash("flashError", "Please login to access dashboard!");
@@ -105,6 +115,7 @@ router.get(["", "/dashboard"], (req, res) => {
   res.end();
 });
 
+
 // 06. Logout...
 router.get("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -112,6 +123,7 @@ router.get("/logout", (req, res) => {
     res.redirect("/panel/login");
   });
 });
+
 
 /*************************************************
  * This section below will be using Admin Template
@@ -129,12 +141,12 @@ router.get("/register", (req, res) => {
       username: req.session.username,
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
-      message: req.flash("flashMessage")
     };
 
     res.render("admin/account/register", {
       layout: "./layouts/LAdmin",
       internals,
+      message: req.flash("fmessage"),
     });
   } else {
     req.flash("flashError", "Login to register user!");
@@ -160,37 +172,7 @@ router.post('/register-admin', (req, res) => {
     telephone: te, email: em, role: ro, password: pw,
   }
 
-  const internals = {
-    title: "Register new admin",
-    breadcrumbL1: "Admin",
-    breadcrumbL2: "Registration",
-    role: req.session.role,
-    adminId: req.session.adminId,
-    username: req.session.username,
-    telephone: req.session.telephone,
-    fullName: `${req.session.firstname} ${req.session.lastname}`,
-    message: req.flash("flashMessage")
-  };
-
-  if(fn.length === 0 || ln.length === 0 || un.length === 0 || gd.length === 0 || te.length === 0 || em.length === 0 || ro.length === 0 || pw.length === 0) {
-    req.flash("flashMessage", "Please fill all fields");
-    res.render("admin/account/register", {
-      layout: "./layouts/LAdmin",
-      internals,
-      firstname: fn, lastname: ln, username: un, 
-      gender: gd, telephone: te, email: em, role: ro,
-      password: pw
-    });
-  }
-
-  DBConn.query('INSERT INTO `admin` SET ?', adminData, (err, result) => {
-    if(err) {
-      console.log("Error")
-    } else {
-      console.log("Successful insertion!")
-      res.redirect('/panel/admins');
-    }
-  })
+  // .... More codes to be written
 
 })
 
@@ -198,7 +180,7 @@ router.post('/register-admin', (req, res) => {
 // 08. Retrieve all system users.
 router.get("/admins", (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
-    DBConn.query("SELECT * FROM admin", (error, rows) => {
+    con.query("SELECT * FROM admin", (error, rows) => {
       let internals = {
         title: "All PSF admins",
         adminId: req.session.adminId,
@@ -208,16 +190,17 @@ router.get("/admins", (req, res) => {
       };
       
       if (!error) {
-        req.flash("flashError", "Data fetched");
         res.render("admin/account/admins", {
           layout: "./layouts/LAdmin",
           internals,
+          message: "",
         });
       } else {
         req.flash("flashError", "No data available");
         res.render("admin/account/admins", {
           layout: "./layouts/LAdmin",
           internals,
+          message: req.flash("fmessage"),
         });
       }
     });
@@ -232,7 +215,7 @@ router.get("/admins", (req, res) => {
 router.get('/del-admin/(:theId)', (req, res) => {
     let id = req.params.theId;
     let sql = `DELETE FROM admin WHERE admin_id = ${id}`
-    DBConn.query(sql, (error, result) => {
+    con.query(sql, (error, result) => {
         if(error) {
             req.flash('flashError', "Cannot remove this record");
             res.redirect('/panel/admins');

@@ -15,14 +15,14 @@
                     <form action="/panel/register-admin" method="post">
                         <div class="row">
                             <div class="col-xxl-8 col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12">
-                                <% if(internals.message) { %>
+                                <% if(message.length!=0) { %>
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <i class="bi bi-x-circle alert-icon"></i>
-                                    OKAY    
-                                    <%- internals.messages %>
+                                    <%- message %>
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                                 <% } %>
+                                
                                 <div class="row">
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
