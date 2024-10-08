@@ -316,6 +316,39 @@ router.get('/del-admin/(:theId)', (req, res) => {
 })
 
 
+// 05. Edit published posts view:
+router.get("/profile/(:id)", (req, res, next) => {
+  let id = req.params.id;
+  let sql = `SELECT * FROM admin WHERE admin_id= ${id}`;
+  con.query(sql, (err, rows, fields) => {
+    if (err) throw err;
+    const internals = {
+      title: "Update existing admin",
+      admin_id: rows[0].admin_id,
+      firstname: rows[0].firstname,
+      lastname: rows[0].lastname,
+      username: rows[0].username,
+      gender: rows[0].gender,
+      telephone: rows[0].telephone,
+      
+      has3RouteSegments: true,
+    };
+
+    if (rows.length <= 0) {
+      req.flash("error", `Admin not found id ${id}`);
+      res.redirect("/posts/all");
+    } else {
+
+      res.render("admin/panel/profile", {
+        layout: "./layouts/LAdmin",
+        internals,
+        message: req.flash("fmessage"),
+      });
+    }
+  });
+});
+
+
 
 // Export this router
 module.exports = router;

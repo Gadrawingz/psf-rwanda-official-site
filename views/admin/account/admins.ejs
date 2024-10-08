@@ -49,13 +49,13 @@
                                 <td class="text-green">
                                     <strong><%= internals.data[g].role %></strong></td>
                                 <td class="text-center">
-                                    <a href="/panel/edit-user/<%= internals.data[g].admin_id %>" class="btn btn-primary" onclick="return alert('Not ready yet')">
-                                        <i class="bi bi-pencil-square"></i> Edit
+                                    <a href="/panel/profile/<%= internals.data[g].admin_id %>" class="btn btn-primary" onclick="return alert('Not ready yet')" title="Edit record">
+                                        <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </td>
                                 <td class="text-center">
-                                    <a href="/panel/del-admin/<%= internals.data[g].admin_id %>" class="btn btn-danger" onclick="return confirm('Do you really want to delete this record?')">
-                                        <i class="bi bi-trash"></i> Remove
+                                    <a href="/panel/del-admin/<%= internals.data[g].admin_id %>" class="btn btn-danger" onclick="return confirm('Do you really want to delete this record?')" title="Remove this record">
+                                        <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
                             </tr>
