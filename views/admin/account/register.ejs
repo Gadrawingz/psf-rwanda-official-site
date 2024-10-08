@@ -3,7 +3,6 @@
     <!-- Row start -->
     <div class="row">
         <div class="col-xl-12">
-            <!-- Card start -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
@@ -27,25 +26,26 @@
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">First Name</label>
-                                            <input type="text" class="form-control" id="firstname" name="firstname">
+                                            <input type="text" class="form-control" id="firstname" name="firstname" value="<%= fn %>">
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
                                             <label for="lastname" class="form-label">Last Name</label>
-                                            <input type="text" class="form-control" id="lastname" name="lastname">
+                                            <input type="text" class="form-control" id="lastname" name="lastname" value="<%= ln %>">
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
                                             <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username">
+                                            <input type="text" class="form-control" id="username" name="username" value="<%= un %>">
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
                                             <label for="gender" class="form-label">Gender</label>
                                             <select class="form-control" id="gender" name="gender">
+                                                <option value="<%= gd %>"><%= gd %></option>
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
                                                 <option value="Other">Other</option>
@@ -57,7 +57,7 @@
                                         <div class="mb-3">
                                             <label for="phone" class="form-label">Phone Number</label>
                                             <input type="number" class="form-control" id="phone" name="telephone"
-                                                placeholder="078XXXXXXX">
+                                                placeholder="078XXXXXXX" value="<%= te %>">
                                         </div>
                                     </div>
 
@@ -65,14 +65,14 @@
                                         <div class="mb-3">
                                             <label for="emailID" class="form-label">Email Address</label>
                                             <input type="email" class="form-control" id="emailID" name="email"
-                                                placeholder="someone@psf.org.rw">
+                                                placeholder="someone@psf.org.rw" value="<%= em %>">
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
                                             <label for="role" class="form-label">Relevant Role</label>
                                             <select class="form-control" id="role" name="role">
-                                                <option value="">Select role</option>
+                                                <option value="<%= ro %>"><%= ro %></option>
                                                 <option name="Author">Author</option>
                                                 <option name="IT">IT</option>
                                             </select>
@@ -81,8 +81,7 @@
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
                                             <label for="enterPassword" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="enterPassword"
-                                                name="password">
+                                            <input type="password" class="form-control" id="enterPassword" name="password" value="<%= pw %>">
                                         </div>
                                     </div>
                                 </div>

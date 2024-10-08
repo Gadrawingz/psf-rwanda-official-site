@@ -5,12 +5,14 @@ This page will use: layout: 'layouts/LAccess'
 ***********************************/
 
 const express = require("express");
+const bcrypt = require('bcrypt');
 const router = express.Router();
 const con = require("../config/database");
 
 
 // To be able to send flash
 const flash = require("express-flash");
+const session = require("express-session");
 router.use(flash());
 
 // 01. Forgot admin password view
@@ -50,32 +52,38 @@ router.get("/login", (req, res) => {
 // 04. Admin Login Authentication
 router.post("/login-auth", (req, res) => {
   let email = req.body.email;
-  let role = req.body.role;
+  let role = req.body.admin_role;
   let password = req.body.password;
 
-  if (email && role && password) {
-    const sql = "SELECT * FROM admin WHERE email=? AND role=? AND password=?";
-
-    con.query(sql, [email, role, password], (err, results, fields) => {
-      req.session.loggedin = true;
-      req.session.role = results[0].role;
-      req.session.adminId = results[0].admin_id;
-      req.session.username = results[0].username;
-      req.session.firstname = results[0].firstname;
-      req.session.lastname = results[0].lastname;
-
-      if (err) throw err;
-      if (results.length > 0) {
-        // Authenticate:
-        res.redirect("/panel/dashboard");
-      } else {
-        req.flash("flashError", "Wrong email, role or password!");
+  if (email.length!=0 && role.length!=0 && password.length!=0) {
+    con.query('SELECT * FROM admin WHERE email = ? AND role = ?', [email, role], (error, results, fields) => {
+      if (error) {
+        req.flash("flashError", "Internal Error (in the system)!");
         res.redirect("/panel/login");
       }
-      res.end();
+
+      if(results.length > 0) {
+        let match = bcrypt.compareSync(password, results[0].password);
+        if(match==true) {
+          // Initialize session
+          req.session.loggedin = true;
+          req.session.role = results[0].role;
+          req.session.admin_id = results[0].admin_id;
+          req.session.username = results[0].username;
+          req.session.firstname = results[0].firstname;
+          req.session.lastname = results[0].lastname;
+          // Authenticate...
+          res.redirect("/panel/dashboard");
+        } else {
+          req.flash("flashError", "Wrong password!");
+          res.redirect("/panel/login");
+        }
+      } else {
+        req.flash("flashError", "Email & role do not match!");
+        res.redirect("/panel/login");
+      }
     });
   } else {
-    // res.locals.success = req.flash('success');
     req.flash("flashError", "Please fill all required fields!");
     res.redirect("/panel/login");
     res.end();
@@ -92,7 +100,7 @@ router.get(["", "/dashboard"], (req, res) => {
       breadcrumbL1: "Dashboard",
       breadcrumbL2: "Home",
       // Logged-in user details
-      role: req.session.role,
+      admin_role: req.session.admin_role,
       adminId: req.session.adminId,
       username: req.session.username,
       telephone: req.session.telephone,
@@ -115,7 +123,7 @@ router.get(["", "/dashboard"], (req, res) => {
   }
   res.end();
 });
-
+ 
 
 // 06. Logout...
 router.get("/logout", (req, res) => {
@@ -143,11 +151,13 @@ router.get("/register", (req, res) => {
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
     };
-
+    // On insert form 1, no data on value to be there!
+    let fn, ln, un, gd, te, em, ro, pw = ''; 
     res.render("admin/account/register", {
       layout: "./layouts/LAdmin",
       internals,
       message: req.flash("fmessage"),
+      fn, ln, un, gd, te, em, ro, pw
     });
   } else {
     req.flash("flashError", "Login to register user!");
@@ -158,6 +168,19 @@ router.get("/register", (req, res) => {
 
 // 07.B. POST register admin
 router.post('/register-admin', (req, res) => {
+
+  let internals = {
+    title: "Register new admin",
+    breadcrumbL1: "Admin",
+    breadcrumbL2: "Registration",
+    role: req.session.role,
+    adminId: req.session.adminId,
+    username: req.session.username,
+    telephone: req.session.telephone,
+    fullName: `${req.session.firstname} ${req.session.lastname}`,
+    message: req.flash("flashMessage")
+  };
+
   let fn = req.body.firstname;
   let ln = req.body.lastname;
   let un = req.body.username;
@@ -167,28 +190,59 @@ router.post('/register-admin', (req, res) => {
   let ro = req.body.role;
   let pw = req.body.password;
 
-  let adminData = {
-    firstname: fn, lastname: ln, username: un, gender: gd, 
-    telephone: te, email: em, role: ro, password: pw,
-  }
-
-  if (fn.length != 0 && ln.length != 0 && un.length != 0 && gd.length != 0 && te.length != 0 && em.length != 0 && ro.length != 0 && pw.length != 0) {
+  if (fn.length != 0 && ln.length != 0 && un.length != 0 && gd.length != 0 && te.length != 0 && 
+    em.length != 0 && ro.length != 0 && pw.length != 0) {
     if(te.length >= 10) {
-      if(pw.length > 4) {
-        con.query('INSERT INTO `admin` SET ?', adminData, (err, result) => {
-          if(err) {
-            req.flash("fmessage", "Internal Error!");
-            res.redirect("/panel/register");
-          } else {
-            res.redirect('/panel/admins');
+      // Regular Expression for strong password validation
+      let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+      if(regex.test(pw)==true) {
+        let sqlTelValid = "SELECT COUNT(*) AS valid_count FROM admin WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"'";
+        con.query(sqlTelValid, (err, results) => {
+          if (err) {
+            req.flash("fmessage", "Internal Error with DB!");
+            res.render("admin/account/register", {
+              layout: "./layouts/LAdmin",
+              internals,
+              message: req.flash("fmessage"),
+              fn, ln, un, gd, te, em, ro, pw
+            })
           }
-        })
+
+          // If no tel|email already exist add sh**
+          if(results[0].valid_count == 0) {
+
+            // Hashing Password
+            const saltRounds = 10;
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const hashedPass = bcrypt.hashSync(pw, salt)
+
+            let adminData = {
+              firstname: fn, lastname: ln, username: un, gender: gd, 
+              telephone: te, email: em, role: ro, password: hashedPass,
+            }
+
+            con.query('INSERT INTO `admin` SET ?', adminData, (err, result) => {
+              if(!err) {
+                res.redirect('/panel/admins');
+              }
+            })
+          } else {
+            req.flash("fmessage", "Your Username, Email or Phone No. has been used!");
+            res.render("admin/account/register", {
+              layout: "./layouts/LAdmin",
+              internals,
+              message: req.flash("fmessage"),
+              fn, ln, un, gd, te, em, ro, pw
+            })
+          }
+        });
       } else {
-        req.flash("fmessage", "Phone number cannot go below 10 numbers!");
+        req.flash("fmessage", "Password should contain number, letters & over 8 characters");
         res.render("admin/account/register", {
           layout: "./layouts/LAdmin",
           internals,
           message: req.flash("fmessage"),
+          fn, ln, un, gd, te, em, ro, pw
         })
       }
     } else {
@@ -197,6 +251,7 @@ router.post('/register-admin', (req, res) => {
       layout: "./layouts/LAdmin",
       internals,
       message: req.flash("fmessage"),
+      fn, ln, un, gd, te, em, ro, pw
     });
     }
   } else {
@@ -205,6 +260,7 @@ router.post('/register-admin', (req, res) => {
       layout: "./layouts/LAdmin",
       internals,
       message: req.flash("fmessage"),
+      fn, ln, un, gd, te, em, ro, pw
     });
   }
 })
@@ -247,7 +303,7 @@ router.get("/admins", (req, res) => {
 // 09. Remove admin record
 router.get('/del-admin/(:theId)', (req, res) => {
     let id = req.params.theId;
-    let sql = `DELETE FROM admin WHERE admin_id = ${id}`
+    let sql = `DELETE FROM admin WHERE admin_id = ${id}`;
     con.query(sql, (error, result) => {
         if(error) {
             req.flash('flashError', "Cannot remove this record");
@@ -258,7 +314,6 @@ router.get('/del-admin/(:theId)', (req, res) => {
         } 
     })
 })
-
 
 
 
