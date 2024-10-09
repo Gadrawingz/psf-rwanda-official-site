@@ -63,15 +63,20 @@ router.post("/login-auth", (req, res) => {
       if(results.length > 0) {
         let match = bcrypt.compareSync(password, results[0].password);
         if(match==true) {
-          // Initialize session
-          req.session.loggedin = true;
-          req.session.role = results[0].role;
-          req.session.admin_id = results[0].admin_id;
-          req.session.username = results[0].username;
-          req.session.firstname = results[0].firstname;
-          req.session.lastname = results[0].lastname;
-          // Authenticate...
-          res.redirect("/panel/dashboard");
+          if(results[0].status=='Active') {
+            // If everything is okay, initialize session
+            req.session.loggedin = true;
+            req.session.role = results[0].role;
+            req.session.admin_id = results[0].admin_id;
+            req.session.username = results[0].username;
+            req.session.firstname = results[0].firstname;
+            req.session.lastname = results[0].lastname;
+            // Authenticate...
+            res.redirect("/panel/dashboard");
+          } else {
+            req.flash("flashError", "Oops! Your account is not activated!");
+            res.redirect("/panel/login");
+          }
         } else {
           req.flash("flashError", "Wrong password!");
           res.redirect("/panel/login");
