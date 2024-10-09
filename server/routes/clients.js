@@ -220,14 +220,50 @@ router.get('/services', (req, res) => {
     res.render('clients/services/index', { internals });
 });
 
+
 router.get('/contact', (req, res) => {
     const internals = {
         title: "Contact Us ",
         description: "",
         hasFullFooter: true,
     }
-    res.render('clients/about/contact', { internals });
+    let names, email, phone, subject, cmessage = '';
+    res.render('clients/about/contact', { 
+        internals,
+        names, email, phone, subject, cmessage,
+        message: req.flash("fmessage"),
+    });
 });
+
+
+// Post data to DB:
+router.post('/contact-to-db', (req, res) => {
+    let names = req.body.names;
+    let email = req.body.email;
+    let phone = req.body.phone;
+    let subject = req.body.subject;
+    let cmessage = fun.addSlashes(req.body.cmessage);
+
+    if (names.length != 0 && email.length != 0 && phone.length != 0 && subject.length != 0 && cmessage.length != 0 ) {
+        if(cmessage.length > 20) {
+            let inData = {names: names, email: email, phone: phone, subject: subject, message: cmessage}
+            con.query("INSERT INTO messages SET ?", inData, (err, results, fields) => {
+                if(!err) {
+                    req.flash("fmessage", "Your message has been sent!");
+                    res.redirect('/contact');
+                }
+            })
+        } else {
+            req.flash("fmessage", "Your message is too short!");
+            res.redirect("/contact");
+        }
+    } else {
+        req.flash("fmessage", "Fill All required fields!");
+        res.redirect("/contact");
+    }
+})
+
+
 
 router.get('/support', (req, res) => {
     const internals = {

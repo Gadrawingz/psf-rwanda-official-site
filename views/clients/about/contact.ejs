@@ -69,25 +69,32 @@
             </div>
 
             <div class="col-lg-6">
-                <form  action="clients/inc/sendemail.php" class="contact-form  contact-form-validated" method="post" >
+                <% if (message.length!=0) { %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="bi bi-x-circle alert-icon"></i>
+                    <%- message %> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>
+                <form action="/contact-to-db" class="contact-form" method="post">
                     <div class="row row-gutter-10">
                         <div class="col-12 col-lg-6">
-                            <input type="text" id="name"  class="input-text" placeholder="Your name" name="name" aria-required="true">
+                            <input type="text" id="names" class="input-text" placeholder="Your names" name="names" value="<%= names %>">
                         </div>
                         <div class="col-12 col-lg-6">
-                            <input type="email" id="email" class="input-text" placeholder="Email address" name="email" aria-required="true">
+                            <input type="email" id="email" class="input-text" placeholder="Email address" name="email" value="<%= email %>">
                         </div>
                         <div class="col-12 col-lg-6">
-                            <input type="text" id="phone" class="input-text" placeholder="Phone number" name="phone" aria-required="true">
+                            <input type="number" id="phone" class="input-text" placeholder="Phone number" name="phone" value="<%= phone %>">
                         </div>
                         <div class="col-12 col-lg-6">
-                            <input type="text" id="subject" class="input-text" placeholder="Subject" name="subject" aria-required="true">
+                            <input type="text" id="subject" class="input-text" placeholder="Subject" name="subject" value="<%= subject %>">
                         </div>
                         <div class="col-12 col-lg-12">
-                            <textarea name="message" placeholder="Write a message" class="input-text" aria-required="true"></textarea>
+                            <textarea name="cmessage" placeholder="Write a message" class="input-text"><%= cmessage %></textarea>
                         </div>
                         <div class="col-12 col-lg-12">
-                            <button class="btn btn-primary">Send a Message</button>
+                            <button type="submit" class="btn btn-primary">Send a Message</button>
                         </div>
                     </div>
                 </form>

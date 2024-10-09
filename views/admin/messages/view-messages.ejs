@@ -1,0 +1,78 @@
+<!-- Row start -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><h3><%- internals.title %></h3></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <% if (message.length!=0) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-x-circle alert-icon"></i>
+                        <%- message %> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <% } if (internals.data.length != 0) { %>
+                    <table class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th>N<sup>o</sup></th>
+                                <th>Names</th>
+                                <th>Email/Phone</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th class="text-center">Date Published</th>
+                                <th colspan="2" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% for(let g = 0; g < internals.data.length; g++) { %> 
+                            <tr>
+                                <td><i class="bi bi-check2-circle"></i><%= (g+1) %></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center">
+
+                                </td>
+                                <td class="text-center"><%= internals.data[g].message_date.toLocaleDateString() %></td>
+                                <td class="text-center">
+
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    <% } else { %>
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <i class="bi bi-bullseye alert-icon"></i>No data found!
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Row end -->
+<!-- Modal popup -->
+<div class="modal fade" id="modalXl" tabindex="-1" aria-labelledby="modalXlLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalXlLabel">View this document</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <iframe src="../uploads/publica/pdoc-1727519220232.pdf" style="width:100%; height:500px;" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
