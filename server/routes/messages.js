@@ -13,9 +13,9 @@ const e = require('connect-flash');
 // 02. Retrieve messages
 // 03. View all images
 router.get('/inbox', (req, res) => {
-    con.query("SELECT * FROM messages ORDER BY message_date DESC", (error, rows) => {
+    con.query("SELECT * FROM messages ORDER BY message_date DESC LIMIT 40", (error, rows) => {
         const internals = {
-            title: `All messages: Inbox()`,
+            title: `Latest 40 messages: inbox(${rows.length})`,
             breadcrumbL1: "Messages",
             breadcrumbL2: "All",
             role: req.session.role,

@@ -18,12 +18,12 @@
                         <thead>
                             <tr>
                                 <th>N<sup>o</sup></th>
-                                <th>Names</th>
-                                <th>Email/Phone</th>
+                                <th>Names/Phone</th>
+                                <th>Email Address</th>
                                 <th>Subject</th>
+                                <th>Status</th>
                                 <th>Message</th>
                                 <th class="text-center">Date Published</th>
-                                <th colspan="2" class="text-center">Action</th>
                             </tr>
                         </thead>
 
@@ -31,17 +31,23 @@
                             <% for(let g = 0; g < internals.data.length; g++) { %> 
                             <tr>
                                 <td><i class="bi bi-check2-circle"></i><%= (g+1) %></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="text-center">
-
+                                <td>
+                                    <%= internals.data[g].names %><br>
+                                    <b>(<%= internals.data[g].phone %>)</b>
                                 </td>
+                                <td>
+                                    <%= internals.funs.trancateStr(internals.data[g].email, 18) %>
+                                </td>
+                                <td><%= internals.data[g].subject %></td>
+                                <td>
+                                    <% if(internals.data[g].status=='Unread') { %>
+                                    <span class="badge shade-red min-50">Unread</span>
+                                    <% } else { %>
+                                    <span class="badge shade-green min-50">Read</span>
+                                    <% } %> 
+                                </td>
+                                <td><%= internals.funs.trancateStr(internals.data[g].message, 60) %></td>
                                 <td class="text-center"><%= internals.data[g].message_date.toLocaleDateString() %></td>
-                                <td class="text-center">
-
-                                </td>
                             </tr>
                             <% } %>
                         </tbody>
