@@ -28,6 +28,7 @@
                                 <th>Full Name</th>
                                 <th>Username</th>
                                 <th>Gender</th>
+                                <th>Status</th>
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Role</th>
@@ -44,19 +45,32 @@
                                 <td><%= internals.data[g].firstname %> <%= internals.data[g].lastname %></td>
                                 <td><%= internals.data[g].username %></td>
                                 <td><%= internals.data[g].gender %></td>
+                                <td>
+                                <% if(internals.data[g].status=='Active') { %>
+                                    <span class="text-green td-status"><i class="bi bi-check-circle"></i> Active</span>
+                                <% } else { %>
+                                    <span class="text-red td-status"><i class="bi bi-x-circle"></i> Inactive</span>
+                                <% } %>
+                                </td>
                                 <td><%= internals.data[g].telephone %></td>
                                 <td><strong><%= internals.data[g].email %></strong></td>
                                 <td class="text-green">
                                     <strong><%= internals.data[g].role %></strong></td>
                                 <td class="text-center">
-                                    <a href="/panel/profile/<%= internals.data[g].admin_id %>" class="btn btn-primary" onclick="return alert('Not ready yet')" title="Edit record">
+                                    <a href="/panel/edit/<%= internals.data[g].admin_id %>" class="btn btn-primary" title="Edit record">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </td>
                                 <td class="text-center">
-                                    <a href="/panel/del-admin/<%= internals.data[g].admin_id %>" class="btn btn-danger" onclick="return confirm('Do you really want to delete this record?')" title="Remove this record">
-                                        <i class="bi bi-trash"></i>
+                                    <% if(internals.data[g].status=='Inactive') { %> 
+                                    <a href="/panel/activate/<%= internals.data[g].admin_id %>" class="btn btn-success" onclick="return confirm('Do you want to activate this admin?')" title="Activate">
+                                        <i class="bi bi-power"></i>
                                     </a>
+                                    <% } else { %>
+                                    <a href="/panel/deactivate/<%= internals.data[g].admin_id %>" class="btn btn-danger" onclick="return confirm('Do you want to de-activate this admin?')" title="De-activate">
+                                        <i class="bi bi-power"></i>
+                                    </a>
+                                    <% } %>
                                 </td>
                             </tr>
                             <% } %>

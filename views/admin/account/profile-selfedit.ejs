@@ -34,6 +34,13 @@
                                             <input type="text" class="form-control" id="lastname" name="lastname" value="<%= internals.lastname %>">
                                         </div>
                                     </div>
+                                    
+                                    <div class="col-xxl-6 col-sm-6 col-12">
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username" value="<%= internals.username %>" readonly>
+                                        </div>
+                                    </div>
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
                                             <label for="gender" class="form-label">Gender</label>
@@ -55,23 +62,26 @@
 
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username" value="<%= internals.username %>">
+                                            <label for="emailID" class="form-label text-red">Email Address(Unchangeable)</label>
+                                            <input type="email" class="form-control" id="emailID" name="email" value="<%= internals.email %>" readonly>
                                         </div>
                                     </div>
 
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
-                                            <label for="email" class="form-label text-red">Email Address (Uneditable)</label>
-                                            <input type="text" class="form-control" id="email" name="email" value="<%= internals.email %>" readonly>
+                                            <label for="role" class="form-label">Relevant Role</label>
+                                            <select class="form-control" id="role" name="role">
+                                                <option value="<%= internals.role %>"><%= internals.role %></option>
+                                                <option value="Author">Author</option>
+                                                <option value="IT">IT</option>
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-xxl-12 col-sm-12 col-12">
-                                        <hr>
+                                    <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
-                                            <button class="btn btn-info" type="submit">Update Info</button>&nbsp;
-                                            <a href="/panel/change-password" class="btn btn-secondary">Change Password</a>
+                                            <label for="enterPassword" class="form-label">*</label><br>
+                                            <button class="btn btn-info" type="submit">Update Info</button>
                                         </div>
                                     </div>
                                 </div>

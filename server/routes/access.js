@@ -30,11 +30,9 @@ router.get("/forgot-password", (req, res) => {
 
 // 02. Forgot admin post
 router.post("/forgot-password-post", (req, res) => {
-  let email = req.body.email;
   req.flash("flashError", "Please contact in IT Department");
   res.redirect("/panel/forgot-password");
 });
-
 
 // 03. Admin Login view
 router.get("/login", (req, res) => {
@@ -101,7 +99,7 @@ router.get(["", "/dashboard"], (req, res) => {
       breadcrumbL2: "Home",
       // Logged-in user details
       admin_role: req.session.admin_role,
-      adminId: req.session.adminId,
+      admin_id: req.session.admin_id,
       username: req.session.username,
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
@@ -146,7 +144,7 @@ router.get("/register", (req, res) => {
       breadcrumbL1: "Admin",
       breadcrumbL2: "Registration",
       role: req.session.role,
-      adminId: req.session.adminId,
+      admin_id: req.session.admin_id,
       username: req.session.username,
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
@@ -174,7 +172,7 @@ router.post('/register-admin', (req, res) => {
     breadcrumbL1: "Admin",
     breadcrumbL2: "Registration",
     role: req.session.role,
-    adminId: req.session.adminId,
+    admin_id: req.session.admin_id,
     username: req.session.username,
     telephone: req.session.telephone,
     fullName: `${req.session.firstname} ${req.session.lastname}`,
@@ -272,7 +270,7 @@ router.get("/admins", (req, res) => {
     con.query("SELECT * FROM admin", (error, rows) => {
       let internals = {
         title: "All PSF admins",
-        adminId: req.session.adminId,
+        admin_id: req.session.admin_id,
         username: req.session.username,
         telephone: req.session.telephone,
         data: rows, // selected ones
@@ -300,46 +298,62 @@ router.get("/admins", (req, res) => {
 });
 
 
-// 09. Remove admin record
-router.get('/del-admin/(:theId)', (req, res) => {
+// 09. Change admin status to 'Inactive'
+router.get('/deactivate/(:theId)', (req, res) => {
     let id = req.params.theId;
-    let sql = `DELETE FROM admin WHERE admin_id = ${id}`;
-    con.query(sql, (error, result) => {
+    let sql = "UPDATE admin SET status = ? WHERE admin_id = ?";
+    con.query(sql, ['Inactive', id], (error, result, fields) => {
         if(error) {
-            req.flash('flashError', "Cannot remove this record");
+            req.flash('flashError', "Cannot change the status");
             res.redirect('/panel/admins');
         } else {
-            req.flash('success', "Admin record has been removed!");
+            req.flash('success', "Admin status chenged to Inactive!");
             res.redirect('/panel/admins');
         } 
     })
 })
 
+// 10. Change admin status to 'Active'
+router.get('/activate/(:theId)', (req, res) => {
+  let id = req.params.theId;
+  let sql = "UPDATE admin SET status = ? WHERE admin_id = ?";
+  con.query(sql, ['Active', id], (error, result, fields) => {
+      if(error) {
+          req.flash('flashError', "Cannot change the status");
+          res.redirect('/panel/admins');
+      } else {
+          req.flash('success', "Admin status chenged to Inactive!");
+          res.redirect('/panel/admins');
+      } 
+  })
+})
 
-// 05. Edit published posts view:
-router.get("/profile/(:id)", (req, res, next) => {
+
+
+// 11. Edit published posts view:
+router.get("/edit/(:id)", (req, res, next) => {
   let id = req.params.id;
   let sql = `SELECT * FROM admin WHERE admin_id= ${id}`;
   con.query(sql, (err, rows, fields) => {
     if (err) throw err;
     const internals = {
-      title: "Update existing admin",
+      title: `Update ${rows[0].firstname}'s info`,
       admin_id: rows[0].admin_id,
       firstname: rows[0].firstname,
       lastname: rows[0].lastname,
       username: rows[0].username,
       gender: rows[0].gender,
       telephone: rows[0].telephone,
-      
+      email: rows[0].email,
+      role: rows[0].role,
       has3RouteSegments: true,
     };
 
     if (rows.length <= 0) {
       req.flash("error", `Admin not found id ${id}`);
-      res.redirect("/posts/all");
+      res.redirect("/panel/admins");
     } else {
-
-      res.render("admin/panel/profile", {
+      res.render("admin/account/edit-profile", {
         layout: "./layouts/LAdmin",
         internals,
         message: req.flash("fmessage"),
@@ -348,6 +362,231 @@ router.get("/profile/(:id)", (req, res, next) => {
   });
 });
 
+
+// 12. Update admin profile 
+router.post('/update-admin/(:id)', (req, res) => {
+  let id = req.params.id;
+  let internals = {
+    title: "Update this admin",
+    breadcrumbL1: "Admin",
+    breadcrumbL2: "Registration",
+    role: req.session.role,
+    admin_id: req.session.admin_id,
+    username: req.session.username,
+    telephone: req.session.telephone,
+    fullName: `${req.session.firstname} ${req.session.lastname}`,
+    message: req.flash("flashMessage")
+  };
+
+  let fn = req.body.firstname;
+  let ln = req.body.lastname;
+  let un = req.body.username;
+  let gd = req.body.gender;
+  let te = req.body.telephone;
+  let em = req.body.email;
+  let ro = req.body.role;
+
+  if (fn.length != 0 && ln.length != 0 && un.length != 0 && gd.length != 0 && te.length != 0 && 
+    em.length != 0 && ro.length != 0) {
+    if(te.length >= 10) {
+        let sqlTelValid = "SELECT COUNT(*) AS valid_count FROM admin WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"' ";
+        con.query(sqlTelValid, (err, results) => {
+          if (err) {
+            req.flash("fmessage", "Internal Error with DB!");
+            res.redirect(`/panel/edit/${id}`);
+          }
+
+          // If no tel|email already exist add sh**
+          if(results[0].valid_count == 0 || results[0].valid_count > 0) {
+            con.query('UPDATE admin SET firstname = ?, lastname = ?, username = ?, gender = ?, telephone = ?, email = ?, role = ? WHERE admin_id = ?', [fn, ln, un, gd, te, em, ro, id], (err, result) => {
+              if(!err) {
+                res.redirect('/panel/admins');
+              }
+            })
+          } else {
+            req.flash("fmessage", "Your Username, Email or Phone No. has been used!");
+            res.redirect(`/panel/edit/${id}`);
+          }
+        });
+    } else {
+      req.flash("fmessage", "Phone number cannot go below 10 numbers!");
+      res.redirect(`/panel/edit/${id}`);
+    }
+  } else {
+    req.flash("fmessage", "Please fill all required fields!");
+    res.redirect(`/panel/edit/${id}`);
+  }
+});
+
+
+// 13. Admin dashboard view
+router.get('/profile', (req, res) => {
+  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+    let id = req.session.admin_id;
+    let sql5 = `SELECT * FROM admin WHERE admin_id= ${id}`;
+    con.query(sql5, (err, rows, fields) => {
+      if (err) throw err;
+      const internals = {
+        title: `View your profile (${rows[0].firstname})`,
+        admin_id: id,
+        firstname: rows[0].firstname,
+        lastname: rows[0].lastname,
+        username: rows[0].username,
+        gender: rows[0].gender,
+        telephone: rows[0].telephone,
+        email: rows[0].email,
+        status: rows[0].status,
+        has3RouteSegments: true,
+      };
+
+      res.render("admin/account/profile", {
+        layout: "./layouts/LAdmin",
+        internals,
+        message: req.flash("fmessage"),
+      });
+    })
+  } else {
+    // Please get back here and login
+    req.flash("flashError", "Please login to view your profile!");
+    res.redirect("/panel/login");
+  }
+});
+
+
+// 14. Update admin profile 
+router.post('/update-self/(:id)', (req, res) => {
+  let id = req.params.id;
+  let fn = req.body.firstname;
+  let ln = req.body.lastname;
+  let un = req.body.username;
+  let gd = req.body.gender;
+  let te = req.body.telephone;
+  let em = req.body.email;
+  if (fn.length != 0 && ln.length != 0 && un.length != 0 && gd.length != 0 && te.length != 0 && em.length != 0) {
+    if(te.length >= 10) {
+      let sqlTel = "SELECT COUNT(*) AS valid_count FROM admin WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"' ";
+        con.query(sqlTel, (err, results) => {
+          if (err) {
+            req.flash("fmessage", "Internal Error with DB!");
+            res.redirect(`/panel/profile`);
+          }
+
+          // If no tel|email already exist add sh**
+          if(results[0].valid_count > 0) {
+            con.query('UPDATE admin SET firstname = ?, lastname = ?, username = ?, gender = ?, telephone = ?, email = ? WHERE admin_id = ?', [fn, ln, un, gd, te, em, id], (err, result) => {
+              if(!err) {
+                res.redirect('/panel/dashboard');
+              }
+            })
+          } else {
+            req.flash("fmessage", "Your Username, email or phone no. has been used!");
+            res.redirect('/panel/profile');
+          }
+        
+        });
+    } else {
+      req.flash("fmessage", "Phone number cannot go below 10 numbers!");
+      res.redirect(`/panel/profile`);
+    }
+  } else {
+    req.flash("fmessage", "Please fill all required fields!");
+    res.redirect(`/panel/profile`);
+  }
+});
+
+
+// 15. Change password by user ...self
+router.get('/change-password', (req, res) => {
+  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+    let id = req.session.admin_id;
+    let sql5 = `SELECT * FROM admin WHERE admin_id= ${id}`;
+    con.query(sql5, (err, rows, fields) => {
+      if (err) throw err;
+      const internals = {
+        title: `Change your passoword (${rows[0].firstname})`,
+        admin_id: id,
+      };
+
+      res.render("admin/account/change-pass", {
+        layout: "./layouts/LAdmin",
+        internals,
+        message: req.flash("fmessage"),
+      });
+    })
+  } else {
+    // Please get back here and login
+    req.flash("flashError", "Please login to view your profile!");
+    res.redirect("/panel/login");
+  }
+});
+
+
+// 
+router.post('/change-password', (req, res) => {
+  let oldPass = req.body.old_pass;
+  let newPass = req.body.new_pass;
+  let admin_id = req.body.admin_id;
+
+  const internals = {
+    title: `Change your passoword`,
+    admin_id: admin_id,
+  };
+
+  if (oldPass.length != 0 && newPass.length != 0 && admin_id.length != 0) {
+      // Regular Expression for strong password validation
+
+      let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+      if(regex.test(newPass)==true) {
+        let sqlCheck = "SELECT * FROM admin WHERE admin_id='"+admin_id+"' ";
+        con.query(sqlCheck, (err, results) => {
+        
+          if (err) {
+            req.flash("fmessage", "Internal Error with DB!");
+            res.render("admin/account/change-pass", {
+              layout: "./layouts/LAdmin",
+              internals,
+              message: req.flash("fmessage"),
+            })
+          }
+
+          // If no tel|email already exist add sh**
+          if(bcrypt.compareSync(oldPass, results[0].password)) {
+            // Hashing Password
+            const saltRounds = 10;
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const hashedPass = bcrypt.hashSync(newPass, salt);
+
+            con.query('UPDATE admin SET password = ? WHERE admin_id = ?', [hashedPass, admin_id], (err, result) => {
+              if(!err) {
+                res.redirect('/panel/profile');
+              }
+            })
+          } else {
+            req.flash("fmessage", "Your old password is incorrect!");
+            res.render("admin/account/change-pass", {
+              layout: "./layouts/LAdmin",
+              internals,
+              message: req.flash("fmessage"),
+            })
+          }
+        });
+      } else {
+        req.flash("fmessage", "Password should contain number, letters & over 8 characters");
+        res.render("admin/account/change-pass", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: req.flash("fmessage"),
+        })
+      }
+  } else {
+    req.flash("fmessage", "Please fill all required fields!");
+    res.render("admin/account/change-pass", {
+      layout: "./layouts/LAdmin",
+      internals,
+      message: req.flash("fmessage"),
+    });
+  }
+})
 
 
 // Export this router

@@ -41,7 +41,6 @@ app.use('/view/', require('./server/routes/clients-view'))
 
 // For admin Panel
 app.use('/panel', require('./server/routes/access'))
-app.use('/panel', require('./server/routes/admin'))
 app.use('/posts', require('./server/routes/posts'));
 app.use('/publica', require('./server/routes/publica'));
 app.use('/gallery', require('./server/routes/gallery'));
