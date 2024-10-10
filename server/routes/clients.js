@@ -169,6 +169,7 @@ router.get('/press', (req, res) => {
 });
 
 
+// X. Gallery 
 router.get('/gallery', (req, res) => {
     con.query("SELECT * FROM gallery ORDER BY created_at DESC LIMIT 18", (error, rows) => {
         let internals = {

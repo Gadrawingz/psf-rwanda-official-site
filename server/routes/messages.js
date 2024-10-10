@@ -11,8 +11,7 @@ const e = require('connect-flash');
 // 01. Submit messsage with mail package...
 
 // 02. Retrieve messages
-// 03. View all images
-router.get('/inbox', (req, res) => {
+router.get(['/', '/inbox'], (req, res) => {
     con.query("SELECT * FROM messages ORDER BY message_date DESC LIMIT 40", (error, rows) => {
         const internals = {
             title: `Latest 40 messages: inbox(${rows.length})`,
@@ -43,6 +42,37 @@ router.get('/inbox', (req, res) => {
     });
 });
 
+
+// 03. Mark message as read
+router.get('/mark-read/(:theId)', (req, res) => {
+    let id = req.params.theId;
+    let sql = "UPDATE messages SET status = ? WHERE message_id = ?";
+    con.query(sql, ['Read', id], (error, result, fields) => {
+        if(error) {
+            req.flash('fmessage', "Cannot change the status");
+            res.redirect('/messages/inbox');
+        } else {
+            req.flash('fmessage', "Message marked as read!");
+            res.redirect('/messages/inbox');
+        } 
+    })
+})
+
+
+// 04. Mark message as unread
+router.get('/mark-unread/(:theId)', (req, res) => {
+    let id = req.params.theId;
+    let sql = "UPDATE messages SET status = ? WHERE message_id = ?";
+    con.query(sql, ['Unread', id], (error, result, fields) => {
+        if(error) {
+            req.flash('fmessage', "Cannot change the status");
+            res.redirect('/messages/inbox');
+        } else {
+            req.flash('fmessage', "Message marked as unread!");
+            res.redirect('/messages/inbox');
+        } 
+    })
+})
 
 
 // Export this router

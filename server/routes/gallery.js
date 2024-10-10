@@ -115,7 +115,7 @@ router.post("/insert", (req, res) => {
 
 
 // 03. View all images
-router.get(["/all"], (req, res) => {
+router.get('/all', (req, res) => {
     con.query("SELECT * FROM gallery ORDER BY created_at DESC", (error, rows) => {
         const internals = {
             title: "View all gallery items",
