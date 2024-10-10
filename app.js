@@ -45,6 +45,7 @@ app.use('/posts', require('./server/routes/posts'));
 app.use('/publica', require('./server/routes/publica'));
 app.use('/gallery', require('./server/routes/gallery'));
 app.use('/messages', require('./server/routes/messages'));
+app.use('/events', require('./server/routes/events'));
 
 // Running
 app.listen(PORT, ()=> {
