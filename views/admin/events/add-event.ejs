@@ -21,7 +21,7 @@
                             <div class="was-validated mb-3">
                                 <label for="event_name" class="form-label"><strong>Event Name</strong></label>
                                 <input type="text" class="form-control" id="event_name" name="event_name"
-                                    value="<% eventName %>">
+                                    value="<%= eventName %>">
                                 <div class="invalid-feedback">Please add event name correctly.</div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                             <div class="was-validated mb-3">
                                 <label for="event_venue" class="form-label"><strong>Event Venue</strong></label>
                                 <input type="text" class="form-control" id="event_venue" name="event_venue"
-                                    value="<% eventVenue %>">
+                                    value="<%= eventVenue %>">
                                 <div class="invalid-feedback">Please add event location</div>
                             </div>
                         </div>
@@ -39,7 +39,37 @@
                             <div class="was-validated mb-3">
                                 <label for="event_image" class="form-label"><strong>Event Image</strong></label>
                                 <input type="file" class="form-control" id="event_image" name="event_image">
-                                <div class="invalid-feedback">Please add good looking picture</div>
+                                <div class="invalid-feedback">Image should have jpg, jpeg, png or WebP extension</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                              <label for="event_type" class="form-label">Select Event Category</label>
+                              <select class="form-select" id="event_type" name="event_type">
+                                <option value="<%= eventType %>"><%= eventType %></option>
+                                <option value="Exhibition">Exhibition</option>
+                                <option value="GBF" title="Global Business Forum">GBF</option>
+                              </select>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="contact_phone" class="form-label"><strong>Contact
+                                        Tel.Number</strong></label>
+                                <input type="text" class="form-control" id="contact_phone" name="contact_phone"
+                                    value="<%= contPhone %>">
+                                <div class="invalid-feedback">Phone number to call for this event.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="contact_email" class="form-label"><strong>Contact Email</strong></label>
+                                <input type="text" class="form-control" name="contact_email" id="contact_email"
+                                    value="<%= contEmail %>">
+                                <div class="invalid-feedback">E-mail address to write to.</div>
                             </div>
                         </div>
 
@@ -47,7 +77,7 @@
                             <div class="was-validated mb-3">
                                 <label for="start_date" class="form-label"><strong>Start Date</strong></label>
                                 <input type="date" class="form-control" id="start_date" name="start_date"
-                                    value="<% startDate %>">
+                                    value="<%= startDate %>">
                                 <div class="invalid-feedback">Add Starting Date.</div>
                             </div>
                         </div>
@@ -56,27 +86,8 @@
                             <div class="was-validated mb-3">
                                 <label for="end_date" class="form-label"><strong>End Date</strong></label>
                                 <input type="date" class="form-control" id="end_date" name="end_date"
-                                    value="<% endingDate %>">
+                                    value="<%= endingDate %>">
                                 <div class="invalid-feedback">Add Ending Date.</div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6 col-sm-6 col-12">
-                            <div class="was-validated mb-3">
-                                <label for="contact_phone" class="form-label"><strong>Contact
-                                        Tel.Number</strong></label>
-                                <input type="text" class="form-control" id="contact_phone" name="contact_phone"
-                                    value="<% contPhone %>">
-                                <div class="invalid-feedback">Phone number to call for this event.</div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6 col-sm-6 col-12">
-                            <div class="was-validated mb-3">
-                                <label for="contact_email" class="form-label"><strong>Contact Email</strong></label>
-                                <input type="text" class="form-control" name="contact_email" id="contact_email"
-                                    value="<% contEmail %>">
-                                <div class="invalid-feedback">E-mail address to write to.</div>
                             </div>
                         </div>
 
@@ -84,7 +95,7 @@
                             <div class="was-validated mb-3">
                                 <label for="description" class="form-label"><strong>Description</strong></label>
                                 <textarea class="form-control" id="description" name="description"
-                                    rows="2"><% describing %></textarea>
+                                    rows="2"><%= describing %></textarea>
                                 <div class="invalid-feedback">Describe your event in brief.</div>
                             </div>
                         </div>

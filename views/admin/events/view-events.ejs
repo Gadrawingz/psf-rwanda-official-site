@@ -1,0 +1,76 @@
+<!-- Row start -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><h3><%- internals.title %></h3></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <% if (message.length!=0) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-x-circle alert-icon"></i>
+                        <%- message %> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <% } if (internals.data.length != 0) { %>
+                    <table class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th>N<sup>o</sup></th>
+                                <th>Name/Venue</th>
+                                <th>Start-End Date</th>
+                                <th>Image</th>
+                                <th>Contact Info</th>
+                                <th>Description</th>
+                                <th class="text-center">#</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% for(let g = 0; g < internals.data.length; g++) { %> 
+                            <tr>
+                                <td><i class="bi bi-check2-circle"></i><%= (g+1) %></td>
+                                <td>
+                                    <%= internals.data[g].event_name %><br>
+                                    <b><i>(<%= internals.data[g].event_type %>/<%= internals.data[g].event_venue %>)</i></b>
+                                </td>
+                                <td>
+                                    <b><%= internals.data[g].start_date.toLocaleDateString() %> -<br>
+                                    <%= internals.data[g].end_date.toLocaleDateString() %></b>
+                                </td>
+                                <td>
+                                    <div class="media-box">
+                                        <img src="../../../uploads/events/<%= internals.data[g].event_image %>" class="media-avatar" alt="<%= internals.data[g].event_name %>">
+                                    </div>
+                                </td>
+                                <td>
+                                    <b><%= internals.data[g].contact_phone %><br>(<%= internals.data[g].contact_email%>)</b>
+                                </td>
+                                <td>
+                                    <%= internals.funs.trancateStr(internals.data[g].description, 30) %>
+                                </td>
+                                <td class="text-center">
+                                    <a href="/messages/edit/<%= internals.data[g].event_id %>" class="btn btn-success" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="/messages/delete/<%= internals.data[g].event_id %>" class="btn btn-danger" onclick="return confirm('Do you want to trash this row?')" title="Remove">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    <% } else { %>
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <i class="bi bi-bullseye alert-icon"></i>No data found!
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Row end -->

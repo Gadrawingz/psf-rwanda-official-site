@@ -12,7 +12,7 @@ const fun = require("../config/functions");
 
 // 01. Get event registration form
 router.get("/add", (req, res) => {
-    let eventName, eventVenue, eventImage, startDate, endingDate, contEmail, contPhone, describing = "";
+    let eventName, eventVenue, eventType, eventImage, startDate, endingDate, contEmail, contPhone, describing = "";
     if (req.session.loggedin === true && req.session.loggedin != undefined) {
         const internals = {
             title: "Event Registration",
@@ -28,7 +28,7 @@ router.get("/add", (req, res) => {
             layout: "./layouts/LAdmin",
             internals,
             message: req.flash("fmessage"),
-            eventName, eventVenue, eventImage, startDate,
+            eventName, eventVenue, eventType, eventImage, startDate,
             endingDate, contEmail, contPhone, describing
         });
     } else {
@@ -75,6 +75,7 @@ router.post("/insert", (req, res) => {
     upload4events(req, res, (err) => {
         let eventName = req.body.event_name;
         let eventVenue = req.body.event_venue;
+        let eventType = req.body.event_type;
         let eventImage = req.body.event_image;
         let startDate = req.body.start_date;
         let endingDate = req.body.end_date;
@@ -94,13 +95,14 @@ router.post("/insert", (req, res) => {
         };
 
         if (!err) {
-            if (eventName.length != 0 && eventVenue.length != 0 && startDate.length != 0 && endingDate.length != 0 && contEmail.length != 0 && contPhone.length != 0 && describing.length != 0) {
+            if (eventName.length != 0 && eventVenue.length != 0 && startDate.length != 0 && endingDate.length != 0 && contEmail.length != 0 && contPhone.length != 0 && describing.length != 0 && eventType.length != 0) {
                 if (req.file) {
                     if (eventName.length >= 5 && describing.length >= 50) {
                         // ON SUCCESSFUL ACTS
                         let eventsData = {
                             event_name: (eventName),
                             event_venue: eventVenue,
+                            event_type: eventType,
                             event_image: req.file.filename,
                             start_date: startDate,
                             end_date: endingDate,
@@ -116,7 +118,7 @@ router.post("/insert", (req, res) => {
                                     layout: "./layouts/LAdmin",
                                     internals,
                                     message: req.flash("fmessage"),
-                                    eventName, eventVenue, startDate, endingDate, contEmail, contPhone, describing
+                                    eventName, eventVenue, eventType, startDate, endingDate, contEmail, contPhone, describing
                                 })
                             } else {
                                 res.redirect("/events/all");
@@ -128,7 +130,7 @@ router.post("/insert", (req, res) => {
                             layout: "./layouts/LAdmin",
                             internals,
                             message: req.flash("fmessage"),
-                            eventName, eventVenue, startDate, endingDate, contEmail, contPhone, describing
+                            eventName, eventVenue, eventType, startDate, endingDate, contEmail, contPhone, describing
                         })
                         let fs = require("fs");
                         let path2file = "public/uploads/events/" + eventImage;
@@ -142,7 +144,7 @@ router.post("/insert", (req, res) => {
                         layout: "./layouts/LAdmin",
                         internals,
                         message: req.flash("fmessage"),
-                        eventName, eventVenue, startDate, endingDate, contEmail, contPhone, describing
+                        eventName, eventVenue, eventType, startDate, endingDate, contEmail, contPhone, describing
                     })
                 }
             } else {
@@ -151,7 +153,7 @@ router.post("/insert", (req, res) => {
                     layout: "./layouts/LAdmin",
                     internals,
                     message: req.flash("fmessage"),
-                    eventName, eventVenue, startDate, endingDate, contEmail, contPhone, describing
+                    eventName, eventVenue, eventType, startDate, endingDate, contEmail, contPhone, describing
                 })
             }
         } else {
@@ -160,13 +162,45 @@ router.post("/insert", (req, res) => {
                 layout: "./layouts/LAdmin",
                 internals,
                 message: req.flash("fmessage"),
-                eventName, eventVenue, startDate, endingDate, contEmail, contPhone, describing
+                eventName, eventVenue, eventType, startDate, endingDate, contEmail, contPhone, describing
             })
         }
     })
 });
 
 
+// 03. Get all events
+router.get('/all', (req, res) => {
+    con.query("SELECT * FROM events ORDER BY start_date DESC", (error, rows) => {
+        const internals = {
+            title: "View all events in order",
+            breadcrumbL1: "Events",
+            breadcrumbL2: "All",
+            role: req.session.role,
+            admin_id: req.session.admin_id,
+            username: req.session.username,
+            telephone: req.session.telephone,
+            fullName: `${req.session.firstname} ${req.session.lastname}`,
+            data: rows,
+            funs: fun,
+        };
+        
+        if (!error) {
+            // @gadira
+            res.render("admin/events/view-events", {
+                layout: "./layouts/LAdmin",internals,
+                message: "",
+            });
+        } else {
+            req.flash("fmessage", "There is an error occured");
+            res.render("admin/events/view-events", {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash("fmessage"),
+            });
+        }
+    });
+});
 
 
 
