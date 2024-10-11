@@ -10,7 +10,6 @@ const con = require("../config/database");
 const fun = require("../config/functions");
 
 
-
 // 01. Get Gallery view
 router.get("/add", (req, res) => {
     if (req.session.loggedin === true && req.session.loggedin != undefined) {

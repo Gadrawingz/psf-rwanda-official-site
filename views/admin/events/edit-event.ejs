@@ -1,0 +1,105 @@
+<!-- Row start -->
+<div class="row">
+    <div class="col-sm-12 col-12">
+        <div class="card">
+
+            <div class="card-header">
+                <div class="card-title"><%- internals.title %></div>
+            </div>
+
+            <div class="card-body">
+                <% if (message.length!=0) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-x-circle alert-icon"></i>
+                        <%- message %> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
+                <form action="/events/update-event/<%= internals.event_id %>" method="post">
+                    <div class="row">
+                        <div class="col-xl-4 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="event_name" class="form-label"><strong>Event Name</strong></label>
+                                <input type="text" class="form-control" id="event_name" name="event_name"
+                                    value="<%= internals.eventName %>">
+                                <div class="invalid-feedback">Please add event name correctly.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="event_venue" class="form-label"><strong>Event Venue</strong></label>
+                                <input type="text" class="form-control" id="event_venue" name="event_venue"
+                                    value="<%= internals.eventVenue %>">
+                                <div class="invalid-feedback">Please add event location</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                              <label for="event_type" class="form-label">Select Event Category</label>
+                              <select class="form-select" id="event_type" name="event_type">
+                                <option value="<%= internals.eventType %>"><%= internals.eventType %></option>
+                                <option value="Exhibition">Exhibition</option>
+                                <option value="GBF" title="Global Business Forum">GBF</option>
+                              </select>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="contact_phone" class="form-label"><strong>Contact
+                                        Tel.Number</strong></label>
+                                <input type="text" class="form-control" id="contact_phone" name="contact_phone"
+                                    value="<%= internals.contPhone %>">
+                                <div class="invalid-feedback">Phone number to call for this event.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="contact_email" class="form-label"><strong>Contact Email</strong></label>
+                                <input type="text" class="form-control" name="contact_email" id="contact_email"
+                                    value="<%= internals.contEmail %>">
+                                <div class="invalid-feedback">E-mail address to write to.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="start_date" class="form-label"><strong>Start Date</strong></label>
+                                <input type="date" class="form-control" id="start_date" name="start_date" value="<%= internals.startDate %>">
+                                <div class="invalid-feedback">Add Starting Date.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-sm-6 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="end_date" class="form-label"><strong>End Date</strong></label>
+                                <input type="date" class="form-control" id="end_date" name="end_date" value="<%= internals.endingDate %>">
+                                <div class="invalid-feedback">Add Ending Date.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-12">
+                            <div class="was-validated mb-3">
+                                <label for="description" class="form-label"><strong>Description</strong></label>
+                                <textarea class="form-control" id="description" name="description"
+                                    rows="2"><%= internals.describing %></textarea>
+                                <div class="invalid-feedback">Describe your event in brief.</div>
+                            </div>
+                        </div>
+                    </div>             
+                    <!-- Form actions footer start -->
+                    <div class="custom-btn-group flex-start">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="reset" class="btn btn-danger">Cancel</button>
+                    </div>
+                    <!-- Form actions footer end -->
+                </form>
+            </div>
+        </div>
+        <!-- Card end -->
+    </div>
+</div>
+<!-- Row end -->

@@ -97,12 +97,24 @@ router.get('/regular', (req, res) => {
 
 // Routes for Events
 router.get('/exhibitions', (req, res) => {
-    const internals = {
-        title: "Events - Exhibitions",
-        description: "",
-        hasFullFooter: true,
-    }
-    res.render('clients/events/exhibitions', { internals });
+    con.query("SELECT * FROM events ORDER BY event_id DESC LIMIT 18", (error, rows) => {
+        let internals = {
+            title: "Events - Exhibitions",
+            description: "",
+            hasFullFooter: true,
+            has3RouteSegments: false,
+            data: rows,
+            funs: fun,
+            moment: moment
+        };
+
+        if (!error) {
+            res.render("clients/events/exhibitions", { internals });
+        } else {
+            req.flash("fmessage", "There is an error occured");
+            res.render("clients/events/exhibitions", { internals });
+        }
+    });
 });
 
 router.get('/gbf', (req, res) => {

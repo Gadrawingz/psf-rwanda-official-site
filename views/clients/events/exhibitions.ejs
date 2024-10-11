@@ -18,18 +18,21 @@
 <section class="event-three-section">
     <div class="event-section-outer">
         <div class="container">
+            <% if(internals.data.length > 0) { %>
             <div class="row row-gutter-y-30">
+                
+                <% for(let g=0; g < internals.data.length; g++ ) { %>
                 <div class="col-12 col-lg-6 col-xl-6">
                     <div class="event-card">
                         <div class="event-card-image">
                             <div class="event-card-image-inner">
-                                <a href="#"><img src="clients/images/event/event-2.jpg" class="img-fluid" alt="img-164"></a>		
+                                <a href="#"><img src="../uploads/events/<%= internals.data[g].event_image %>" class="img-fluid" alt="img-90" style="height: 40px!important; width: 40px!important;"></a>		
                                 <div class="event-card-meta">
                                     <div class="event-meta-number">
-                                        <span>13</span>
+                                        <span><%= internals.moment(internals.data[g].created_at).format('DD'); %></span>
                                     </div>
                                     <div class="event-meta-date">
-                                        <span>January 2025</span>
+                                        <span><%= internals.moment(internals.data[g].created_at).format('MM-YYYY'); %></span>
                                     </div>
                                 </div>
                             </div>
@@ -39,7 +42,7 @@
                                 <ul class="list-unstyled">
                                     <li>
                                         <i class="fa-solid fa-clock"></i>
-                                        <span>08:00am - 05:00pm</span>
+                                        <span><%= internals.data[g].start_date %> - <%= internals.data[g].end_date %></span>
                                     </li>
                                     <li>
                                         <i class="fa-sharp fa-solid fa-location-pin"></i>
@@ -53,111 +56,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 col-xl-6">
-                    <div class="event-card">
-                        <div class="event-card-image">
-                            <div class="event-card-image-inner">
-                            <a href="#"><img src="clients/images/event/event-3.jpg" class="img-fluid" alt="img-165"></a>				
-                                <div class="event-card-meta">
-                                    <div class="event-meta-number">
-                                        <span>17</span>
-                                    </div>
-                                    <div class="event-meta-date">
-                                        <span>October 2024</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="event-card-content">
-                            <div class="event-card-info">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <i class="fa-solid fa-clock"></i>
-                                        <span>09:00am - 09:00pm</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa-sharp fa-solid fa-location-pin"></i>
-                                        <span>Expo Ground, Gikondo</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-card-title">
-                                <h4><a href="#">Major Expo25</a></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6 col-xl-6">
-                    <div class="event-card">
-                        <div class="event-card-image">
-                            <div class="event-card-image-inner">
-                                <a href="#"><img src="clients/images/event/event-4.jpg" class="img-fluid" alt="img-166"></a>		
-                                <div class="event-card-meta">
-                                    <div class="event-meta-number">
-                                        <span>04</span>
-                                    </div>
-                                    <div class="event-meta-date">
-                                        <span>July 2025</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="event-card-content">
-                            <div class="event-card-info">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <i class="fa-solid fa-clock"></i>
-                                        <span>08:30am - 11:00pm</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa-sharp fa-solid fa-location-pin"></i>
-                                        <span>Musanze, Kinigi</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-card-title">
-                                <h4><a href="#">Medical Expo Rwanda</a></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <% } %>
 
-                <div class="col-12 col-lg-6 col-xl-6">
-                    <div class="event-card">
-                        <div class="event-card-image">
-                            <div class="event-card-image-inner">
-                            <a href="#"><img src="clients/images/event/event-6.jpg" class="img-fluid" alt="img-167"></a>			
-                                <div class="event-card-meta">
-                                    <div class="event-meta-number">
-                                        <span>28</span>
-                                    </div>
-                                    <div class="event-meta-date">
-                                        <span>December 2024</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="event-card-content">
-                            <div class="event-card-info">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <i class="fa-solid fa-clock"></i>
-                                        <span>08:00am - 05:00pm</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa-sharp fa-solid fa-location-pin"></i>
-                                        <span>Rwamagana, Market</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-card-title">
-                                <h4><a href="#">Cinema Expo 2024</a></h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
+            <% } else { } %>
         </div>
     </div>
 </section>

@@ -51,10 +51,10 @@
                                     <%= internals.funs.trancateStr(internals.data[g].description, 30) %>
                                 </td>
                                 <td class="text-center">
-                                    <a href="/messages/edit/<%= internals.data[g].event_id %>" class="btn btn-success" title="Edit">
+                                    <a href="/events/edit/<%= internals.data[g].event_id %>" class="btn btn-success" title="Edit">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <a href="/messages/delete/<%= internals.data[g].event_id %>" class="btn btn-danger" onclick="return confirm('Do you want to trash this row?')" title="Remove">
+                                    <a href="/events/delete/<%= internals.data[g].event_id %>" class="btn btn-danger" onclick="return confirm('Do you want to trash this row?')" title="Remove">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
