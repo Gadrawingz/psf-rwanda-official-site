@@ -6295,25 +6295,27 @@ label {
 .list-style-two > li{
 	display: flex;
 	align-items: center;
-	margin-bottom: 10px;
+	margin-bottom: 18px;
 }
 .list-style-two > li >i{
-	color: var(--thm-primary);
+	color: var(--green-main);
 	font-size: 14px;
 }
 .list-style-two > li > h5{
 	margin-left: 10px;
 	font-weight: 600;
 	font-size: 17px;
-	color: var(--thm-gray);
+	color: #000800cf;
 	margin-bottom: 0px;
 }
 .list-style-two > li > p{
 	margin-left: 10px;
 }
+
 .list-style-three{
 	margin-bottom: 45px;
 }
+
 .list-style-three > li{
 	display: flex;
 	align-items: center;
