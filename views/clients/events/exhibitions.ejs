@@ -13,7 +13,6 @@
     </div>			
 </section>
 
-
 <!--event-three-section-->
 <section class="event-three-section">
     <div class="event-section-outer">
@@ -26,13 +25,13 @@
                     <div class="event-card">
                         <div class="event-card-image">
                             <div class="event-card-image-inner">
-                                <a href="#"><img src="../uploads/events/<%= internals.data[g].event_image %>" class="img-fluid" alt="img-90" style="height: 40px!important; width: 40px!important;"></a>		
+                                <a href="#"><img src="clients/images/event/event-2.jpg" class="img-fluid" alt="img-164"></a>		
                                 <div class="event-card-meta">
                                     <div class="event-meta-number">
-                                        <span><%= internals.moment(internals.data[g].created_at).format('DD'); %></span>
+                                        <span><u><%= internals.moment(internals.data[g].start_date).format('Do'); %></u></span>
                                     </div>
                                     <div class="event-meta-date">
-                                        <span><%= internals.moment(internals.data[g].created_at).format('MM-YYYY'); %></span>
+                                        <span><%= internals.moment(internals.data[g].start_date).format('MMMM YYYY'); %></span>
                                     </div>
                                 </div>
                             </div>
@@ -42,16 +41,27 @@
                                 <ul class="list-unstyled">
                                     <li>
                                         <i class="fa-solid fa-clock"></i>
-                                        <span><%= internals.data[g].start_date %> - <%= internals.data[g].end_date %></span>
+                                        <span>
+                                            <b><%= internals.moment(internals.data[g].start_date).format('DD MMM. YYYY'); %> - 
+                                            <%= internals.moment(internals.data[g].end_date).format('DD MMM. YYYY'); %></b>
+                                        </span>
                                     </li>
                                     <li>
                                         <i class="fa-sharp fa-solid fa-location-pin"></i>
-                                        <span>Huye, Tumba</span>
+                                        <span><%= internals.data[g].event_venue; %></span>
                                     </li>
                                 </ul>
                             </div>
                             <div class="event-card-title">
-                                <h4><a href="#">Mini Expo Rwanda</a></h4>
+                                <h4><a href="#"><%= internals.data[g].event_name; %></a></h4>
+                            </div><hr>
+                            <div class="event-card-info">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <i class="fa-sharp fa-solid fa-phone"></i>
+                                        <span class="text-dark" title="Call: <%= internals.data[g].contact_phone; %>"><b><%= internals.data[g].contact_email; %></b></span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

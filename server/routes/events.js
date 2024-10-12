@@ -171,7 +171,7 @@ router.post("/insert", (req, res) => {
 
 // 03. Get all events
 router.get('/all', (req, res) => {
-    con.query("SELECT * FROM events ORDER BY start_date DESC", (error, rows) => {
+    con.query("SELECT * FROM events ORDER BY event_id DESC LIMIT 20", (error, rows) => {
         const internals = {
             title: "View all events in order",
             breadcrumbL1: "Events",
