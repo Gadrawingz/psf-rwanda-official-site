@@ -198,6 +198,7 @@ a{
 	text-transform: uppercase;
 	font-weight: bolder;
 	letter-spacing: 1px;
+	margin-bottom: 15px;
 }
 .section-tagline:before {
 	content: '';
