@@ -66,13 +66,13 @@ router.get('/psf-business-in-rwanda', (req, res) => {
 
 
 // Routes for Membership
-router.get('/association', (req, res) => {
+router.get('/clusters', (req, res) => {
     const internals = {
-        title: "Clusters - Association",
+        title: "Membership - Clusters",
         description: "",
         hasFullFooter: true,
     }
-    res.render('clients/membership/assoc', { internals });
+    res.render('clients/membership/clusters', { internals });
 });
 
 router.get('/golden-circle', (req, res) => {
