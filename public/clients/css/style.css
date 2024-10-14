@@ -4302,7 +4302,7 @@ a.search-toggler{
 }
 .event-details-section {
 	padding-top: 120px;	
-	padding-bottom: 120px;	
+	padding-bottom: 80px;	
 }
 @media(max-width: 1199px){
 	.event-details-section{
