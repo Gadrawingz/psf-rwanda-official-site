@@ -1018,8 +1018,8 @@ a.search-toggler{
 	margin-top: 10px;
 }
 .slider-content{
-	padding-top: 100px;
-	padding-bottom: 100px;
+	padding-top: 120px;
+	padding-bottom: 120px;
 	position: relative;
 }
 @media(max-width: 991px){
@@ -1028,12 +1028,16 @@ a.search-toggler{
 	}
 }
 .slider-tagline{
-	font-size: 20px;
 	color: #fff;
+	border-bottom: 1px solid rgba(227, 243, 227, 0.484);
+	padding-bottom: 10px;
+	font-size: 22px;
+	font-weight: 900;
+
 	transform: translateY(-50px);
-	opacity: 0;
 	transition: all 1500ms ease;
 }
+
 .main-slider-swiper .owl-item.active .slider-tagline {
 	transform: translateY(0);
 	opacity: 1;
@@ -1046,9 +1050,9 @@ a.search-toggler{
 	margin-bottom: 35px;
 }
 .slider-content .section-title{
-	font-size: 90px;
-	font-weight: 800;
-	color: var(--thm-white);
+	font-size: 40px;
+	font-weight: 900;
+	color: #eefcf0;
 	font-family: var(--thm-font);
 	margin-bottom: 30px;
 	transform: translateY(50px);
@@ -1079,6 +1083,7 @@ a.search-toggler{
 	transform: translateY(0);
 	opacity: 1;
 }
+
 .main-slider .owl-item .item .item-slider-bg{
 	position: absolute;
   top: 0;
@@ -1235,8 +1240,8 @@ a.search-toggler{
 * Department
 ***********************/
 .department-section{
-	background-image:url("../image/bg/department-bg-1.jpg");
-	padding-bottom: 120px;
+	background-image:url("/clients/images/bg/department-bg-1.jpg");
+	padding-bottom: 0px;
 	margin-top: -20px;
 }
 .department-section .department-section-inner{
@@ -1267,7 +1272,7 @@ a.search-toggler{
 }
 .department-card-icon{
 	font-size: 35px;
-	color: var(--thm-primary);
+	color: var(--green-main);
 	height: 80px;
 	width: 80px;
 	background-color: var(--thm-white);
@@ -1283,7 +1288,7 @@ a.search-toggler{
 	color: var(--thm-white);
 }
 .department-card-icon a{
-	color: var(--thm-primary);
+	color: var(--green-main);
 }
 .department-card-icon:hover i{
 	color: var(--thm-white);
@@ -1294,7 +1299,7 @@ a.search-toggler{
 }
 .department-card-content h5 > a{
 	color: inherit;
-	font-size: 18px;
+	font-size: 16.5px;
 	font-weight: 800;
 }
 .department-card-content h5 > a:hover{
@@ -1878,8 +1883,8 @@ a.search-toggler{
 	font-family: var(--thm-font);
 }
 .about-one-section{
-	padding-top: 120px;
-	padding-bottom: 120px;
+	padding-top: 30px;
+	padding-bottom: 30px;
 }
 @media(max-width: 1199px){
 	.about-one-section{
@@ -3305,7 +3310,7 @@ a.search-toggler{
 }
 .client-section .owl-stage-outer{
   border-top: 1px solid var(--thm-border);
-  padding-top: 80px;
+  padding-top: 280px;
   padding-bottom: 90px;
   background-color: rgb(227, 244, 231);
 }
