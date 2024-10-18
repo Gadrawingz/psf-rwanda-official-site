@@ -481,9 +481,18 @@ a{
 .topbar-inner{
 	display: flex;
 	justify-content: space-between;
-	background-color: var(--green-dark)!important;
+	background-color: var(--green-darker)!important;
 	padding-right: 60px;
 }
+
+.topbar-inner h4{
+	color: #FFF!important;
+	padding: 4px!important;
+	border-bottom: 2px solid #FEF9F3!important;
+	opacity: 0.2;
+}
+
+
 .topbar-left{
 	display: flex;
 }
@@ -2971,9 +2980,9 @@ a.search-toggler{
 * Page banner
 ***********************/
 .page-banner{
-	background-image: url("/clients/images/banner/banner-bg3.webp");
+	/*background-image: url("/clients/images/banner/banner-bg3.webp");*/
 	background-repeat: no-repeat;
-	background-color: var(--thm-black);
+	background-color: var(--green-main);
 	background-size: cover;
 	padding-top: 40px;
 	padding-bottom: 40px;
@@ -3311,8 +3320,8 @@ a.search-toggler{
 }
 .client-section .owl-stage-outer{
   border-top: 1px solid var(--thm-border);
-  padding-top: 280px;
-  padding-bottom: 90px;
+  padding-top: 70px;
+  padding-bottom: 70px;
   background-color: rgb(227, 244, 231);
 }
 @media(max-width: 1199px){
