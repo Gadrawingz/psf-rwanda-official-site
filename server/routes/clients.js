@@ -135,6 +135,15 @@ router.get('/gbf', (req, res) => {
     res.render('clients/events/gbf', { internals });
 });
 
+router.get('/ritf-expo', (req, res) => {
+    const internals = {
+        title: "RITF EXPO",
+        description: "",
+        hasFullFooter: true,
+    }
+    res.render('clients/events/ritf-expo', { internals });
+});
+
 
 
 // Routes for Teams
