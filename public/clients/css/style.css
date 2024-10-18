@@ -193,7 +193,8 @@ a{
 .section-tagline {
 	position: relative;
 	font-size: 20px;
-	color: var(--green-light);
+	/*color: var(--green-light);*/
+	color: var(--green-main);
 	font-family: var(--thm-font);
 	text-transform: uppercase;
 	font-weight: bolder;

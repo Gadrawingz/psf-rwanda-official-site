@@ -84,13 +84,22 @@ router.get('/golden-circle', (req, res) => {
     res.render('clients/membership/golden-circle', { internals });
 });
 
-router.get('/regular', (req, res) => {
+router.get('/indashyikirwa', (req, res) => {
     const internals = {
-        title: "Regular",
+        title: "Indashyikirwa",
         description: "",
         hasFullFooter: true,
     }
-    res.render('clients/membership/regular', { internals });
+    res.render('clients/membership/indashyikirwa', { internals });
+});
+
+router.get('/associate-members', (req, res) => {
+    const internals = {
+        title: "Associate Members",
+        description: "",
+        hasFullFooter: true,
+    }
+    res.render('clients/membership/associate', { internals });
 });
 
 
@@ -288,13 +297,13 @@ router.get('/support', (req, res) => {
 });
 
 // Membership benefits page:
-router.get('/membership-benefits', (req, res) => {
+router.get('/membership', (req, res) => {
     const internals = {
-        title: "PSF Membership Benefits",
+        title: "PSF Membership",
         description: "",
         hasFullFooter: true,
     }
-    res.render('clients/membership/benefits', { internals });
+    res.render('clients/membership/memberships', { internals });
 });
 
 // Member Join page
