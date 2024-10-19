@@ -75,6 +75,15 @@ router.get('/clusters', (req, res) => {
     res.render('clients/membership/clusters', { internals });
 });
 
+router.get('/associations', (req, res) => {
+    const internals = {
+        title: "Associations per Clusters",
+        description: "",
+        hasFullFooter: true,
+    }
+    res.render('clients/membership/associations', { internals });
+});
+
 router.get('/golden-circle', (req, res) => {
     const internals = {
         title: "Golden Circle",
@@ -247,6 +256,7 @@ router.get('/services', (req, res) => {
         title: "Services",
         description: "PSF Offers various services including Advocacy, Membership, Market linkage, IBI...",
         hasFullFooter: true,
+        funs: fun,
     }
     res.render('clients/services/index', { internals });
 });

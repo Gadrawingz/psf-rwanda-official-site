@@ -1500,11 +1500,13 @@ a.search-toggler{
     width: 100px;
     text-align: center;
     font-size: 50px;
-    background-color:var(--thm-primary);
+    background-color: rgb(2, 99, 2);
+	border: 1px solid silver;
     line-height: 115px;
     border-radius: 50%;
     color: var(--thm-white);
 }
+
 .department-two-img-icon:hover{
 	background-color: var(--thm-white);
 }
@@ -1516,7 +1518,7 @@ a.search-toggler{
 	color: var(--thm-primary);
 }
 .department-two-content{
-	padding: 14px 50px 43px 50px;
+	padding: 25px 30px;
 }
 @media(max-width: 1199px){
 	.department-two-content{
@@ -1525,9 +1527,11 @@ a.search-toggler{
 }
 .department-two-content h4{
 	margin-bottom: 23px;
+	font-size: 22px;
 }
 .department-two-content h4 a{
-	color: inherit;
+	color: var(--green-dark);
+	border-bottom: 1px solid var(--orange-lower)!important;
 	transition: all 500ms ease;
 }
 .department-two-content h4 a:hover{
@@ -6005,8 +6009,8 @@ border-radius: 100px;
 	width: 100vw;
 	top: 0;
 	left: 0;
-	background-color: var(--thm-dark-black);
-	opacity: 0.9;
+	background-color: var(--green-main);
+	opacity: 0.4;
 }
 .mobile-nav-content {
 	position: absolute;
@@ -6015,7 +6019,7 @@ border-radius: 100px;
 	width: 100%;
 	padding: 30px 15px;
 	z-index: 1;
-	background: var(--thm-black);
+	background: var(--green-dark);
 	height: 100vh;
 	opacity: 0;
 	transform: translateX(-100%);
