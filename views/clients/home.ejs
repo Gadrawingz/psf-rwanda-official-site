@@ -148,6 +148,55 @@
     </div>
 </section><hr>
 
+<!-- numbers section -->
+<section class="funfact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-md-6">
+                <div class="funfact-counter-item">
+                    <div class="funfact-counter-box">
+                        <div class="funfact-counter-icon">
+                            <i class="flaticon-running-man"></i>
+                        </div>
+                        <div class="funfact-counter-number">
+                            <h3 class="counter-number">156</h3>
+                        </div>
+                    </div>
+                    <p class="funfact-text">Cooperations</p>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="funfact-counter-item">
+                    <div class="funfact-counter-box">
+                        <div class="funfact-counter-icon">
+                            <i class="flaticon-coverage"></i>
+                        </div>
+                        <div class="funfact-counter-number">
+                            <h3 class="counter-number">335</h3>
+                        </div>
+                    </div>
+                    <p class="funfact-text">Professional Associations</p>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="funfact-counter-item">
+                    <div class="funfact-counter-box">
+                        <div class="funfact-counter-icon">
+                            <i class="flaticon-landscape"></i>
+                        </div>
+                        <div class="funfact-counter-number">
+                            <h3 class="counter-number">262</h3>
+                        </div>
+                    </div>
+                    <p class="funfact-text">Corporate Members</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 <section class="about-one-section">
     <div class="container">
         <div class="row justify-content-between row-gutter-y-60">
@@ -161,8 +210,7 @@
             
             <div class="col-lg-12 col-xl-6 col-xxl-6">
                 <div class="contact-box">
-                    <h1 class="section-title">Need to talk to us?</h1>
-                    <p>Drop us a line through the contact form we'll get back to you shortly.</p>
+                    <p>The Private Sector Federation (PSF) has achieved significant accomplishments. Apart from establishing a solid reputation and attracting a large membership, PSF has been a trailblazer in Business Development Services (BDS), achieved notable victories in advocacy efforts, and made significant contributions on national, regional, and international levels.</p>
                 </div><hr>
 
                 <div class="col-md-12 col-lg-12 col-xl-12 cst-contact-orange-box">
@@ -269,76 +317,41 @@
 </section>
 
 
-<!-- blog-section -->
-<section class="blog-section">
+<!-- blog-section with latest 3 releases -->
+<section class="blog-section blog-section-two">
+    <div class="blog-box">
+        <div class="section-title-box text-center">
+            <div class="section-tagline">PSF MEDIA</div>
+            <h2 class="section-title">Our Latest press releases</h2>
+        </div>
+    </div>
     <div class="container">
-        <div class="blog-box">
-            <div class="section-title-box text-center">
-                <div class="section-tagline">PSF MEDIA</div>
-                <h2 class="section-title">Our Latest press releases</h2>
-            </div>
-        </div>
+        <!--If post found here -->
+        <% if(internals.data.length > 0) { %>
         <div class="row row-gutter-y-155">
-            <div class="col-lg-4">
+            <% for (let g = 0; g < internals.data.length; g++) { %>
+            <div class="col-lg-6 col-xl-4">
                 <div class="blog-card">
                     <div class="blog-card-image">
-                        <img src="clients/images/blog/blog-1.jpg" class="img-fluid" alt="img-22">
-                        <a href="#"></a>
+                        <img src="clients/images/blog/blog-1.jpg" class="img-fluid" alt="img-184">
+                        <a href="/view/post/<%= internals.data[g].post_slug %>"></a>
                     </div>
                     <div class="blog-card-date">
-                        <a href="#">12 AUG</a>
+                        <a href="#" title="<%= internals.moment(internals.data[g].post_date).format('DD-MM-YYYY'); %>"><%= internals.moment(internals.data[g].post_date).startOf('day').fromNow(); %></a>
                     </div>
                     <div class="blog-card-content">
                         <div class="blog-card-meta">
-                            <span class="author">
-                                <a href="#">Category01</a>
-                            </span>	
+                            <span class="tagged">
+                                <a href="#"><%= internals.data[g].post_category %></a>
+                            </span>
                         </div>
-                        <h4><a href="#">PSF Release article 01 need to be read</a></h4>
+                        <h4><a href="/view/post/<%= internals.data[g].post_slug %>"><%= internals.data[g].post_title %></a></h4>
+                        <p><a href="/view/post/<%= internals.data[g].post_slug %>" class="text-success cst-read-more-link">...Read full article...</a></p>
                     </div>
-                </div>	
+                </div>
             </div>
-            
-            <div class="col-lg-4">
-                <div class="blog-card">
-                    <div class="blog-card-image">
-                        <img src="clients/images/blog/blog-1.jpg" class="img-fluid" alt="img-22">
-                        <a href="#"></a>
-                    </div>
-                    <div class="blog-card-date">
-                        <a href="#">30 SEP</a>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="blog-card-meta">
-                            <span class="author">
-                                <a href="#">Category01</a>
-                            </span>	
-                        </div>
-                        <h4><a href="#">PSF Release article 01 need to be read</a></h4>
-                    </div>
-                </div>	
-            </div>
-
-            <div class="col-lg-4">
-                <div class="blog-card">
-                    <div class="blog-card-image">
-                        <img src="clients/images/blog/blog-3.jpg" class="img-fluid" alt="img-22">
-                        <a href="#"></a>
-                    </div>
-                    <div class="blog-card-date">
-                        <a href="#">15 JUN</a>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="blog-card-meta">
-                            <span class="author">
-                                <a href="#">Category01</a>
-                            </span>	
-                        </div>
-                        <h4><a href="#">PSF Release article 01 need to be read</a></h4>
-                    </div>
-                </div>	
-            </div>
-        
+            <% } %>
         </div>
+        <% } else { } %>
     </div>
 </section>

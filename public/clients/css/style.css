@@ -44,9 +44,11 @@
 :root{
 	/*gadir green choice */
     --green-light : #27A567;
-    --green-main : #0A5C36;
-    --green-dark: #14452F;
-    --green-darker: #18392B;
+    --green-main : #065814;
+    --green-dark: #144525;
+    --green-darker: #094209;
+    --green-psf-light: #0f6f0f;
+    --green-psf-dark: #0c5f0c;
 
     /*gadir orange choice */
     --orange-higher : #FF7B00;
@@ -63,9 +65,9 @@
     --white-cotton: #FBFBF9;
     --white-chiffon: #FBFAF2;
     --white-powder: #FBFCFA;
-    --white-frost: #FCFBFC;
+    --white-cream: #FCFBFC;
 
-	--thm-primary: #2dcd7c;
+	--thm-primary: #0f6f0f;
 	--thm-primary-rgb: 45, 205, 124;
 	--thm-secondary: #9cb7bd;
 	--thm-secondary-rgb: 156, 183, 189;
@@ -137,11 +139,12 @@ p{
 	background:var(--thm-black);
 }
 .btn-primary:hover {
-	background-color: var(--orange-higher);
+	background-color: var(--white-cotton);
 }
+
 a{
 	text-decoration: none;
-	color: var(--thm-secondary);
+	color: var(--thm-white);
 	transition: all 500ms ease;
 }
 .row-gutter-30 {
@@ -307,6 +310,7 @@ a{
 		box-shadow: 0 0 0 0px rgba(255, 255, 255, 0);
 	}
 }
+
 /***********************
 * Pre-loader
 ***********************/
@@ -318,6 +322,7 @@ a{
   height: 100%;
   z-index: 1000; 
 }
+
 #pre-loader .loader-section {
   position: fixed;
   top: 0;
@@ -555,10 +560,11 @@ a{
 }
 .topbar-text a{
 	margin-left: 5px;
-	font-size: 13px;
+	font-size: 14px;
+	color: var(--thm-white);
 }
 .topbar-text a:hover{
-	color: var(--thm-white);
+	color: var(--orange-whiten)
 }
 .topbar-text{
 	margin-left: 5px;
@@ -2777,9 +2783,9 @@ a.search-toggler{
 * Funfact
 ***********************/
 .funfact-section {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	background-color: var(--green-light);
+	padding-top: 100px;
+	padding-bottom: 100px;
+	background-color: var(--green-psf-dark);
 	background-image: url("/clients/images/bg/funfact-bg-1.png");
 	background-position: top center;
 	background-repeat: no-repeat;
@@ -2812,12 +2818,14 @@ a.search-toggler{
 	justify-content: center;
 	width: 102px;
 	height: 102px;
-	background-color: var(--thm-black);
-	color: var(--thm-primary);
+	background-color: var(--orange-main);
+	color: #FFF;
+	font-weight: 900;
 	font-size: 54px;
 	flex-shrink: 0;
 	margin-right: 25px;
 }
+
 .funfact-counter-icon:after {
 	content: '';
 	position: absolute;
@@ -2827,7 +2835,7 @@ a.search-toggler{
 	top: 100%;
 	border-style: solid;
 	border-width: 10px 15px 0 0;
-	border-color: var(--thm-black) transparent transparent transparent;
+	border-color: var(--green-psf-dark) transparent transparent transparent;
 }
 .funfact-counter-number {
 	font-size: 60px;
@@ -3326,7 +3334,8 @@ a.search-toggler{
   border-top: 1px solid var(--thm-border);
   padding-top: 70px;
   padding-bottom: 70px;
-  background-color: rgb(227, 244, 231);
+  background-color: rgba(6, 84, 3, 0.08);
+
 }
 @media(max-width: 1199px){
 	.client-section .owl-stage-outer{
@@ -3828,7 +3837,8 @@ a.search-toggler{
 	line-height: 40px;
 	border-radius: 50%;
 	text-align: center;
-	background-color: var(--thm-dark-black);
+	border: 1.5px solid #FFF;
+	background-color: #CC5500;
 	color: var(--thm-white);
 }
 .footer-widget-socials a:hover{
@@ -3880,7 +3890,7 @@ a.search-toggler{
 	font-family: var(--thm-font);
 }
 .footer-widget-explore li a{
-	color: var(--thm-secondary);
+	color: var(--white-cream);
 }
 .footer-widget-explore li a:hover{
 	color: var(--thm-white);
@@ -3917,7 +3927,7 @@ a.search-toggler{
 	margin-bottom: 10px;
 }
 .footer-widget-contact-list i{
-	color: var(--thm-primary);
+	color: var(--orange-lower);
 }
 .footer-widget-contact-item{
 	margin-bottom: 5px;
@@ -3940,8 +3950,8 @@ a.search-toggler{
 }
 .bottom-footer p{
 	margin-bottom: 0;
-	font-weight: 500;
-	color: var(--thm-secondary);
+	font-weight: 800;
+	color: var(--thm-white);
 	line-height: 1;
 }
 /***********************

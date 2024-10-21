@@ -18,12 +18,21 @@ router.use(flash())
 
 // Home page
 router.get(['', '/home'], (req, res) => {
-    const internals = {
-        title: "Home page",
-        description: "Welcome official website for PSF Rwanda",
-        hasFullFooter: true,
-    }
-    res.render('clients/home', { internals });
+    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN admin ad ON ad.admin_id = po.post_author ORDER BY po.post_date DESC LIMIT 3", (error, rows) => {    
+
+        const internals = {
+            title: "Home page",
+            description: "Welcome official website for PSF Rwanda",
+            hasFullFooter: true,
+            data: rows,
+            funs: fun,
+            moment: moment
+        }
+
+        if (!error) {
+            res.render("clients/home", { internals });
+        }
+    });
 });
 
 // Routes for for about us

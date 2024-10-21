@@ -2,9 +2,11 @@
 :root {
     /*gadir green choice */
     --green-light : #27A567;
-    --green-main : #0A5C36;
-    --green-dark: #14452F;
-    --green-darker: #18392B;
+    --green-main : #065814;
+    --green-dark: #144525;
+    --green-darker: #094209;
+    --green-psf-light: #0f6f0f;
+    --green-psf-dark: #0c5f0c;
 
     /*gadir orange choice */
     --orange-higher : #FF7B00;
@@ -21,7 +23,7 @@
     --white-cotton: #FBFBF9;
     --white-chiffon: #FBFAF2;
     --white-powder: #FBFCFA;
-    --white-frost: #FCFBFC;
+    --white-cream: #FFFDD0;
 }
 
 .cst-footer-sm-box {
@@ -34,7 +36,7 @@
 }
 
 .cst-white-border1 {
-    color: var(--white-frost)!important;
+    color: var(--white-cream)!important;
     font-weight: 900;
 }
 
@@ -60,7 +62,7 @@
 }
 
 .cst-white-border1 {
-    /*border: 1px solid var(--white-frost)!important;*/
+    /*border: 1px solid var(--white-cream)!important;*/
     font-weight: 900;
 }
 
@@ -150,4 +152,15 @@
     background: var(--orange-tangerine)!important;
     border-radius: 2px!important;
     font-weight: 900!important;
+}
+
+/* Links */
+.cst-read-more-link {
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.cst-read-more-link:hover {
+    color: var(--orange-higher)!important;
+    border-bottom: 2px solid var(--green-dark);
 }
