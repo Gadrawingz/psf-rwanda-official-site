@@ -1,4 +1,6 @@
-/* For custom css @gadev */
+/*Importing beautiful google font */
+@import url(https://fonts.googleapis.com/css?family=Sofia);
+
 :root {
     /*gadir green choice */
     --green-light : #27A567;
@@ -163,4 +165,21 @@
 .cst-read-more-link:hover {
     color: var(--orange-higher)!important;
     border-bottom: 2px solid var(--green-dark);
+}
+
+.cst-blue-link {
+    color: #0452b2cf!important;
+    font-weight: 700;
+}
+
+.cst-blue-link:hover {
+    border-bottom: 1px solid #FA8128!important; 
+}
+
+/* Misc. Sizing */
+.size-65 {
+    font-size: 65px!important;
+    opacity: 0.2!important;
+    font-family: 'Sofia'!important;
+    font-weight: bolder!important;
 }

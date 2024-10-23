@@ -7401,6 +7401,7 @@ label {
     -webkit-transition: all 500ms ease;
     transition: all 500ms ease;
 }
+
 .blog-pagination a:hover, .blog-pagination span:hover {
     color: #fff;
     background-color: var(--thm-black, var(--green-main));

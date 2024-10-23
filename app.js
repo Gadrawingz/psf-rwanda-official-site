@@ -33,7 +33,6 @@ app.use(session({
 app.use(express.static('public/'));
 app.use(eLayout);
 
-
 // Routes 
 // For clients
 app.use('/', require('./server/routes/clients'))
