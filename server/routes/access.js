@@ -110,10 +110,10 @@ router.get(["", "/dashboard"], (req, res) => {
       fullName: `${req.session.firstname} ${req.session.lastname}`,
     };
 
-    let publiCount = 30;
-    let postsCount = 20;
-    let galleryNum = 18;
-    let appManagers = 4;
+    let publiCount = "X";
+    let postsCount = "X";
+    let galleryNum = "X";
+    let appManagers = "X";
 
     res.render("admin/dashboard", { 
       layout: "./layouts/LAdmin", 
