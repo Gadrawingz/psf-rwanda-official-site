@@ -9,7 +9,7 @@
             </ul>
         </div>
         <div class="page-banner-title">
-            <h3><%= internals.title; %></h3>
+            <h3><%= internals.funs.trancateStr(internals.title, 50) %></h3>
         </div>
     </div>
 </section>
@@ -29,14 +29,14 @@
                 <div class="news-details-meta-box">
                     <div class="news-details-meta-box-inner">
                         <span class="author">
-                            Posted by<a href="#"><%= internals.data[0].author_fn %> <%= internals.data[0].author_ln %></a>
+                            Published by<a href="#"><%= internals.data[0].author_fn %> <%= internals.data[0].author_ln %></a>
                         </span>
-                        <span class="published-date">On: <%= internals.data[0].post_date.toLocaleDateString() %></span>
+                        <span class="published-date"><%= internals.moment(internals.data[0].post_date).format('DD. MM. YYYY'); %></span>
                     </div>
                 </div><hr>
                 <div class="news-details-content-box">
                     <h2><%= internals.data[0].post_title %></h2>
-                    <div style="line-height: 30px!important; color: black;">
+                    <div style="line-height: 5px!important; color: #000!important;">
                         <%- internals.data[0].post_text %>
                     </div>
                 </div>

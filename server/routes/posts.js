@@ -9,25 +9,31 @@ const path = require("path");
 const router = express.Router();
 const con = require("../config/database");
 const fun = require("../config/functions");
+const moment = require('moment/moment');
+
 
 // 01.
 router.get("/add", (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
+    
     const internals = {
       title: "Make a new post or press release",
       breadcrumbL1: "Post",
       breadcrumbL2: "New",
       role: req.session.role,
-      adminId: req.session.adminId,
+      admin_id: req.session.admin_id,
       username: req.session.username,
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
+      funs: fun,
+      moment: moment,
     };
 
     res.render("admin/posts/add-post", {
       layout: "./layouts/LAdmin",
       internals,
       message: req.flash("fmessage"),
+      post_title:"", post_text: "", post_category:""
     });
 
   } else {
@@ -37,6 +43,7 @@ router.get("/add", (req, res) => {
 });
 
 // 02. Publish post view
+// A. Configure storage engine and filename
 const postsImageStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/uploads/posts");
@@ -47,56 +54,115 @@ const postsImageStorage = multer.diskStorage({
   },
 });
 
-let upload4posts = multer({ storage: postsImageStorage });
-router.post("/insert", upload4posts.single("post_image"), (req, res, next) => {
-  let file = req.file;
-  let post_title = fun.addSlashes(req.body.post_title);
-  let post_text = fun.addSlashes(req.body.post_text);
-  let post_image = req.file.filename;
-  let post_category = req.body.post_category;
-
-  if (file) {
-    if (post_title.length >= 10 && post_text.length >= 100) {
-      if (
-        file.mimetype === "image/jpeg" ||
-        file.mimetype === "image/webp" ||
-        file.mimetype === "image/png"
-      ) {
-        // IF SUCCESSFUL
-        let sql =
-          "INSERT INTO posts(post_title, post_text, post_image, post_author, post_slug, post_category) VALUES ('" +
-          post_title +
-          "', '" +
-          post_text +
-          "', '" +
-          post_image +
-          "', '" +
-          req.session.adminId +
-          "', '" +
-          "p-"+fun.slugify(post_title) +
-          "', '" +
-          post_category +
-          "')";
-        con.query(sql, function (err, result) {
-          if (err) {
-            req.flash("fmessage", "Error occurred in database!");
-            res.redirect("/posts/add");
-          } else {
-            res.redirect("/posts/all"); // When
-          }
-        });
-      } else {
-        req.flash("fmessage", "Only PNG, JPG and WEBP images are allowed!");
-        res.redirect("/posts/add");
-      }
-    } else {
-      req.flash("fmessage", "Post title or text is too short!");
-      res.redirect("/posts/add");
-    }
+// B. Custom function to check the file type
+function gadCheckFileType(file, cb) {
+  const filetypes = /jpeg|jpg|png|gif|webp/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+  if (mimetype && extname) {
+      return cb(null, true);
   } else {
-    req.flash("fmessage", "Please upload a file!");
-    res.redirect("/posts/add");
+      cb('Image should have jpeg, jpg, png, gif and WebP extensions');
   }
+}
+
+// C. Add file type validation
+const upload4posts = multer({
+  storage: postsImageStorage,
+  limits: { fileSize: (1024 * 1024) * 5 }, // size is limited to 5 MB
+  fileFilter: (req, file, cb) => {
+      gadCheckFileType(file, cb);
+  }
+}).single('post_image');
+
+router.post("/insert", (req, res) => {
+  upload4posts(req, res, (err) => {
+    let post_title = fun.addSlashes(req.body.post_title);
+    let post_text = fun.addSlashes(req.body.post_text);
+    let post_image = req.file.filename;
+    let post_category = req.body.post_category;
+
+    const internals = {
+      title: "Make a post (Press Release)",
+      breadcrumbL1: "Post",
+      breadcrumbL2: "New",
+      role: req.session.role,
+      admin_id: req.session.admin_id,
+      username: req.session.username,
+      telephone: req.session.telephone,
+      fullName: `${req.session.firstname} ${req.session.lastname}`,
+      funs: fun
+    };
+
+      if (!err) {
+          if (post_title.length != 0 && post_text.length != 0 && post_category.length != 0) {
+              if (req.file) {
+                  if (post_title.length >= 10 && post_text.length >= 100) {
+                      // ON SUCCESSFUL ACTS
+                      let postsData = {
+                        post_title: fun.addSlashes(post_title),
+                        post_text: fun.addSlashes(post_text),
+                        post_image: post_image,
+                        post_author: req.session.admin_id,
+                        post_slug: "p-"+fun.slugify(post_title),
+                        post_category: post_category
+                      };
+
+                      con.query("INSERT INTO posts SET ?", postsData, (err, results, fields) => {
+                          if (err) {
+                              req.flash("fmessage", "Error occurred in database!");
+                              res.render("admin/posts/add-post", {
+                                  layout: "./layouts/LAdmin",
+                                  internals,
+                                  message: req.flash("fmessage"),
+                                  post_title, post_text, post_category
+                              })
+                          } else {
+                            res.redirect("/posts/all");
+                          }
+                      });
+                  } else {
+                      req.flash("fmessage", "The title or description is too short!");
+                      res.render("admin/posts/add-post", {
+                          layout: "./layouts/LAdmin",
+                          internals,
+                          message: req.flash("fmessage"),
+                          post_title, post_text, post_category
+                      })
+                      let fs = require("fs");
+                      let path2file = "public/uploads/posts/" + post_image;
+                      if (fs.existsSync(path2file)) {
+                          fs.unlinkSync(path2file);
+                      }
+                  }
+              } else {
+                  req.flash("fmessage", "No file uploaded");
+                  res.render("admin/posts/add-post", {
+                      layout: "./layouts/LAdmin",
+                      internals,
+                      message: req.flash("fmessage"),
+                      post_title, post_text, post_category
+                  })
+              }
+          } else {
+              req.flash("fmessage", "All fields are required!");
+              res.render("admin/posts/add-post", {
+                  layout: "./layouts/LAdmin",
+                  internals,
+                  message: req.flash("fmessage"),
+                  post_title, post_text, post_category
+              })
+          }
+      } else {
+          req.flash("fmessage", "ERROR: " + err);
+          res.render("admin/posts/add-post", {
+              layout: "./layouts/LAdmin",
+              internals,
+              message: req.flash("fmessage"),
+              post_title, post_text, post_category
+          })
+      }
+  })
 });
 
 
@@ -108,7 +174,7 @@ router.get(["/all"], (req, res) => {
       breadcrumbL1: "Posts",
       breadcrumbL2: "All",
       role: req.session.role,
-      adminId: req.session.adminId,
+      admin_id: req.session.admin_id,
       username: req.session.username,
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
@@ -292,35 +358,32 @@ router.get("/edit-image/(:id)", (req, res, next) => {
   });
 });
 
-
-
-// 08. Update Image HTML view:
-router.post("/update-image/(:id)", upload4posts.single("post_image"), (req, res, next) => {
+router.post("/update-image/(:id)", (req, res) => {
   let id = req.params.id;
-  let file = req.file;
   let post_image = req.file.filename;
-
-  if (file) {
-    if (file.mimetype === "image/jpeg" || file.mimetype === "image/webp" || file.mimetype === "image/png") {
-      let sql = `UPDATE posts SET post_image ='${post_image}' WHERE post_id=${id}`;
-      con.query(sql, (err, result) => {
-        if (err) {
-          req.flash("fmessage", "Error occurred in database!");
-          res.redirect("/posts/add");
-        } else {
-          res.redirect("/posts/all");
-        }
-      });
+  upload4posts(req, res, (err) => {
+    if (!err) {
+      if (req.file) {
+        // ON SUCCESSFUL
+        let sql = `UPDATE posts SET post_image ='${post_image}' WHERE post_id=${id}`;
+        con.query(sql, (err, result) => {
+          if (err) {
+            req.flash("fmessage", "Error occurred in database!");
+            res.redirect(`/posts/edit/${id}`);
+          } else {
+            res.redirect("/posts/all");
+          }
+        });
+      } else {
+        req.flash("fmessage", "No file uploaded");
+        res.redirect(`/posts/edit/${id}`);
+      }
     } else {
-      req.flash("fmessage", "Only PNG, JPG and WEBP images are allowed!");
+      req.flash("fmessage", "ERROR: " + err);
       res.redirect(`/posts/edit/${id}`);
     }
-  } else {
-    req.flash("fmessage", "Please upload a new picture!");
-    res.redirect(`/posts/edit/${id}`);
-  }
+  })
 });
-
 
 
 // Export this

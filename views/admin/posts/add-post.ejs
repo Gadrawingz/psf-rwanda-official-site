@@ -20,11 +20,15 @@
                             <div class="was-validated">
                                 <label for="post_category" class="form-label"><strong>Category of Press Release</strong></label>
                                 <select class="form-select" id="post_category" required="" name="post_category">
-                                    <option selected="" disabled="" value="">Choose category...</option>
+                                    <option value="<%= post_category %>"><%= post_category %></option>
+                                    <option value="PSF">PSF</option>
+                                    <option value="GBF">GBF</option>
+                                    <option value="RITF-EXPO">RITF-EXPO</option>
                                     <option value="Marketing">Marketing</option>
                                     <option value="Exhibition">Exhibition</option>
-                                    <option value="E-Commerce">E-Commerce</option>
-                                    <option value="I.B.I">I.B.I</option>
+                                    <option value="BRC">BRC</option>
+                                    <option value="IBI">IBI</option>
+                                    <option value="MSME">MSME</option>
                                 </select>
                                 <div class="invalid-feedback">Please select a category that matchs the post.</div>
                             </div>
@@ -42,7 +46,7 @@
                             <div class="was-validated">
                                 <label for="post_title" class="form-label"><strong>Title of Press Release</strong></label>
                                 <input type="text" class="form-control" id="post_title" name="post_title"
-                                    required="">
+                                    value="<%= post_title %>">
                                 <div class="invalid-feedback">Please add meaningful post title.</div>
                             </div>
                         </div> 
@@ -50,7 +54,7 @@
                         <div class="col-12">
                             <div class="was-validated mb-2">
                                 <label for="post_text" class="form-label"><strong>Post</strong></label>
-                                <textarea class="summernote" name="post_text" id="post_text" required></textarea>
+                                <textarea class="summernote" name="post_text" id="post_text" required><%= post_text %><%= internals.funs.trancateStr(post_text).replace(/<[^>]*>?/gm, '') %></textarea>
                                 <div class="invalid-feedback">Please write the post in the textarea.</div>
                             </div>
                         </div>

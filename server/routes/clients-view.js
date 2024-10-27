@@ -8,6 +8,7 @@ const stripTags = require('striptags')
 const router = express.Router()
 const con = require("../config/database");
 const fun = require("../config/functions");
+const moment = require('moment/moment');
 
 // Routes for View Single post
 router.get("/post/(:slug)", (req, res) => {
@@ -24,7 +25,8 @@ router.get("/post/(:slug)", (req, res) => {
                 data: rows,
                 asideData: rows2,
                 stripTags: stripTags,
-                funs: fun // 2use fx in ejs
+                funs: fun, // 2use fx in ejs
+                moment: moment,
             };
 
             if (!error) {
