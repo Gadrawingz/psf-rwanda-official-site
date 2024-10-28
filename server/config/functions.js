@@ -5,6 +5,22 @@ module.exports = {
         let thisVar = (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
         return thisVar;
     },
+
+     addSlashes2: function(str) {
+        str = str.replace(/\\/g, '\\\\');
+        str = str.replace(/\'/g, '\\\'');
+        str = str.replace(/\"/g, '\\"');
+        str = str.replace(/\0/g, '\\0');
+        return str;
+    },
+
+    stripSlashes: function(str) {
+        str = str.replace(/\\'/g, '\'');
+        str = str.replace(/\\"/g, '"');
+        str = str.replace(/\\0/g, '\0');
+        str = str.replace(/\\\\/g, '\\');
+        return str;
+    },
     
     truncateString: (str, num) => {
         return (str.length > num) ? str.slice(0, num-1) + '&hellip;' : str;

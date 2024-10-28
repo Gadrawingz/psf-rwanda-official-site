@@ -3073,7 +3073,8 @@ a.search-toggler{
 }
 .portfolio-card-text a{
 	font-size: 16px;
-	color: var(--thm-black);
+	color: #f2ea8c;
+
 	font-weight: 800;
 }
 .portfolio-card-title{
