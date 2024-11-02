@@ -13,10 +13,10 @@ const moment = require('moment/moment');
 // Routes for View Single post
 router.get("/post/(:slug)", (req, res) => {
     let slug = req.params.slug;
-    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.firstname AS author_fn, ad.lastname AS author_ln, ad.gender, ad.role FROM posts po LEFT JOIN admin ad ON ad.admin_id = po.post_author WHERE po.post_slug='" + slug + "'", (error, rows) => {
+    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.firstname AS author_fn, ad.lastname AS author_ln, ad.gender, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author WHERE po.post_slug='" + slug + "'", (error, rows) => {
 
         // Inside, We fetch all related posts but limited to 8
-        con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN admin ad ON ad.admin_id = po.post_author ORDER BY po.post_title ASC LIMIT 8", (error2, rows2) => {
+        con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_title ASC LIMIT 8", (error2, rows2) => {
             let internals = {
                 title: rows[0].post_title,
                 description: "",

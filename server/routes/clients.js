@@ -18,7 +18,7 @@ router.use(flash())
 
 // Home page
 router.get(['', '/home'], (req, res) => {
-    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN admin ad ON ad.admin_id = po.post_author ORDER BY po.post_date DESC LIMIT 3", (error, rows) => {    
+    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_date DESC LIMIT 3", (error, rows) => {    
 
         const internals = {
             title: "Home page",
@@ -195,7 +195,7 @@ router.get('/team-staff', (req, res) => {
 
 // Routes for Media
 router.get('/press', (req, res) => {
-    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN admin ad ON ad.admin_id = po.post_author ORDER BY po.post_date DESC LIMIT 12", (error, rows) => {
+    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_date DESC LIMIT 12", (error, rows) => {
         let internals = {
             title: "All recent press Releases",
             description: "",
@@ -249,7 +249,7 @@ router.get('/publications', (req, res) => {
             title : "View all publications",
             description: "",
             hasFullFooter: true,
-            adminId: req.session.adminId,
+            user_id: req.session.user_id,
             username: req.session.username,
             telephone: req.session.telephone,
             data: rows
@@ -317,7 +317,7 @@ router.post('/contact-to-db', (req, res) => {
 
 router.get('/support', (req, res) => {
     const internals = {
-        title: "Suppport/FAQs ",
+        title: "Support / F.A.Qs",
         description: "",
         hasFullFooter: true,
     }

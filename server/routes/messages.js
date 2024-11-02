@@ -18,7 +18,7 @@ router.get(['/', '/inbox'], (req, res) => {
             breadcrumbL1: "Messages",
             breadcrumbL2: "All",
             role: req.session.role,
-            adminId: req.session.adminId,
+            user_id: req.session.user_id,
             username: req.session.username,
             telephone: req.session.telephone,
             fullName: `${req.session.firstname} ${req.session.lastname}`,

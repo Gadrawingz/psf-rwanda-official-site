@@ -177,7 +177,7 @@ router.get('/all', (req, res) => {
             breadcrumbL1: "Events",
             breadcrumbL2: "All",
             role: req.session.role,
-            admin_id: req.session.admin_id,
+            user_id: req.session.user_id,
             username: req.session.username,
             telephone: req.session.telephone,
             fullName: `${req.session.firstname} ${req.session.lastname}`,

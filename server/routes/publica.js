@@ -79,7 +79,7 @@ router.get("/all", (req, res) => {
     (error, rows) => {
       const internals = {
         title: "View all publications",
-        adminId: req.session.adminId,
+        user_id: req.session.user_id,
         username: req.session.username,
         telephone: req.session.telephone,
         data: rows,

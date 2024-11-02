@@ -15,7 +15,7 @@ const flash = require("express-flash");
 const session = require("express-session");
 router.use(flash());
 
-// 01. Forgot admin password view
+// 01. Forgot user password view
 router.get("/forgot-password", (req, res) => {
   const internals = {
     title: "Reset Password",
@@ -28,7 +28,7 @@ router.get("/forgot-password", (req, res) => {
 });
 
 
-// 02. Forgot admin post
+// 02. Forgot User post
 router.post("/forgot-password-post", (req, res) => {
   req.flash("flashError", "Please contact in IT Department");
   res.redirect("/panel/forgot-password");
@@ -50,11 +50,11 @@ router.get("/login", (req, res) => {
 // 04. Admin Login Authentication
 router.post("/login-auth", (req, res) => {
   let email = req.body.email;
-  let role = req.body.admin_role;
+  let role = req.body.user_role;
   let password = req.body.password;
 
   if (email.length!=0 && role.length!=0 && password.length!=0) {
-    con.query('SELECT * FROM admin WHERE email = ? AND role = ?', [email, role], (error, results, fields) => {
+    con.query('SELECT * FROM site_users WHERE email = ? AND role = ?', [email, role], (error, results, fields) => {
       if (error) {
         req.flash("flashError", "Internal Error (in the system)!");
         res.redirect("/panel/login");
@@ -67,7 +67,7 @@ router.post("/login-auth", (req, res) => {
             // If everything is okay, initialize session
             req.session.loggedin = true;
             req.session.role = results[0].role;
-            req.session.admin_id = results[0].admin_id;
+            req.session.user_id = results[0].user_id;
             req.session.username = results[0].username;
             req.session.firstname = results[0].firstname;
             req.session.lastname = results[0].lastname;
@@ -103,8 +103,8 @@ router.get(["", "/dashboard"], (req, res) => {
       breadcrumbL1: "Dashboard",
       breadcrumbL2: "Home",
       // Logged-in user details
-      admin_role: req.session.admin_role,
-      admin_id: req.session.admin_id,
+      user_role: req.session.user_role,
+      user_id: req.session.user_id,
       username: req.session.username,
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
@@ -141,15 +141,15 @@ router.get("/logout", (req, res) => {
  * This section below will be using Admin Template
  * ***********************************************/
 
-// 07. Register a new admin
+// 07. Register a new user
 router.get("/register", (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
     const internals = {
-      title: "Register new admin",
+      title: "Register new user",
       breadcrumbL1: "Admin",
       breadcrumbL2: "Registration",
       role: req.session.role,
-      admin_id: req.session.admin_id,
+      user_id: req.session.user_id,
       username: req.session.username,
       telephone: req.session.telephone,
       fullName: `${req.session.firstname} ${req.session.lastname}`,
@@ -173,11 +173,11 @@ router.get("/register", (req, res) => {
 router.post('/register-admin', (req, res) => {
 
   let internals = {
-    title: "Register new admin",
+    title: "Register new user",
     breadcrumbL1: "Admin",
     breadcrumbL2: "Registration",
     role: req.session.role,
-    admin_id: req.session.admin_id,
+    user_id: req.session.user_id,
     username: req.session.username,
     telephone: req.session.telephone,
     fullName: `${req.session.firstname} ${req.session.lastname}`,
@@ -199,7 +199,7 @@ router.post('/register-admin', (req, res) => {
       // Regular Expression for strong password validation
       let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
       if(regex.test(pw)==true) {
-        let sqlTelValid = "SELECT COUNT(*) AS valid_count FROM admin WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"'";
+        let sqlTelValid = "SELECT COUNT(*) AS valid_count FROM site_users WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"'";
         con.query(sqlTelValid, (err, results) => {
           if (err) {
             req.flash("fmessage", "Internal Error with DB!");
@@ -219,14 +219,14 @@ router.post('/register-admin', (req, res) => {
             const salt = bcrypt.genSaltSync(saltRounds);
             const hashedPass = bcrypt.hashSync(pw, salt)
 
-            let adminData = {
+            let userData = {
               firstname: fn, lastname: ln, username: un, gender: gd, 
               telephone: te, email: em, role: ro, password: hashedPass,
             }
 
-            con.query('INSERT INTO `admin` SET ?', adminData, (err, result) => {
+            con.query('INSERT INTO `site_users` SET ?', userData, (err, result) => {
               if(!err) {
-                res.redirect('/panel/admins');
+                res.redirect('/panel/users');
               }
             })
           } else {
@@ -270,26 +270,26 @@ router.post('/register-admin', (req, res) => {
 
 
 // 08. Retrieve all system users.
-router.get("/admins", (req, res) => {
+router.get("/users", (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
-    con.query("SELECT * FROM admin", (error, rows) => {
+    con.query("SELECT * FROM site_users", (error, rows) => {
       let internals = {
-        title: "All PSF admins",
-        admin_id: req.session.admin_id,
+        title: "All PSF users",
+        user_id: req.session.user_id,
         username: req.session.username,
         telephone: req.session.telephone,
         data: rows, // selected ones
       };
       
       if (!error) {
-        res.render("admin/account/admins", {
+        res.render("admin/account/users", {
           layout: "./layouts/LAdmin",
           internals,
           message: "",
         });
       } else {
         req.flash("flashError", "No data available");
-        res.render("admin/account/admins", {
+        res.render("admin/account/users", {
           layout: "./layouts/LAdmin",
           internals,
           message: req.flash("fmessage"),
@@ -297,7 +297,7 @@ router.get("/admins", (req, res) => {
       }
     });
   } else {
-    req.flash("flashError", "Login to view admins");
+    req.flash("flashError", "Login to view users");
     res.redirect("/panel/login");
   }
 });
@@ -306,14 +306,14 @@ router.get("/admins", (req, res) => {
 // 09. Change admin status to 'Inactive'
 router.get('/deactivate/(:theId)', (req, res) => {
     let id = req.params.theId;
-    let sql = "UPDATE admin SET status = ? WHERE admin_id = ?";
+    let sql = "UPDATE site_users SET status = ? WHERE user_id = ?";
     con.query(sql, ['Inactive', id], (error, result, fields) => {
         if(error) {
             req.flash('flashError', "Cannot change the status");
-            res.redirect('/panel/admins');
+            res.redirect('/panel/users');
         } else {
             req.flash('success', "Admin status chenged to Inactive!");
-            res.redirect('/panel/admins');
+            res.redirect('/panel/users');
         } 
     })
 })
@@ -321,14 +321,14 @@ router.get('/deactivate/(:theId)', (req, res) => {
 // 10. Change admin status to 'Active'
 router.get('/activate/(:theId)', (req, res) => {
   let id = req.params.theId;
-  let sql = "UPDATE admin SET status = ? WHERE admin_id = ?";
+  let sql = "UPDATE site_users SET status = ? WHERE user_id = ?";
   con.query(sql, ['Active', id], (error, result, fields) => {
       if(error) {
           req.flash('flashError', "Cannot change the status");
-          res.redirect('/panel/admins');
+          res.redirect('/panel/users');
       } else {
           req.flash('success', "Admin status chenged to Inactive!");
-          res.redirect('/panel/admins');
+          res.redirect('/panel/users');
       } 
   })
 })
@@ -338,12 +338,12 @@ router.get('/activate/(:theId)', (req, res) => {
 // 11. Edit published posts view:
 router.get("/edit/(:id)", (req, res, next) => {
   let id = req.params.id;
-  let sql = `SELECT * FROM admin WHERE admin_id= ${id}`;
+  let sql = `SELECT * FROM site_users WHERE user_id= ${id}`;
   con.query(sql, (err, rows, fields) => {
     if (err) throw err;
     const internals = {
       title: `Update ${rows[0].firstname}'s info`,
-      admin_id: rows[0].admin_id,
+      user_id: rows[0].user_id,
       firstname: rows[0].firstname,
       lastname: rows[0].lastname,
       username: rows[0].username,
@@ -356,7 +356,7 @@ router.get("/edit/(:id)", (req, res, next) => {
 
     if (rows.length <= 0) {
       req.flash("error", `Admin not found id ${id}`);
-      res.redirect("/panel/admins");
+      res.redirect("/panel/users");
     } else {
       res.render("admin/account/edit-profile", {
         layout: "./layouts/LAdmin",
@@ -369,14 +369,14 @@ router.get("/edit/(:id)", (req, res, next) => {
 
 
 // 12. Update admin profile 
-router.post('/update-admin/(:id)', (req, res) => {
+router.post('/update-user/(:id)', (req, res) => {
   let id = req.params.id;
   let internals = {
-    title: "Update this admin",
+    title: "Update this User",
     breadcrumbL1: "Admin",
     breadcrumbL2: "Registration",
     role: req.session.role,
-    admin_id: req.session.admin_id,
+    user_id: req.session.user_id,
     username: req.session.username,
     telephone: req.session.telephone,
     fullName: `${req.session.firstname} ${req.session.lastname}`,
@@ -394,7 +394,7 @@ router.post('/update-admin/(:id)', (req, res) => {
   if (fn.length != 0 && ln.length != 0 && un.length != 0 && gd.length != 0 && te.length != 0 && 
     em.length != 0 && ro.length != 0) {
     if(te.length >= 10) {
-        let sqlTelValid = "SELECT COUNT(*) AS valid_count FROM admin WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"' ";
+        let sqlTelValid = "SELECT COUNT(*) AS valid_count FROM site_users WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"' ";
         con.query(sqlTelValid, (err, results) => {
           if (err) {
             req.flash("fmessage", "Internal Error with DB!");
@@ -403,9 +403,9 @@ router.post('/update-admin/(:id)', (req, res) => {
 
           // If no tel|email already exist add sh**
           if(results[0].valid_count == 0 || results[0].valid_count > 0) {
-            con.query('UPDATE admin SET firstname = ?, lastname = ?, username = ?, gender = ?, telephone = ?, email = ?, role = ? WHERE admin_id = ?', [fn, ln, un, gd, te, em, ro, id], (err, result) => {
+            con.query('UPDATE site_users SET firstname = ?, lastname = ?, username = ?, gender = ?, telephone = ?, email = ?, role = ? WHERE user_id = ?', [fn, ln, un, gd, te, em, ro, id], (err, result) => {
               if(!err) {
-                res.redirect('/panel/admins');
+                res.redirect('/panel/users');
               }
             })
           } else {
@@ -427,13 +427,13 @@ router.post('/update-admin/(:id)', (req, res) => {
 // 13. Admin dashboard view
 router.get('/profile', (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
-    let id = req.session.admin_id;
-    let sql5 = `SELECT * FROM admin WHERE admin_id= ${id}`;
+    let id = req.session.user_id;
+    let sql5 = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql5, (err, rows, fields) => {
       if (err) throw err;
       const internals = {
         title: `View your profile (${rows[0].firstname})`,
-        admin_id: id,
+        user_id: id,
         firstname: rows[0].firstname,
         lastname: rows[0].lastname,
         username: rows[0].username,
@@ -458,7 +458,7 @@ router.get('/profile', (req, res) => {
 });
 
 
-// 14. Update admin profile 
+// 14. Update User profile 
 router.post('/update-self/(:id)', (req, res) => {
   let id = req.params.id;
   let fn = req.body.firstname;
@@ -469,7 +469,7 @@ router.post('/update-self/(:id)', (req, res) => {
   let em = req.body.email;
   if (fn.length != 0 && ln.length != 0 && un.length != 0 && gd.length != 0 && te.length != 0 && em.length != 0) {
     if(te.length >= 10) {
-      let sqlTel = "SELECT COUNT(*) AS valid_count FROM admin WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"' ";
+      let sqlTel = "SELECT COUNT(*) AS valid_count FROM site_users WHERE telephone='"+te+"' OR username='"+un+"' OR email='"+em+"' ";
         con.query(sqlTel, (err, results) => {
           if (err) {
             req.flash("fmessage", "Internal Error with DB!");
@@ -478,7 +478,7 @@ router.post('/update-self/(:id)', (req, res) => {
 
           // If no tel|email already exist add sh**
           if(results[0].valid_count > 0) {
-            con.query('UPDATE admin SET firstname = ?, lastname = ?, username = ?, gender = ?, telephone = ?, email = ? WHERE admin_id = ?', [fn, ln, un, gd, te, em, id], (err, result) => {
+            con.query('UPDATE site_users SET firstname = ?, lastname = ?, username = ?, gender = ?, telephone = ?, email = ? WHERE user_id = ?', [fn, ln, un, gd, te, em, id], (err, result) => {
               if(!err) {
                 res.redirect('/panel/dashboard');
               }
@@ -503,13 +503,13 @@ router.post('/update-self/(:id)', (req, res) => {
 // 15. Change password by user ...self
 router.get('/change-password', (req, res) => {
   if (req.session.loggedin === true && req.session.loggedin != undefined) {
-    let id = req.session.admin_id;
-    let sql5 = `SELECT * FROM admin WHERE admin_id= ${id}`;
+    let id = req.session.user_id;
+    let sql5 = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql5, (err, rows, fields) => {
       if (err) throw err;
       const internals = {
         title: `Change your passoword (${rows[0].firstname})`,
-        admin_id: id,
+        user_id: id,
       };
 
       res.render("admin/account/change-pass", {
@@ -530,19 +530,19 @@ router.get('/change-password', (req, res) => {
 router.post('/change-password', (req, res) => {
   let oldPass = req.body.old_pass;
   let newPass = req.body.new_pass;
-  let admin_id = req.body.admin_id;
+  let user_id = req.body.user_id;
 
   const internals = {
     title: `Change your passoword`,
-    admin_id: admin_id,
+    user_id: user_id,
   };
 
-  if (oldPass.length != 0 && newPass.length != 0 && admin_id.length != 0) {
+  if (oldPass.length != 0 && newPass.length != 0 && user_id.length != 0) {
       // Regular Expression for strong password validation
 
       let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
       if(regex.test(newPass)==true) {
-        let sqlCheck = "SELECT * FROM admin WHERE admin_id='"+admin_id+"' ";
+        let sqlCheck = "SELECT * FROM site_users WHERE user_id='"+user_id+"' ";
         con.query(sqlCheck, (err, results) => {
         
           if (err) {
@@ -561,7 +561,7 @@ router.post('/change-password', (req, res) => {
             const salt = bcrypt.genSaltSync(saltRounds);
             const hashedPass = bcrypt.hashSync(newPass, salt);
 
-            con.query('UPDATE admin SET password = ? WHERE admin_id = ?', [hashedPass, admin_id], (err, result) => {
+            con.query('UPDATE site_users SET password = ? WHERE user_id = ?', [hashedPass, user_id], (err, result) => {
               if(!err) {
                 res.redirect('/panel/profile');
               }

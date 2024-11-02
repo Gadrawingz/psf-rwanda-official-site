@@ -37,7 +37,7 @@
                 <div class="news-details-content-box">
                     <h2><%= internals.data[0].post_title %></h2>
                     <div style="line-height: 5px!important; color: #000!important;">
-                        <%- internals.data[0].post_text %>
+                        <%- internals.funs.stripSlashes(internals.data[0].post_text); %>
                     </div>
                 </div>
                 <div class="news-details-share-box">

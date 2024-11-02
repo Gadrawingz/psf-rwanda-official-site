@@ -57,17 +57,17 @@
                                 <td class="text-green">
                                     <strong><%= internals.data[g].role %></strong></td>
                                 <td class="text-center">
-                                    <a href="/panel/edit/<%= internals.data[g].admin_id %>" class="btn btn-primary" title="Edit record">
+                                    <a href="/panel/edit/<%= internals.data[g].user_id %>" class="btn btn-primary" title="Edit record">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </td>
                                 <td class="text-center">
                                     <% if(internals.data[g].status=='Inactive') { %> 
-                                    <a href="/panel/activate/<%= internals.data[g].admin_id %>" class="btn btn-success" onclick="return confirm('Do you want to activate this admin?')" title="Activate">
+                                    <a href="/panel/activate/<%= internals.data[g].user_id %>" class="btn btn-success" onclick="return confirm('Do you want to activate this user?')" title="Activate">
                                         <i class="bi bi-power"></i>
                                     </a>
                                     <% } else { %>
-                                    <a href="/panel/deactivate/<%= internals.data[g].admin_id %>" class="btn btn-danger" onclick="return confirm('Do you want to de-activate this admin?')" title="De-activate">
+                                    <a href="/panel/deactivate/<%= internals.data[g].user_id %>" class="btn btn-danger" onclick="return confirm('Do you want to de-activate this user?')" title="De-activate">
                                         <i class="bi bi-power"></i>
                                     </a>
                                     <% } %>

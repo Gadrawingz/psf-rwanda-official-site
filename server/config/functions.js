@@ -6,7 +6,7 @@ module.exports = {
         return thisVar;
     },
 
-     addSlashes2: function(str) {
+    addSlashes2: function(str) {
         str = str.replace(/\\/g, '\\\\');
         str = str.replace(/\'/g, '\\\'');
         str = str.replace(/\"/g, '\\"');
