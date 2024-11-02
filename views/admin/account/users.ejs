@@ -27,10 +27,9 @@
                                 <th>N<sup>o</sup></th>
                                 <th>Full Name</th>
                                 <th>Username</th>
-                                <th>Gender</th>
                                 <th>Status</th>
                                 <th>Phone</th>
-                                <th>Email</th>
+                                <th>Email / Position</th>
                                 <th>Role</th>
                                 <th colspan="2" class="text-center">Action</th>
                             </tr>
@@ -42,9 +41,11 @@
                                 <td>
                                     <i class="bi bi-check2-circle"></i><%= (g+1) %> 
                                 </td>
-                                <td><%= internals.data[g].firstname %> <%= internals.data[g].lastname %></td>
+                                <td>
+                                    <%= internals.data[g].firstname %> <%= internals.data[g].lastname %>
+                                    <br><strong>(<%= internals.data[g].gender %>)</strong>
+                                </td>
                                 <td><%= internals.data[g].username %></td>
-                                <td><%= internals.data[g].gender %></td>
                                 <td>
                                 <% if(internals.data[g].status=='Active') { %>
                                     <span class="text-green td-status"><i class="bi bi-check-circle"></i> Active</span>
@@ -53,15 +54,17 @@
                                 <% } %>
                                 </td>
                                 <td><%= internals.data[g].telephone %></td>
-                                <td><strong><%= internals.data[g].email %></strong></td>
+                                <td>
+                                    <strong><%= internals.data[g].email %></strong><br>
+                                    <p>(<%= internals.data[g].position %>)</p>
+                                </td>
                                 <td class="text-green">
                                     <strong><%= internals.data[g].role %></strong></td>
                                 <td class="text-center">
                                     <a href="/panel/edit/<%= internals.data[g].user_id %>" class="btn btn-primary" title="Edit record">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                </td>
-                                <td class="text-center">
+                                    <%# Activate / Deactivate --%>
                                     <% if(internals.data[g].status=='Inactive') { %> 
                                     <a href="/panel/activate/<%= internals.data[g].user_id %>" class="btn btn-success" onclick="return confirm('Do you want to activate this user?')" title="Activate">
                                         <i class="bi bi-power"></i>
@@ -71,6 +74,12 @@
                                         <i class="bi bi-power"></i>
                                     </a>
                                     <% } %>
+                                    
+                                </td>
+                                <td class="text-center">
+                                    <a href="/panel/add-more/<%= internals.data[g].user_id %>" class="btn btn-primary" title="Add more info+">
+                                        <i class="bi bi-plus"></i>
+                                    </a>
                                 </td>
                             </tr>
                             <% } %>

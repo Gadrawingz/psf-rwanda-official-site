@@ -43,6 +43,5 @@ router.get("/post/(:slug)", (req, res) => {
 
 
 
-
 // Export this router
 module.exports = router;

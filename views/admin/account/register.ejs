@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     <!-- Row start -->
-                    <form action="/panel/register-admin" method="post">
+                    <form action="/panel/register-user" method="post">
                         <div class="row">
                             <div class="col-xxl-8 col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12">
                                 <% if(message.length!=0) { %>
@@ -75,6 +75,7 @@
                                                 <option value="<%= ro %>"><%= ro %></option>
                                                 <option name="Admin">Admin</option>
                                                 <option name="Author">Author</option>
+                                                <option name="Lead">Lead</option>
                                                 <option name="Staff">Staff</option>
                                             </select>
                                         </div>
@@ -85,10 +86,15 @@
                                             <input type="password" class="form-control" id="enterPassword" name="password" value="<%= pw %>">
                                         </div>
                                     </div>
+                                    <div class="col-xxl-12 col-sm-12 col-12">
+                                        <div class="mb-3">
+                                            <label for="position" class="form-label">Position</label>
+                                            <input type="text" class="form-control" id="position" name="position" placeholder="Describe position" value="<%= po %>">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-12">
-                                <hr>
                                 <button class="btn btn-info" type="submit">Save Info</button>
                                 <button class="btn btn-danger" type="reset">Reset</button>
                             </div>

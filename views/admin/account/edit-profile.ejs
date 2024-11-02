@@ -73,15 +73,23 @@
                                             <label for="role" class="form-label">Relevant Role</label>
                                             <select class="form-control" id="role" name="role">
                                                 <option value="<%= internals.role %>"><%= internals.role %></option>
-                                                <option value="Author">Author</option>
-                                                <option value="IT">IT</option>
+                                                <option name="Admin">Admin</option>
+                                                <option name="Author">Author</option>
+                                                <option name="Lead">Lead</option>
+                                                <option name="Staff">Staff</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="col-xxl-6 col-sm-6 col-12">
                                         <div class="mb-3">
-                                            <label for="enterPassword" class="form-label">*</label><br>
+                                            <label for="position" class="form-label">Position</label>
+                                            <input type="text" class="form-control" id="position" name="position" placeholder="Describe position" value="<%= internals.position %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-12 col-sm-12 col-12">
+                                        <div class="mb-3">
                                             <button class="btn btn-info" type="submit">Save Info</button>
                                         </div>
                                     </div>

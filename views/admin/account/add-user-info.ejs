@@ -1,0 +1,96 @@
+<div class="content-wrapper">
+
+    <!-- Row start -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3><%- internals.title %></h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Row start -->
+                    <form action="/panel/update-user-info/<%= internals.user_id %>" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-xxl-8 col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12">
+                                <% if(message.length!=0) { %>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-x-circle alert-icon"></i>
+                                    <%- message %>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <% } %>
+                                
+                                <div class="row">
+                                    <div class="col-xxl-6 col-sm-6 col-12">
+                                        <div class="mb-3">
+                                            <label for="depart" class="form-label"><strong>Department</strong></label>
+                                            <select class="form-control" id="depart" name="department">
+                                                <option value="<%= depart %>"><%= depart %></option>
+                                                <option value="CEOs OFFICE">CEOs OFFICE</option>
+                                                <option value="ADVOCACY">ADVOCACY</option>
+                                                <option value="IBI">IBI</option>
+                                                <option value="BRC">BRC</option>
+                                                <option value="OPERATIONS">OPERATIONS</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-6 col-sm-6 col-12">
+                                        <div class="mb-3">
+                                            <label for="abbrev" class="form-label"><strong>Position Abbreviation</strong></label>
+                                            <input type="text" class="form-control" id="abbrev" name="abbreviation" value="<%= abbrev %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-12 col-sm-12 col-12">
+                                        <div class="mb-3">
+                                            <label for="profile" class="form-label"><strong>Profile Picture</strong></label>
+                                            <% if (profile.length > 0) { %>
+                                                <b><u>Uploaded!</u></b>
+                                                <input type="hidden" class="form-control" name="profile" value="<%= profile %>">
+                                                <input type="hidden" class="form-control" name="profile_exist" value="yes">
+                                            <% } else { %>
+                                                <input type="file" class="form-control" id="profile" name="profile">
+                                                <input type="hidden" class="form-control" name="profile_exist" value="no">
+                                            <% } %>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-12 col-sm-12 col-12">
+                                        <div class="mb-3">
+                                            <label for="biography" class="form-label"><strong>Add Biography</strong></label>
+                                            <textarea class="form-control" id="biography" name="biography" rows="3"><%= biography %></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-6 col-sm-6 col-12">
+                                        <div class="mb-3">
+                                            <label for="twitter" class="form-label"><strong>Twitter Link</strong></label>
+                                            <input type="text" class="form-control" id="twitter" name="tw_link" value="<%= tw_link %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-6 col-sm-6 col-12">
+                                        <div class="mb-3">
+                                            <label for="linkedin" class="form-label"><strong>LinkedIn Link</strong></label>
+                                            <input type="text" class="form-control" id="linkedin" name="lk_link" value="<%= lk_link %>">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-12">
+                                <button class="btn btn-info" type="submit">Update</button>
+                                <button class="btn btn-danger" type="reset">Cancel</button>
+                            </div>
+                        </div>
+                    </form><!-- Row end -->
+                </div>
+            </div><!-- Card end -->
+        </div>
+    </div>
+    <!-- Row end -->
+
+</div>
