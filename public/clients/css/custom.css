@@ -183,3 +183,32 @@
     font-family: 'Sofia'!important;
     font-weight: bolder!important;
 }
+
+.documents-link {
+    background-color: #FFF!important;
+    list-style: none!important;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+.documents-link li {
+    margin: 10px!important;
+    padding: 18px;
+}
+
+.documents-link li a{
+    text-decoration: none!important;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 0 var(--orange-higher);
+    padding: 1em 1.2em;
+}
+
+.documents-link>li>a>span{
+    border-radius: 2px!important;
+    background-color: var(--green-darker);
+    color: #FFF;
+    padding: 10px!important;
+    font-size: 18px;
+}

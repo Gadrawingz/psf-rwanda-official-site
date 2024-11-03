@@ -7,12 +7,12 @@ const multer = require('multer')
 const path = require('path')
 const router = express.Router()
 const con = require("../config/database");
+const con2 = require("../config/database2");
 const fun = require("../config/functions");
 const moment = require('moment/moment');
 
 // To be able to send flash...
 const flash = require('express-flash');
-
 router.use(flash())
 
 
@@ -240,7 +240,6 @@ router.get('/gallery', (req, res) => {
     });
 });
 
-
 // Media (Publication fetch)
 router.get('/publications', (req, res) => {
     
@@ -256,6 +255,33 @@ router.get('/publications', (req, res) => {
         }
         res.render('clients/media/publicas', { internals });
     });
+});
+
+
+// Media (Public & Private documents)
+router.get('/extract-documents', async (req, res) => {
+    try {
+        const internals = {
+            title : "Documents Extracted",
+            description: "",
+            hasFullFooter: true,
+            user_id: req.session.user_id,
+        }
+        
+        // Fetching data from multiple tables
+        const [doc2024] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2024' ORDER BY dt_id ASC");
+        const [doc2025] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2025' ORDER BY dt_id ASC");
+        
+        // Combining data
+        const combinedData = { table24: doc2024, table25: doc2025 };
+        
+        // Render data with combined data
+        res.render('clients/media/super-docs', { data: combinedData, internals });
+    } catch (error) {
+        //console.error('Error executing queries:', error);
+        //res.status(500).send('Server Error');
+        console.log('Server Error: Error with DB');
+    }
 });
 
 
