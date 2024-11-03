@@ -242,7 +242,6 @@ router.get('/gallery', (req, res) => {
 
 // Media (Publication fetch)
 router.get('/publications', (req, res) => {
-    
     con.query("SELECT * FROM publication ORDER BY pub_date DESC", (error, rows) => {
         const internals = {
             title : "View all publications",
@@ -262,7 +261,7 @@ router.get('/publications', (req, res) => {
 router.get('/extract-documents', async (req, res) => {
     try {
         const internals = {
-            title : "Documents Extracted",
+            title : "Extract - Documents",
             description: "",
             hasFullFooter: true,
             user_id: req.session.user_id,
