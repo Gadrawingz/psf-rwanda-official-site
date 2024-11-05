@@ -1,0 +1,43 @@
+<section class="document-section pt-3">
+    <div class="container">
+        <h2 class="text-center">View Documents under selected monthy</h2><hr>
+        <% if(internals.data.length > 0) { %>
+        <div class="row">
+            <% for(let g = 0; g < internals.data.length; g++) { %>
+            <div class="col-xxl-4 col-lg-12">
+                <div class="causes-card">
+                    <div class="causes-content pt-3 pb-3">
+                        <div class="causes-card-funding-list">
+                            <div class="causes-card-funding-item">
+                                <div class="causes-card-funding-amount">
+                                    <%= internals.data[g].dt_month %>/<%= internals.data[g].dt_year %>
+                                </div>
+                            </div>
+                            <div class="causes-card-funding-item">
+                                <div class="causes-card-funding-amount">
+                                    <%= internals.moment(internals.data[g].upload_date).format("DD.MM.YYYY") %>
+                                </div>
+                            </div>
+                        </div>
+                        <h4> <a href="#"><%= internals.data[g].doc_title %></a></h4>
+                        <p><%= internals.data[g].description %></p><hr>
+                        <p class="text-left">
+                            <a href="#" class="btn btn-primary">Login to view documents</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        
+        <% } else { %>
+        <div class="error-box-content text-center">
+            <br><h5>No document found &#9888;</h5>
+            <p>It looks like no document was uploaded or attached this month. Click this to return back.</p>
+        </div>
+        <div class="text-center">
+            <a href="/extract-documents" class="btn btn-primary cst-bg-green-darker"><span>Back to first page</span> <i class="fa-solid fa-arrow-right-long"></i></a>
+        </div>
+        <% } %>
+    </div>
+</section>

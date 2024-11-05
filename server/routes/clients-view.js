@@ -10,7 +10,7 @@ const con = require("../config/database");
 const fun = require("../config/functions");
 const moment = require('moment/moment');
 
-// Routes for View Single post
+// 01. Routes for View Single post
 router.get("/post/(:slug)", (req, res) => {
     let slug = req.params.slug;
     con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.firstname AS author_fn, ad.lastname AS author_ln, ad.gender, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author WHERE po.post_slug='" + slug + "'", (error, rows) => {
@@ -40,6 +40,31 @@ router.get("/post/(:slug)", (req, res) => {
     });
 });
 
+
+// 01. Routes for View Single post
+router.get("/docs/(:theId)", (req, res) => {
+    let theId = req.params.theId;
+    con.query("SELECT dc.doc_id, dc.dt_id_ref, dc.doc_title, dc.description, dc.attachment, dc.status, dc.upload_date, dt.dt_id, dt.dt_month, dt.dt_month_no, dt.dt_year, su.firstname, su.lastname, su.role FROM documents dc LEFT JOIN doc_timeline dt ON dt.dt_id=dc.dt_id_ref LEFT JOIN site_users su ON su.user_id = dc.uploader WHERE dc.dt_id_ref='"+theId+"' ORDER BY dc.upload_date DESC; ", (error, rows) => {
+
+        let internals = {
+            title: "View Documents",
+            description: "",
+            hasFullFooter: true,
+            has3RouteSegments: true,
+            data: rows,
+            stripTags: stripTags,
+            funs: fun, // 2use fx in ejs
+            moment: moment,
+        };
+
+        if (!error) {
+            res.render("clients/media/docs-view-monthly", { internals });
+        } else {
+            req.flash("fmessage", "There is an error occured");
+            res.render("clients/media/docs-view-monthly", { internals });
+        }
+    });
+});
 
 
 

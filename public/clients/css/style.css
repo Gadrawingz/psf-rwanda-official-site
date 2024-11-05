@@ -197,7 +197,7 @@ a{
 .section-tagline {
 	position: relative;
 	font-size: 20px;
-	/*color: var(--green-light);*/
+	/* color: var(--green-light); */
 	color: var(--green-main);
 	font-family: var(--thm-font);
 	text-transform: uppercase;
@@ -5287,10 +5287,15 @@ border-radius: 100px;
 	margin-bottom: 10px;
 }
 .causes-content .btn-primary{
-	padding: 11px 27px;
-	font-size: 13px;
-	font-weight: 600;
+	padding: 12px 28px;
+	font-size: 14px!important;
+	font-weight: 900!important;
 }
+
+.causes-content .btn-primary:hover{
+	background-color: var(--orange-tangerine);
+}
+
 .causes-details-section{
 	padding-top: 120px;
 	padding-bottom: 120px;

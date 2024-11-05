@@ -23,7 +23,7 @@
                     <ul class="documents-link">
                         <% data.table24.forEach(item => { %> 
                         <li>
-                            <a href="#">
+                            <a href="/view/docs/<%= item.dt_id %>">
                                 <span class="link-block"><%= item.dt_month %></span>
                             </a>
                         </li>
@@ -36,7 +36,7 @@
                     <ul class="documents-link">
                         <% data.table25.forEach(item => { %> 
                         <li>
-                            <a href="#">
+                            <a href="/view/docs/<%= item.dt_id %>">
                                 <span class="link-block"><%= item.dt_month %></span>
                             </a>
                         </li>

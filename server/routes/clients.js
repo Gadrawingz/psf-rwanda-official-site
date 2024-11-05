@@ -275,7 +275,7 @@ router.get('/extract-documents', async (req, res) => {
         const combinedData = { table24: doc2024, table25: doc2025 };
         
         // Render data with combined data
-        res.render('clients/media/super-docs', { data: combinedData, internals });
+        res.render('clients/media/extract-docs', { data: combinedData, internals });
     } catch (error) {
         //console.error('Error executing queries:', error);
         //res.status(500).send('Server Error');
