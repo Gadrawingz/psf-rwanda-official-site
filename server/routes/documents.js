@@ -48,7 +48,6 @@ router.get("/add", (req, res) => {
 });
 
 
-
 // A. Configure storage engine and filename
 const imageStorage = multer.diskStorage({
   destination: function (req, file, cb) {

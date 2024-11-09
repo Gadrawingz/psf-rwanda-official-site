@@ -49,5 +49,11 @@ module.exports = {
                  .replace(/-+/g, '-');
         return str;
     },
+    currentDateTime: () => {
+        const dt4 = new Date();
+        const padLine = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
+        return `${dt4.getFullYear()}-${padLine(dt4.getMonth()+1)}-${padLine(dt4.getDate())} ${padLine(dt4.getHours())}:${padLine(dt4.getMinutes())}:${padLine(dt4.getSeconds())}`;
+    },
+    
     currentYear: new Date().getFullYear()
 }

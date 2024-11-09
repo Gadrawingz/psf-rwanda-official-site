@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-lg-12 cst-login-container">
+        <div class="col-lg-6">
+            <div class="cst-login-content">
+                <h2><%= internals.title %></h2>
+                <p><%= internals.description %></p>
+
+                <% if (message.length!=0) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-x-circle alert-icon"></i>
+                        <%- message %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>
+
+                <form action="/login-documents-auth" class="contact-form" method="POST">
+                    <div class="row row-gutter-10">
+                        <div class="col-12 col-lg-12">
+                            <input type="email" id="email" class="input-text" placeholder="Email address" name="email" aria-required="true" />
+                        </div>
+                        <div class="col-12 col-lg-12">
+                            <input type="password" id="password" class="input-text" placeholder="Password" name="password" aria-required="true" />
+                        </div>
+                        <div class="col-12 col-lg-12">
+                            <button type="submit" class="btn btn-primary cst-bg-green-main">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

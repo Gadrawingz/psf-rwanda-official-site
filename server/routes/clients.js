@@ -4,6 +4,7 @@ clients who interacts with website
 ***********************************/
 const express = require('express')
 const multer = require('multer')
+const bcrypt = require('bcrypt');
 const path = require('path')
 const router = express.Router()
 const con = require("../config/database");
@@ -280,6 +281,75 @@ router.get('/extract-documents', async (req, res) => {
         //console.error('Error executing queries:', error);
         //res.status(500).send('Server Error');
         console.log('Server Error: Error with DB');
+    }
+});
+
+
+// Sign-up to view document: GET
+router.get('/login-documents', async (req, res) => {
+    try {
+        const internals = {
+            title : "Board member login",
+            description: "Enter valid credentials to access board documents...",
+            hasFullFooter: true,
+            user_id: req.session.user_id,
+        }
+        const message = req.flash("fmessage"); // To make flash message appear
+        res.render('clients/media/login-docs', { internals, message });
+    } catch (error) {
+        console.log('Server Error: Error with DB');
+    }
+});
+
+
+// Sign-up to view document: POST
+router.post('/login-documents-auth', (req, res) => {
+    try {
+        let email = req.body.email;
+        let password = req.body.password;
+        let loginTime = fun.currentDateTime();
+
+        if(email.length!=0 && password.length!=0) {
+            let sqlLogin = "SELECT * FROM site_users WHERE email = ? AND role = 'Lead' ";
+            con.query(sqlLogin, [email], (error, results, fields) => {
+                if (error) {
+                    req.flash("fmessage", `Internal Error (in the system)!`);
+                    res.redirect("/login-documents");
+                }
+                
+                // DATA : 01
+                if(results.length > 0) {
+                    let match = bcrypt.compareSync(password, results[0].password);
+                    if(match==true) {
+                        if(results[0].status=='Active') {
+                            req.session.loggedin = true;
+                            req.session.role = results[0].role;
+                            req.session.user_id = results[0].user_id;
+                            req.session.username = results[0].username;
+                            req.session.firstname = results[0].firstname;
+                            req.session.lastname = results[0].lastname;
+                            res.redirect("/extract-documents");
+                        } else {
+                            req.flash("fmessage", `Oops! This account is not activated!`);
+                            res.redirect("/login-documents");
+                        }
+                    } else {
+                        req.flash("fmessage", "Wrong password!");
+                        res.redirect("/login-documents");
+                    }
+                } else {
+                    req.flash("fmessage", "Only board members or staff members with permission are allowed!");
+                    res.redirect("/login-documents");
+                }
+            })
+        } else {
+            req.flash("flashError", "Please fill all required fields!");
+            res.redirect("/login-documents");
+            res.end();
+        }
+    } catch (error) {
+        req.flash("flashError", "Server Error : Error with DB!");
+        res.redirect("/login-documents");
     }
 });
 

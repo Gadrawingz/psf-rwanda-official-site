@@ -68,7 +68,6 @@ const upload4gallery = multer({
     }
 }).single('file_name');
 
-
 // 02. Handling full gallery insert
 router.post("/insert", (req, res) => {
     upload4gallery(req, res, (err) => {

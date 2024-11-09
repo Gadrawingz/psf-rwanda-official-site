@@ -37,6 +37,7 @@ router.post("/forgot-password-post", (req, res) => {
   res.redirect("/panel/forgot-password");
 });
 
+
 // 03. Admin Login view
 router.get("/login", (req, res) => {
   const internals = {
@@ -664,6 +665,7 @@ const upload4profile = multer({
     imageCheckFileType(file, cb);
   }
 }).single('profile');
+
 
 // 18. Post user info with image:
 router.post('/update-user-info/(:id)', (req, res) => {
