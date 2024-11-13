@@ -85,13 +85,47 @@ router.get('/clusters', (req, res) => {
     res.render('clients/membership/clusters', { internals });
 });
 
-router.get('/associations', (req, res) => {
-    const internals = {
-        title: "Associations per Clusters",
+router.get('/associations', async(req, res) => {
+    let internals = {
+        title: "Associations per clusters",
         description: "",
         hasFullFooter: true,
+        has3RouteSegments: false,
+        funs: fun,
+        moment: moment
+    };
+
+    try {
+        // Fetching data...
+        const [infoAgro] = await con2.query(
+            "SELECT * FROM associations WHERE cluster_name='Agriculture' ORDER BY association ASC LIMIT 5"
+        );
+        const [infoTrade] = await con2.query(
+            "SELECT * FROM associations WHERE cluster_name='Trade' ORDER BY association ASC LIMIT 5"
+        );
+        const [infoService] = await con2.query(
+            "SELECT * FROM associations WHERE cluster_name='Service' ORDER BY association ASC LIMIT 5"
+        );
+        const [infoIndustry] = await con2.query(
+            "SELECT * FROM associations WHERE cluster_name='Industry' ORDER BY association ASC LIMIT 5"
+        );
+        const [infoSpecialized] = await con2.query(
+            "SELECT * FROM associations WHERE cluster_name='Specialized' ORDER BY association ASC LIMIT 5"
+        );
+
+        const combinedData = { 
+            tableAgro: infoAgro, tableTrade: infoTrade,
+            tableServ: infoService, tableIndu: infoIndustry, tableSpec: infoSpecialized
+        };
+
+        res.render('clients/membership/associations', { 
+            data: combinedData, internals
+        });
+
+    } catch (error) {
+        console.log('Server Error: Error with DB');
     }
-    res.render('clients/membership/associations', { internals });
+
 });
 
 router.get('/golden-circle', (req, res) => {
@@ -162,7 +196,6 @@ router.get('/ritf-expo', (req, res) => {
     }
     res.render('clients/events/ritf-expo', { internals });
 });
-
 
 
 // Routes for Teams
@@ -274,7 +307,7 @@ router.get('/extract-documents', async (req, res) => {
         
         // Combining data
         const combinedData = { table24: doc2024, table25: doc2025 };
-        
+
         // Render data with combined data
         res.render('clients/media/extract-docs', { data: combinedData, internals });
     } catch (error) {

@@ -10,7 +10,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 5005 || process.env.PORT;
 
-
 // Setting up custom default layout
 app.set('layout', './layouts/LClients');
 app.set('view engine', 'ejs');
