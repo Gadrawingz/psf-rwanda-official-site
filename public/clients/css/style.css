@@ -144,10 +144,19 @@ p{
 
 a{
 	text-decoration: none;
-	/*color: var(--thm-white);*/
 	color: #52da8d;
 	transition: all 500ms ease;
 }
+
+.link-white {
+	color: var(--thm-white);;
+}
+
+.link-white:hover {
+	color: var(--orange-low)!important;
+	border-bottom: 2px solid burlywood!important;
+}
+
 .row-gutter-30 {
 	--bs-gutter-x: 30px;
 	--bs-gutter-y: 30px;

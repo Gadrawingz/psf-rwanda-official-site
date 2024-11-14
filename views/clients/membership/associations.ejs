@@ -54,7 +54,7 @@
                         <% }) %>
                         <tr>
                             <td colspan="6" class="outable-bluely">
-                                <a href="#" class="text-center">View more associations </a>
+                                <a href="/view/cluster/agriculture" class="text-center">View more associations </a>
                             </td>
                         </tr>
                     </tbody>
@@ -107,7 +107,7 @@
                         <% }) %>
                         <tr>
                             <td colspan="6" class="outable-bluely">
-                                <a href="#" class="text-center">View more associations </a>
+                                <a href="/view/cluster/trade" class="text-center">View more associations </a>
                             </td>
                         </tr>
                     </tbody>
@@ -160,7 +160,7 @@
                         <% }) %>
                         <tr>
                             <td colspan="6" class="outable-bluely">
-                                <a href="#" class="text-center">View more associations </a>
+                                <a href="/view/cluster/service" class="text-center">View more associations </a>
                             </td>
                         </tr>
                     </tbody>
@@ -213,7 +213,61 @@
                         <% }) %>
                         <tr>
                             <td colspan="6" class="outable-bluely">
-                                <a href="#" class="text-center">View more associations </a>
+                                <a href="/view/cluster/industry" class="text-center">View more associations </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <% } else { %>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6" class="text-center">No Data Found At The Moment!</td>
+                        </tr>
+                    </tfoot>
+                    <% } %>
+                    </tr>
+                </table>
+            </div><br><br>
+
+
+
+            <!--BLOCK 5 -->
+            <div class="section-title-box text-center mt-5">
+                <div class="section-tagline">ASSOCIATIONS IN &OpenCurlyDoubleQuote;SPECIALIZED&CloseCurlyDoubleQuote; CLUSTER</div>
+            </div><hr>
+            <div class="col-lg-12">
+                <table class="cst-outable">
+                    <thead>
+                        <tr>
+                            <th>N<sup>o</sup></th>
+                            <th>Association Name</th>
+                            <th>Cruster</th>
+                            <th>Leader Name (Position)</th>
+                            <th>Company Name</th>
+                            <th>Telephone (Email)</th>
+                        </tr>
+                    </thead>
+                    
+                    <% if(data.tableSpec.length > 0) { %>
+                    <tbody>
+                        <% data.tableSpec.forEach(row => { %>
+                        <tr>
+                            <td>#</td>
+                            <td><%= row.association %></td>
+                            <td><%= row.cluster_name; %></td>
+                            <td>
+                                <%= row.leader_name; %><br>
+                                <%= row.leader_position; %>
+                            </td>
+                            <td><%= row.company; %></td>
+                            <td>
+                                <%= row.telephone; %><br>
+                                <%= row.email; %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                        <tr>
+                            <td colspan="6" class="outable-bluely">
+                                <a href="/view/cluster/specialized" class="text-center">View more associations </a>
                             </td>
                         </tr>
                     </tbody>
@@ -227,7 +281,6 @@
                     </tr>
                 </table>
             </div>
-
 
         </div>
     </div>

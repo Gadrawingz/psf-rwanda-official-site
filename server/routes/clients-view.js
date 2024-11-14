@@ -22,6 +22,7 @@ router.get("/post/(:slug)", (req, res) => {
                 title: rows[0].post_title,
                 description: "",
                 hasFullFooter: true,
+                inUser: req.session.in_user,
                 has3RouteSegments: true,
                 data: rows,
                 asideData: rows2,
@@ -52,6 +53,7 @@ router.get("/docs/(:theId)", (req, res) => {
             title: "View Documents",
             description: "",
             hasFullFooter: true,
+            inUser: req.session.in_user,
             has3RouteSegments: true,
             data: rows,
             stripTags: stripTags,
@@ -79,6 +81,7 @@ router.get("/read-doc/(:theId)", (req, res) => {
             title: "Read this document",
             description: "",
             hasFullFooter: true,
+            inUser: req.session.in_user,
             has3RouteSegments: true,
             doc_title: rows[0].doc_title,
             attachment: rows[0].attachment
@@ -106,6 +109,7 @@ router.get('/cluster/(:slug)', async(req, res) => {
                     title: `${rows[0].cluster_name}'s info`,
                     description: `${rows[0].description}`,
                     hasFullFooter: true,
+                    inUser: req.session.in_user,
                     has3RouteSegments: true,
                     stripTags: stripTags
                 };

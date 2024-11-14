@@ -3,6 +3,7 @@ This page shows all the routes for the
 clients who interacts with website
 ***********************************/
 const express = require('express')
+const session = require('express-session');
 const multer = require('multer')
 const bcrypt = require('bcrypt');
 const path = require('path')
@@ -19,15 +20,15 @@ router.use(flash())
 
 // Home page
 router.get(['', '/home'], (req, res) => {
-    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_date DESC LIMIT 3", (error, rows) => {    
-
+    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_date DESC LIMIT 3", (error, rows) => {
         const internals = {
             title: "Home page",
             description: "Welcome official website for PSF Rwanda",
+            inUser: req.session.in_user,
             hasFullFooter: true,
             data: rows,
             funs: fun,
-            moment: moment
+            moment: moment,
         }
 
         if (!error) {
@@ -41,8 +42,10 @@ router.get('/background', (req, res) => {
     const internals = {
         title: "Our Background",
         description: "",
+        inUser: req.session.in_user,
         hasFullFooter: true,
     }
+
     res.render('clients/about/background', { internals });
 });
 
@@ -51,6 +54,7 @@ router.get('/psf-25', (req, res) => {
         title: "PSF 25",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/about/psf-25', { internals });
 });
@@ -60,6 +64,7 @@ router.get('/strategies', (req, res) => {
         title: "Strategies",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/about/strategies', { internals });
 });
@@ -69,6 +74,7 @@ router.get('/psf-business-in-rwanda', (req, res) => {
         title: "Doing Business in Rwanda",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/about/psf-business', { internals });
 });
@@ -81,6 +87,7 @@ router.get('/clusters', (req, res) => {
         title: "Membership - Clusters",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/membership/clusters', { internals });
 });
@@ -90,6 +97,7 @@ router.get('/associations', async(req, res) => {
         title: "Associations per clusters",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
         has3RouteSegments: false,
         funs: fun,
         moment: moment
@@ -133,6 +141,7 @@ router.get('/golden-circle', (req, res) => {
         title: "Golden Circle",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/membership/golden-circle', { internals });
 });
@@ -142,6 +151,7 @@ router.get('/indashyikirwa', (req, res) => {
         title: "Indashyikirwa",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/membership/indashyikirwa', { internals });
 });
@@ -151,6 +161,7 @@ router.get('/associate-members', (req, res) => {
         title: "Associate Members",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/membership/associate', { internals });
 });
@@ -164,6 +175,7 @@ router.get('/exhibitions', (req, res) => {
             title: "Events - Exhibitions",
             description: "",
             hasFullFooter: true,
+            inUser: req.session.in_user,
             has3RouteSegments: false,
             data: rows,
             funs: fun,
@@ -184,6 +196,7 @@ router.get('/gbf', (req, res) => {
         title: "Events - GBF",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/events/gbf', { internals });
 });
@@ -193,6 +206,7 @@ router.get('/ritf-expo', (req, res) => {
         title: "RITF EXPO",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/events/ritf-expo', { internals });
 });
@@ -204,6 +218,7 @@ router.get('/team-board', (req, res) => {
         title: "PSF Board",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/teams/board', { internals });
 });
@@ -213,6 +228,7 @@ router.get('/team-management', (req, res) => {
         title: "PSF Management Team",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/teams/management', { internals });
 });
@@ -222,6 +238,7 @@ router.get('/team-staff', (req, res) => {
         title: "PSF Staff",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/teams/staff', { internals });
 });
@@ -234,6 +251,7 @@ router.get('/press', (req, res) => {
             title: "All recent press Releases",
             description: "",
             hasFullFooter: true,
+            inUser: req.session.in_user,
             has3RouteSegments: false,
             data: rows,
             funs: fun, // 2use fx in ejs
@@ -258,6 +276,7 @@ router.get('/gallery', (req, res) => {
             title: "All recent images from PSF gallery",
             description: "",
             hasFullFooter: true,
+            inUser: req.session.in_user,
             has3RouteSegments: false,
             data: rows,
             funs: fun, // 2use fx in ejs
@@ -274,6 +293,7 @@ router.get('/gallery', (req, res) => {
     });
 });
 
+
 // Media (Publication fetch)
 router.get('/publications', (req, res) => {
     con.query("SELECT * FROM publication ORDER BY pub_date DESC", (error, rows) => {
@@ -281,9 +301,7 @@ router.get('/publications', (req, res) => {
             title : "View all publications",
             description: "",
             hasFullFooter: true,
-            user_id: req.session.user_id,
-            username: req.session.username,
-            telephone: req.session.telephone,
+            inUser: req.session.in_user,
             data: rows
         }
         res.render('clients/media/publicas', { internals });
@@ -298,18 +316,20 @@ router.get('/extract-documents', async (req, res) => {
             title : "Extract - Documents",
             description: "",
             hasFullFooter: true,
-            user_id: req.session.user_id,
+            inUser: req.session.in_user,
+            inUserInfo: req.session.in_user,
         }
-        
+
         // Fetching data from multiple tables
         const [doc2024] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2024' ORDER BY dt_id ASC");
         const [doc2025] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2025' ORDER BY dt_id ASC");
-        
-        // Combining data
+        // Render data with combined data
         const combinedData = { table24: doc2024, table25: doc2025 };
 
-        // Render data with combined data
-        res.render('clients/media/extract-docs', { data: combinedData, internals });
+        // Receive session initialized from login_auth 
+        // Here we get: loggedin, role, user_id, username, firstname,...
+        const inUser = req.session.in_user;
+        res.render('clients/media/extract-docs', { data: combinedData, internals, inUser });
     } catch (error) {
         //console.error('Error executing queries:', error);
         //res.status(500).send('Server Error');
@@ -325,7 +345,7 @@ router.get('/login-documents', async (req, res) => {
             title : "Board member login",
             description: "Enter valid credentials to access board documents...",
             hasFullFooter: true,
-            user_id: req.session.user_id,
+            inUser: req.session.in_user,
         }
         const message = req.flash("fmessage"); // To make flash message appear
         res.render('clients/media/login-docs', { internals, message });
@@ -355,13 +375,21 @@ router.post('/login-documents-auth', (req, res) => {
                     let match = bcrypt.compareSync(password, results[0].password);
                     if(match==true) {
                         if(results[0].status=='Active') {
-                            req.session.loggedin = true;
-                            req.session.role = results[0].role;
-                            req.session.user_id = results[0].user_id;
-                            req.session.username = results[0].username;
-                            req.session.firstname = results[0].firstname;
-                            req.session.lastname = results[0].lastname;
-                            res.redirect("/extract-documents");
+                            
+                            // Initialize session for logged in user
+                            req.session.in_user = { 
+                                loggedin : true,
+                                inFromOutSite: true,
+                                role: results[0].role,
+                                user_id: results[0].user_id, 
+                                username: results[0].username,
+                                position: results[0].position, 
+                                firstname: results[0].firstname, 
+                                lastname: results[0].lastname 
+                            };
+
+                            let activeUser = results[0].user_id;
+                            res.redirect(`/extract-documents?access_allowed=true&staff=${activeUser}`);
                         } else {
                             req.flash("fmessage", `Oops! This account is not activated!`);
                             res.redirect("/login-documents");
@@ -393,6 +421,7 @@ router.get('/services', (req, res) => {
         title: "Services",
         description: "PSF Offers various services including Advocacy, Membership, Market linkage, IBI...",
         hasFullFooter: true,
+        inUser: req.session.in_user,
         funs: fun,
     }
     res.render('clients/services/index', { internals });
@@ -404,6 +433,7 @@ router.get('/contact', (req, res) => {
         title: "Contact Us ",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     let names, email, phone, subject, cmessage = '';
     res.render('clients/about/contact', { 
@@ -426,7 +456,7 @@ router.post('/contact-to-db', (req, res) => {
         if(cmessage.length > 20) {
             let inData = {names: names, email: email, phone: phone, subject: subject, message: cmessage}
             con.query("INSERT INTO messages SET ?", inData, (err, results, fields) => {
-                if(!err) {
+                if (!err) {
                     req.flash("fmessage", "Your message has been sent!");
                     res.redirect('/contact');
                 }
@@ -448,6 +478,7 @@ router.get('/support', (req, res) => {
         title: "Support / F.A.Qs",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/about/support', { internals });
 });
@@ -458,6 +489,7 @@ router.get('/membership', (req, res) => {
         title: "PSF Membership",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/membership/memberships', { internals });
 });
@@ -468,6 +500,7 @@ router.get('/join', (req, res) => {
         title: "Join Membership",
         description: "",
         hasFullFooter: true,
+        inUser: req.session.in_user,
     }
     res.render('clients/membership/join', { internals });
 });

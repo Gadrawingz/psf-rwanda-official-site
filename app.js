@@ -29,8 +29,26 @@ app.use(session({
     }
 }))
 
+
 app.use(express.static('public/'));
 app.use(eLayout);
+
+// Middleware f(x) to check and set default session data across the pages
+app.use((req, res, next) => {
+    if (!req.session.in_user) {
+        // To check if user is logged in, if not, set default values
+        req.session.in_user = {
+            loggedin : false,
+            role: "visitor",
+            user_id: 0,
+            username: "Guest",
+            firstname: "",
+            lastname: "",
+        };
+    }
+    // Passing control to the next middleware or route handler
+    next();
+});
 
 // Routes 
 // For clients

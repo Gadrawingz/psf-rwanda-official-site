@@ -19,8 +19,11 @@
             <!-- topbar-right -->
             <div class="topbar-right">
                 <ul>
-                    <li><a href="/staff/login">Staff Mail</a></li>
-                    <li><a href="/panel/login">Admin Login</a></li>
+                    <% if (internals.inUser.loggedin) { %>
+                        <li><a class="link-white" href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">Logout (<%- internals.inUser.firstname %> <%= internals.inUser.lastname %>)</a></li> 
+                    <% } else { %>
+                        <li><a class="link-white" href="/panel/login">Login</a></li>
+                    <% } %>
                 </ul>
             </div>
         </div>

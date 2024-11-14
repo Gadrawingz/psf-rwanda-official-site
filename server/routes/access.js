@@ -67,14 +67,19 @@ router.post("/login-auth", (req, res) => {
       if(results.length > 0) {
         let match = bcrypt.compareSync(password, results[0].password);
         if(match==true) {
-          if(results[0].status=='Active') {
+          if(results[0].status=='Active') {  
             // If everything is okay, initialize session
-            req.session.loggedin = true;
-            req.session.role = results[0].role;
-            req.session.user_id = results[0].user_id;
-            req.session.username = results[0].username;
-            req.session.firstname = results[0].firstname;
-            req.session.lastname = results[0].lastname;
+            req.session.in_user = { 
+              loggedin : true,
+              inFromOutSite: false,
+              role: results[0].role,
+              user_id: results[0].user_id, 
+              position: results[0].position,
+              username: results[0].username,
+              firstname: results[0].firstname,
+              lastname: results[0].lastname 
+            };
+
             // Authenticate...
             res.redirect("/panel/dashboard");
           } else {
@@ -100,18 +105,13 @@ router.post("/login-auth", (req, res) => {
 
 // 05. Admin dashboard view
 router.get(["", "/dashboard"], (req, res) => {
-  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+  if (req.session.in_user && req.session.in_user != undefined) {
     // Local stuffs:
     const internals = {
       title: "Dashboard Page",
       breadcrumbL1: "Dashboard",
       breadcrumbL2: "Home",
-      // Logged-in user details
-      user_role: req.session.user_role,
-      user_id: req.session.user_id,
-      username: req.session.username,
-      telephone: req.session.telephone,
-      fullName: `${req.session.firstname} ${req.session.lastname}`,
+      inUser: req.session.in_user,
     };
 
     let publiCount = "X";
@@ -147,17 +147,15 @@ router.get("/logout", (req, res) => {
 
 // 07. Register a new user
 router.get("/register", (req, res) => {
-  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+  if (req.session.in_user && req.session.in_user != undefined) {
+    
     const internals = {
       title: "Register new sytem user",
       breadcrumbL1: "Admin",
       breadcrumbL2: "Registration",
-      role: req.session.role,
-      user_id: req.session.user_id,
-      username: req.session.username,
-      telephone: req.session.telephone,
-      fullName: `${req.session.firstname} ${req.session.lastname}`,
+      inUser: req.session.in_user,
     };
+
     // On insert form 1, no data on value to be there!
     let fn, ln, un, gd, te, em, ro, pw, po = ''; 
     res.render("admin/account/register", {
@@ -180,11 +178,7 @@ router.post('/register-user', (req, res) => {
     title: "Register new user",
     breadcrumbL1: "Admin",
     breadcrumbL2: "Registration",
-    role: req.session.role,
-    user_id: req.session.user_id,
-    username: req.session.username,
-    telephone: req.session.telephone,
-    fullName: `${req.session.firstname} ${req.session.lastname}`,
+    inUser: req.session.in_user,
     message: req.flash("flashMessage")
   };
 
@@ -276,13 +270,11 @@ router.post('/register-user', (req, res) => {
 
 // 08. Retrieve all system users.
 router.get("/users", (req, res) => {
-  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+  if (req.session.in_user && req.session.in_user != undefined) {
     con.query("SELECT * FROM site_users", (error, rows) => {
       let internals = {
         title: "All PSF users",
-        user_id: req.session.user_id,
-        username: req.session.username,
-        telephone: req.session.telephone,
+        inUser: req.session.in_user,
         data: rows, // selected ones
       };
       
@@ -381,11 +373,7 @@ router.post('/update-user/(:id)', (req, res) => {
     title: "Update this User",
     breadcrumbL1: "Admin",
     breadcrumbL2: "Registration",
-    role: req.session.role,
-    user_id: req.session.user_id,
-    username: req.session.username,
-    telephone: req.session.telephone,
-    fullName: `${req.session.firstname} ${req.session.lastname}`,
+    inUser: req.session.in_user,
     message: req.flash("flashMessage")
   };
 
@@ -430,10 +418,10 @@ router.post('/update-user/(:id)', (req, res) => {
   }
 });
 
-
+// PAUSE: X
 // 13. Admin dashboard view
 router.get('/profile', (req, res) => {
-  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+  if (req.session.in_user && req.session.in_user != undefined) {
     let id = req.session.user_id;
     let sql5 = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql5, (err, rows, fields) => {
@@ -509,7 +497,7 @@ router.post('/update-self/(:id)', (req, res) => {
 
 // 15. Change password by user ...self
 router.get('/change-password', (req, res) => {
-  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+  if (req.session.in_user && req.session.in_user != undefined) {
     let id = req.session.user_id;
     let sql5 = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql5, (err, rows, fields) => {
@@ -542,6 +530,7 @@ router.post('/change-password', (req, res) => {
   const internals = {
     title: `Change your passoword`,
     user_id: user_id,
+    inUser: req.session.in_user,
   };
 
   if (oldPass.length != 0 && newPass.length != 0 && user_id.length != 0) {
@@ -610,6 +599,7 @@ router.get("/add-more/(:id)", (req, res, next) => {
     const internals = {
       title: `Extra info about (${rows[0].username})`,
       user_id: rows[0].user_id,
+      inUser: req.session.in_user,
       has3RouteSegments: true,
     };
 
