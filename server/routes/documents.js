@@ -24,11 +24,7 @@ router.get("/add", (req, res) => {
         title: "Upload new document",
         breadcrumbL1: "Documents",
         breadcrumbL2: "New",
-        role: req.session.role,
-        user_id: req.session.user_id,
-        username: req.session.username,
-        telephone: req.session.telephone,
-        fullName: `${req.session.firstname} ${req.session.lastname}`,
+        inUser: req.session.in_user,
         yearsData: rows
       };
 
@@ -114,7 +110,7 @@ router.post('/insert', (req, res) => {
 
 // 03. View all uploaded documents
 router.get('/all', (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     con.query("SELECT dc.doc_id, dc.dt_id_ref, dc.doc_title, dc.description, dc.attachment, dc.status, dc.upload_date, su.firstname, su.lastname, su.telephone, su.position, su.role FROM documents dc LEFT JOIN site_users su ON su.user_id=dc.uploader ORDER BY created_at DESC", (error, rows) => {
         const internals = {
             title: "View all uploaded documents",

@@ -19,7 +19,7 @@
             <!-- topbar-right -->
             <div class="topbar-right">
                 <ul>
-                    <% if (internals.inUser.loggedin) { %>
+                    <% if ((internals.inUser.loggedin) == true) { %>
                         <li><a class="link-white" href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">Logout (<%- internals.inUser.firstname %> <%= internals.inUser.lastname %>)</a></li> 
                     <% } else { %>
                         <li><a class="link-white" href="/panel/login">Login</a></li>

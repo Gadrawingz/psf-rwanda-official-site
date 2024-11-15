@@ -73,9 +73,10 @@ router.post("/insert", upload1.single("file"), (req, res, next) => {
   }
 });
 
+
 // 03. View all publications
 router.get("/all", (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     con.query(
       "SELECT * FROM publication ORDER BY pub_date DESC",
       (error, rows) => {
@@ -113,7 +114,7 @@ router.get("/all", (req, res) => {
 router.get("/delete/(:id)", (req, res) => {
   let id = req.params.id;
 
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     // Get the item to remove
     let sql3 = `SELECT * FROM publication WHERE pub_id = ${id}`;
     con.query(sql3, (err, rows, fields) => {
@@ -156,7 +157,7 @@ router.get("/delete/(:id)", (req, res) => {
 // 05. Edit published document view:
 router.get("/edit/(:id)", (req, res, next) => {
   let id = req.params.id;
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let sql = `SELECT * FROM publication WHERE pub_id= ${id}`;
     con.query(sql, (err, rows, fields) => {
       if (err) throw err;

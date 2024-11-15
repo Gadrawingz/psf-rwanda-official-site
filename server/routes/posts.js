@@ -14,7 +14,7 @@ const moment = require('moment/moment');
 
 // 01.
 router.get("/add", (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     
     const internals = {
       title: "Make a new post (press release)",
@@ -160,7 +160,7 @@ router.post("/insert", (req, res) => {
 
 // 03. View All Posts
 router.get(["/all"], (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     con.query("SELECT * FROM posts ORDER BY post_date DESC", (error, rows) => {
       const internals = {
         title: "Press Releases (Posts)",
@@ -197,7 +197,7 @@ router.get(["/all"], (req, res) => {
 // 04. Remove post record
 router.get("/delete/(:id)", (req, res) => {
   let id = req.params.id;
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let sql3 = `SELECT * FROM posts WHERE post_id = ${id}`;
     con.query(sql3, (err, rows, fields) => {
       if (err) throw err;
@@ -237,7 +237,7 @@ router.get("/delete/(:id)", (req, res) => {
 // 05. Edit published posts view:
 router.get("/edit/(:id)", (req, res, next) => {
   let id = req.params.id;
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
     con.query(sql, (err, rows, fields) => {
       if (err) throw err;
@@ -337,7 +337,7 @@ router.post("/update/:id", (req, res, next) => {
 // 07. Get page view to update image:
 router.get("/edit-image/(:id)", (req, res, next) => {
   let id = req.params.id;
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
     con.query(sql, (err, rows, fields) => {
       if (err) throw err;

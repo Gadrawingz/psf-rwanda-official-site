@@ -47,10 +47,14 @@
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
             <div class="header-profile-actions">
               <a href="/panel/profile">Profile</a>
-              <% if (internals.inUser.loggedin=true) { %>
+              <% if ((internals.inUser.loggedin) == true) { %>
               <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
                 Logout
               </a>
+              <% } else { %>
+                <script>
+                  document.location.href = '/panel/login' 
+                </script>
               <% } %>
 
             </div>

@@ -50,10 +50,12 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // Routes 
 // For clients
 app.use('/', require('./server/routes/clients'))
 app.use('/view/', require('./server/routes/clients-view'))
+
 
 // For admin Panel
 app.use('/panel', require('./server/routes/access'))
@@ -63,6 +65,12 @@ app.use('/gallery', require('./server/routes/gallery'));
 app.use('/messages', require('./server/routes/messages'));
 app.use('/events', require('./server/routes/events'));
 app.use('/documents', require('./server/routes/documents'));
+
+
+// Redirect any URL that doesn't exist to the 404 page.
+app.get('*', function(req, res){
+    res.redirect('/view/error/404');
+});
 
 
 // Running

@@ -103,7 +103,7 @@ router.post("/login-auth", (req, res) => {
 
 // 05. Admin dashboard view
 router.get(["", "/dashboard"], (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     // Local stuffs:
     const internals = {
       title: "Dashboard Page",
@@ -145,7 +145,7 @@ router.get("/logout", (req, res) => {
 
 // 07. Register a new user
 router.get("/register", (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     const internals = {
       title: "Register new sytem user",
       breadcrumbL1: "Admin",
@@ -266,7 +266,7 @@ router.post('/register-user', (req, res) => {
 
 // 08. Retrieve all system users.
 router.get("/users", (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     con.query("SELECT * FROM site_users", (error, rows) => {
       let internals = {
         title: "All PSF users",
@@ -314,7 +314,6 @@ router.get('/deactivate/(:theId)', (req, res) => {
     req.flash("flashError", "You need to be admin for de-activation!");
     res.redirect("/panel/login");
   }
-  console.log(req.session.in_user.role)
 })
 
 // 10. Change user status to 'Active'
@@ -341,7 +340,7 @@ router.get('/activate/(:theId)', (req, res) => {
 
 // 11. Edit published posts view:
 router.get("/edit/(:id)", (req, res, next) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let id = req.params.id;
     let sql = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql, (err, rows, fields) => {
@@ -433,7 +432,7 @@ router.post('/update-user/(:id)', (req, res) => {
 // PAUSE: X
 // 13. Admin dashboard view
 router.get('/profile', (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let id = req.session.user_id;
     let sql5 = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql5, (err, rows, fields) => {
@@ -509,7 +508,7 @@ router.post('/update-self/(:id)', (req, res) => {
 
 // 15. Change password by user ...self
 router.get('/change-password', (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let id = req.session.user_id;
     let sql5 = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql5, (err, rows, fields) => {
@@ -535,7 +534,7 @@ router.get('/change-password', (req, res) => {
 
 // 16. Change pass posting
 router.post('/change-password', (req, res) => {
-  if (req.session.in_user && req.session.in_user != undefined) {
+  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let oldPass = req.body.old_pass;
     let newPass = req.body.new_pass;
     let user_id = req.body.user_id;

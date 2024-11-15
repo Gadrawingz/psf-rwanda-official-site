@@ -44,7 +44,7 @@ router.get('/mark-read/(:theId)', (req, res) => {
     let id = req.params.theId;
     let sql = "UPDATE messages SET status = ? WHERE message_id = ?";
 
-    if (req.session.in_user && req.session.in_user != undefined) {
+    if (req.session.in_user && (req.session.in_user.loggedin) == true) {
         con.query(sql, ['Read', id], (error, result, fields) => {
             if(error) {
                 req.flash('fmessage', "Cannot change the status");
@@ -65,7 +65,7 @@ router.get('/mark-read/(:theId)', (req, res) => {
 router.get('/mark-unread/(:theId)', (req, res) => {
     let id = req.params.theId;
 
-    if (req.session.in_user && req.session.in_user != undefined) {
+    if (req.session.in_user && (req.session.in_user.loggedin) == true) {
         let sql = "UPDATE messages SET status = ? WHERE message_id = ?";
         con.query(sql, ['Unread', id], (error, result, fields) => {
             if(error) {

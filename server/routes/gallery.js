@@ -12,7 +12,7 @@ const fun = require("../config/functions");
 
 // 01. Get Gallery view
 router.get("/add", (req, res) => {
-    if (req.session.in_user && req.session.in_user != undefined) {
+    if (req.session.in_user && (req.session.in_user.loggedin) == true) {
         const internals = {
             title: "Upload new gallery content",
             breadcrumbL1: "Gallery",
@@ -110,7 +110,7 @@ router.post("/insert", (req, res) => {
 
 // 03. View all images
 router.get('/all', (req, res) => {
-    if (req.session.in_user && req.session.in_user != undefined) {
+    if (req.session.in_user && (req.session.in_user.loggedin) == true) {
         con.query("SELECT * FROM gallery ORDER BY created_at DESC", (error, rows) => {
             const internals = {
                 title: "View all gallery items",
@@ -145,7 +145,7 @@ router.get('/all', (req, res) => {
 
 // 04. Remove gallery item
 router.get("/delete/(:id)", (req, res) => {
-    if (req.session.in_user && req.session.in_user != undefined) {
+    if (req.session.in_user && (req.session.in_user.loggedin) == true) {
         let id = req.params.id;
         let sql3 = `SELECT * FROM gallery WHERE gallery_id = ${id}`;
         
@@ -188,7 +188,7 @@ router.get("/delete/(:id)", (req, res) => {
 // 05. Edit gallery item:
 router.get("/edit/(:id)", (req, res, next) => {
     let id = req.params.id;
-    if (req.session.in_user && req.session.in_user != undefined) {
+    if (req.session.in_user && (req.session.in_user.loggedin) == true) {
         let sql = `SELECT * FROM gallery WHERE gallery_id= ${id}`;
         con.query(sql, (err, rows, fields) => {
             if (err) throw err;

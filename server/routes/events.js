@@ -13,7 +13,7 @@ const fun = require("../config/functions");
 // 01. Get event registration form
 router.get("/add", (req, res) => {
     let eventName, eventVenue, eventType, eventImage, startDate, endingDate, contEmail, contPhone, describing = "";
-    if (req.session.in_user && req.session.in_user != undefined){
+    if (req.session.in_user && (req.session.in_user.loggedin) == true){
         const internals = {
             title: "Event Registration",
             breadcrumbL1: "Events",
@@ -169,7 +169,7 @@ router.post("/insert", (req, res) => {
 router.get('/all', (req, res) => {
 
     con.query("SELECT * FROM events ORDER BY event_id DESC LIMIT 20", (error, rows) => {
-        if (req.session.in_user && req.session.in_user != undefined){
+        if (req.session.in_user && (req.session.in_user.loggedin) == true){
             const internals = {
                 title: "View all events in order",
                 breadcrumbL1: "Events",
@@ -203,7 +203,7 @@ router.get('/all', (req, res) => {
 
 // 04. Remove event item
 router.get("/delete/(:id)", (req, res) => {
-    if (req.session.in_user && req.session.in_user != undefined) {
+    if (req.session.in_user && (req.session.in_user.loggedin) == true) {
         let id = req.params.id;
         let sql3 = `SELECT * FROM events WHERE event_id = ${id}`;
 
@@ -244,7 +244,7 @@ router.get("/delete/(:id)", (req, res) => {
 
 // 05. Edit event item:
 router.get("/edit/(:id)", (req, res, next) => {
-if (req.session.in_user && req.session.in_user != undefined){
+if (req.session.in_user && (req.session.in_user.loggedin) == true){
         let id = req.params.id;
         let sql = `SELECT * FROM events WHERE event_id= ${id}`;
         con.query(sql, (err, rows, fields) => {
@@ -283,7 +283,7 @@ if (req.session.in_user && req.session.in_user != undefined){
 
 // 03. Posting event update
 router.post("/update-event/(:id)", (req, res, next) => {
-    if (req.session.in_user && req.session.in_user != undefined) {
+    if (req.session.in_user && (req.session.in_user.loggedin) == true) {
         let id = req.params.id;
         let eventName = req.body.event_name;
         let eventVenue = req.body.event_venue;
