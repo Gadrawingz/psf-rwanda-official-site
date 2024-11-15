@@ -133,8 +133,8 @@ router.get('/associations', async(req, res) => {
     } catch (error) {
         console.log('Server Error: Error with DB');
     }
-
 });
+
 
 router.get('/golden-circle', (req, res) => {
     const internals = {
@@ -311,35 +311,41 @@ router.get('/publications', (req, res) => {
 
 // Media (Public & Private documents)
 router.get('/extract-documents', async (req, res) => {
-    try {
-        const internals = {
-            title : "Extract - Documents",
-            description: "",
-            hasFullFooter: true,
-            inUser: req.session.in_user,
-            inUserInfo: req.session.in_user,
+    if ((req.session.in_user && req.session.in_user.role == 'Admin') 
+        || (req.session.in_user && req.session.in_user.role == 'Lead')) {
+        try {
+            const internals = {
+                title : "Extract - Documents",
+                description: "",
+                hasFullFooter: true,
+                inUser: req.session.in_user,
+                inUserInfo: req.session.in_user,
+            }
+
+            // Fetching data from multiple tables
+            const [doc2024] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2024' ORDER BY dt_id ASC");
+            const [doc2025] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2025' ORDER BY dt_id ASC");
+            // Render data with combined data
+            const combinedData = { table24: doc2024, table25: doc2025 };
+
+            // Receive session initialized from login_auth 
+            // Here we get: loggedin, role, user_id, username, firstname,...
+            const inUser = req.session.in_user;
+            res.render('clients/media/extract-docs', { data: combinedData, internals, inUser });
+        } catch (error) {
+            //console.error('Error executing queries:', error);
+            //res.status(500).send('Server Error');
+            console.log('Server Error: Error with DB');
         }
-
-        // Fetching data from multiple tables
-        const [doc2024] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2024' ORDER BY dt_id ASC");
-        const [doc2025] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2025' ORDER BY dt_id ASC");
-        // Render data with combined data
-        const combinedData = { table24: doc2024, table25: doc2025 };
-
-        // Receive session initialized from login_auth 
-        // Here we get: loggedin, role, user_id, username, firstname,...
-        const inUser = req.session.in_user;
-        res.render('clients/media/extract-docs', { data: combinedData, internals, inUser });
-    } catch (error) {
-        //console.error('Error executing queries:', error);
-        //res.status(500).send('Server Error');
-        console.log('Server Error: Error with DB');
-    }
+    } else {
+        req.flash("fmessage", "Login here to access document section as board member!");
+        res.redirect("/login-documents");
+    } 
 });
 
 
 // Sign-up to view document: GET
-router.get('/login-documents', async (req, res) => {
+router.get('/login-documents', (req, res) => {
     try {
         const internals = {
             title : "Board member login",
@@ -347,10 +353,16 @@ router.get('/login-documents', async (req, res) => {
             hasFullFooter: true,
             inUser: req.session.in_user,
         }
-        const message = req.flash("fmessage"); // To make flash message appear
-        res.render('clients/media/login-docs', { internals, message });
+
+        if (req.session.in_user.loggedin==true) {
+            res.redirect("/extract-documents?access_allowed=true");
+        } else {
+            const message = req.flash("fmessage"); // 2 make flash msg appear
+            res.render('clients/media/login-docs', { internals, message });
+        }
     } catch (error) {
-        console.log('Server Error: Error with DB');
+        // Server Error: Error with DB');
+        res.redirect("/view/error/505");
     }
 });
 
@@ -387,9 +399,7 @@ router.post('/login-documents-auth', (req, res) => {
                                 firstname: results[0].firstname, 
                                 lastname: results[0].lastname 
                             };
-
-                            let activeUser = results[0].user_id;
-                            res.redirect(`/extract-documents?access_allowed=true&staff=${activeUser}`);
+                            res.redirect(`/extract-documents?access_allowed=true`);
                         } else {
                             req.flash("fmessage", `Oops! This account is not activated!`);
                             res.redirect("/login-documents");
@@ -472,7 +482,6 @@ router.post('/contact-to-db', (req, res) => {
 })
 
 
-
 router.get('/support', (req, res) => {
     const internals = {
         title: "Support / F.A.Qs",
@@ -482,6 +491,7 @@ router.get('/support', (req, res) => {
     }
     res.render('clients/about/support', { internals });
 });
+
 
 // Membership benefits page:
 router.get('/membership', (req, res) => {
@@ -493,6 +503,7 @@ router.get('/membership', (req, res) => {
     }
     res.render('clients/membership/memberships', { internals });
 });
+
 
 // Member Join page
 router.get('/join', (req, res) => {

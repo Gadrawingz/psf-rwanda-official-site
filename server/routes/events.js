@@ -13,7 +13,7 @@ const fun = require("../config/functions");
 // 01. Get event registration form
 router.get("/add", (req, res) => {
     let eventName, eventVenue, eventType, eventImage, startDate, endingDate, contEmail, contPhone, describing = "";
-    if (req.session.loggedin === true && req.session.loggedin != undefined) {
+    if (req.session.in_user && req.session.in_user != undefined){
         const internals = {
             title: "Event Registration",
             breadcrumbL1: "Events",
@@ -32,7 +32,7 @@ router.get("/add", (req, res) => {
             endingDate, contEmail, contPhone, describing
         });
     } else {
-        req.flash("flashError", "Login to register user!");
+        req.flash("flashError", "Login to do your task!");
         res.redirect("/panel/login");
     }
 });
@@ -87,11 +87,7 @@ router.post("/insert", (req, res) => {
             title: "Event Registration",
             breadcrumbL1: "Events",
             breadcrumbL2: "New",
-            role: req.session.role,
-            admin_id: req.session.admin_id,
-            username: req.session.username,
-            telephone: req.session.telephone,
-            fullName: `${req.session.firstname} ${req.session.lastname}`,
+            inUser: req.session.in_user,
         };
 
         if (!err) {
@@ -171,33 +167,35 @@ router.post("/insert", (req, res) => {
 
 // 03. Get all events
 router.get('/all', (req, res) => {
+
     con.query("SELECT * FROM events ORDER BY event_id DESC LIMIT 20", (error, rows) => {
-        const internals = {
-            title: "View all events in order",
-            breadcrumbL1: "Events",
-            breadcrumbL2: "All",
-            role: req.session.role,
-            user_id: req.session.user_id,
-            username: req.session.username,
-            telephone: req.session.telephone,
-            fullName: `${req.session.firstname} ${req.session.lastname}`,
-            data: rows,
-            funs: fun,
-        };
-        
-        if (!error) {
-            // @gadira
-            res.render("admin/events/view-events", {
-                layout: "./layouts/LAdmin",internals,
-                message: "",
-            });
+        if (req.session.in_user && req.session.in_user != undefined){
+            const internals = {
+                title: "View all events in order",
+                breadcrumbL1: "Events",
+                breadcrumbL2: "All",
+                inUser: req.session.in_user,
+                data: rows,
+                funs: fun,
+            };
+            
+            if (!error) {
+                // @gadira
+                res.render("admin/events/view-events", {
+                    layout: "./layouts/LAdmin",internals,
+                    message: "",
+                });
+            } else {
+                req.flash("fmessage", "There is an error occured");
+                res.render("admin/events/view-events", {
+                    layout: "./layouts/LAdmin",
+                    internals,
+                    message: req.flash("fmessage"),
+                });
+            }
         } else {
-            req.flash("fmessage", "There is an error occured");
-            res.render("admin/events/view-events", {
-                layout: "./layouts/LAdmin",
-                internals,
-                message: req.flash("fmessage"),
-            });
+            req.flash("flashError", "Login to do your task!");
+            res.redirect("/panel/login");
         }
     });
 });
@@ -205,121 +203,136 @@ router.get('/all', (req, res) => {
 
 // 04. Remove event item
 router.get("/delete/(:id)", (req, res) => {
-    let id = req.params.id;
-    let sql3 = `SELECT * FROM events WHERE event_id = ${id}`;
+    if (req.session.in_user && req.session.in_user != undefined) {
+        let id = req.params.id;
+        let sql3 = `SELECT * FROM events WHERE event_id = ${id}`;
 
-    con.query(sql3, (err, rows, fields) => {
-        if (err) throw err;
-        if (rows.length > 0) {
-            // Remove the file 1st
-            let fs = require("fs");
-            let path2file = "public/uploads/events/" + rows[0].event_image;
-            let newPath44 = "public/uploads/trash/events/" + rows[0].event_image;
-            if (fs.existsSync(path2file)) {
-                fs.renameSync(path2file, newPath44);
-                let sql4 = `DELETE FROM events WHERE event_id = ${id}`;
-                con.query(sql4, (error, result) => {
-                    if (!error) {
-                        req.flash("fmessage", `The record with ID: ${id} removed!`);
-                        res.redirect("/events/all");
-                    } else {
-                        req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
-                        res.redirect("/events/all");
-                    }
-                });
+        con.query(sql3, (err, rows, fields) => {
+            if (err) throw err;
+            if (rows.length > 0) {
+                // Remove the file 1st
+                let fs = require("fs");
+                let path2file = "public/uploads/events/" + rows[0].event_image;
+                let newPath44 = "public/uploads/trash/events/" + rows[0].event_image;
+                if (fs.existsSync(path2file)) {
+                    fs.renameSync(path2file, newPath44);
+                    let sql4 = `DELETE FROM events WHERE event_id = ${id}`;
+                    con.query(sql4, (error, result) => {
+                        if (!error) {
+                            req.flash("fmessage", `The record with ID: ${id} removed!`);
+                            res.redirect("/events/all");
+                        } else {
+                            req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
+                            res.redirect("/events/all");
+                        }
+                    });
+                } else {
+                    req.flash("fmessage", "No file to remove found!");
+                    res.redirect("/events/all");
+                }
             } else {
-                req.flash("fmessage", "No file to remove found!");
+                req.flash("fmessage", `Record was not found!`);
                 res.redirect("/events/all");
             }
-        } else {
-            req.flash("fmessage", `Record was not found!`);
-            res.redirect("/events/all");
-        }
-    });
+        });
+    } else {
+        req.flash("flashError", "Login to do your task!");
+        res.redirect("/panel/login");
+    }
 });
 
 
 // 05. Edit event item:
 router.get("/edit/(:id)", (req, res, next) => {
-    let id = req.params.id;
-    let sql = `SELECT * FROM events WHERE event_id= ${id}`;
-    con.query(sql, (err, rows, fields) => {
-        if (err) throw err;
-        const internals = {
-            title: `Update (${rows[0].event_name})`,
-            event_id: rows[0].event_id,
-            eventName: rows[0].event_name,
-            eventVenue: rows[0].event_venue,
-            eventType: rows[0].event_type,
-            describing: rows[0].description,
-            startDate: rows[0].start_date,
-            endingDate: rows[0].end_date,
-            contEmail: rows[0].contact_email,
-            contPhone: rows[0].contact_phone,
-            has3RouteSegments: true,
-        };
+if (req.session.in_user && req.session.in_user != undefined){
+        let id = req.params.id;
+        let sql = `SELECT * FROM events WHERE event_id= ${id}`;
+        con.query(sql, (err, rows, fields) => {
+            if (err) throw err;
+            const internals = {
+                title: `Update (${rows[0].event_name})`,
+                event_id: rows[0].event_id,
+                eventName: rows[0].event_name,
+                eventVenue: rows[0].event_venue,
+                eventType: rows[0].event_type,
+                describing: rows[0].description,
+                startDate: rows[0].start_date,
+                endingDate: rows[0].end_date,
+                contEmail: rows[0].contact_email,
+                contPhone: rows[0].contact_phone,
+                has3RouteSegments: true,
+            };
 
-        if (rows.length <= 0) {
-            req.flash("error", `No ID:${id} is found`);
-            res.redirect("/events/all");
-        } else {
-            res.render("admin/events/edit-event", {
-                layout: "./layouts/LAdmin",
-                internals,
-                message: req.flash("fmessage"),
-            });
-        }
-    });
+            if (rows.length <= 0) {
+                req.flash("error", `No ID:${id} is found`);
+                res.redirect("/events/all");
+            } else {
+                res.render("admin/events/edit-event", {
+                    layout: "./layouts/LAdmin",
+                    internals,
+                    message: req.flash("fmessage"),
+                });
+            }
+        });
+    } else {
+        req.flash("flashError", "Login to do your task!");
+        res.redirect("/panel/login");
+    }
 });
 
 
 // 03. Posting event update
 router.post("/update-event/(:id)", (req, res, next) => {
-    let id = req.params.id;
-    let eventName = req.body.event_name;
-    let eventVenue = req.body.event_venue;
-    let eventType = req.body.event_type;
-    let startDate = req.body.start_date;
-    let endingDate = req.body.end_date;
-    let contEmail = req.body.contact_email;
-    let contPhone = req.body.contact_phone;
-    let describing = req.body.description;
+    if (req.session.in_user && req.session.in_user != undefined) {
+        let id = req.params.id;
+        let eventName = req.body.event_name;
+        let eventVenue = req.body.event_venue;
+        let eventType = req.body.event_type;
+        let startDate = req.body.start_date;
+        let endingDate = req.body.end_date;
+        let contEmail = req.body.contact_email;
+        let contPhone = req.body.contact_phone;
+        let describing = req.body.description;
 
-    if (
-        eventName.length != 0 &&
-        eventVenue.length != 0 &&
-        startDate.length != 0 &&
-        endingDate.length != 0 &&
-        contEmail.length != 0 &&
-        contPhone.length != 0 &&
-        describing.length != 0 &&
-        eventType.length != 0
-    ) {
-        if (eventName.length >= 5 && describing.length >= 50) {
-            // ON SUCCESSFUL:
-            up = [eventName, eventVenue, eventType, startDate, endingDate, contEmail, contPhone, describing, id];
-            con.query("UPDATE events SET event_name = ?, event_venue = ?, event_type = ?, start_date = ?, end_date = ?, contact_email = ?, contact_phone = ?, description = ? WHERE event_id = ?", up, (err, results, fields) => {
-                    if (err) {
-                        req.flash("fmessage", "Error occurred in database!");
-                        res.redirect(`/events/edit/${id}`);
-                    } else {
-                        res.redirect("/events/all");
+        if (
+            eventName.length != 0 &&
+            eventVenue.length != 0 &&
+            startDate.length != 0 &&
+            endingDate.length != 0 &&
+            contEmail.length != 0 &&
+            contPhone.length != 0 &&
+            describing.length != 0 &&
+            eventType.length != 0
+        ) {
+            if (eventName.length >= 5 && describing.length >= 50) {
+                // ON SUCCESSFUL:
+                up = [eventName, eventVenue, eventType, startDate, endingDate, contEmail, contPhone, describing, id];
+                con.query("UPDATE events SET event_name = ?, event_venue = ?, event_type = ?, start_date = ?, end_date = ?, contact_email = ?, contact_phone = ?, description = ? WHERE event_id = ?", up, (err, results, fields) => {
+                        if (err) {
+                            req.flash("fmessage", "Error occurred in database!");
+                            res.redirect(`/events/edit/${id}`);
+                        } else {
+                            res.redirect("/events/all");
+                        }
                     }
+                );
+            } else {
+                req.flash("fmessage", "The title or description is too short!");
+                res.redirect(`/events/edit/${id}`);
+                // Do not allow file to be saved
+                let fs = require("fs");
+                let path2file = "public/uploads/events/" + eventImage;
+                if (fs.existsSync(path2file)) {
+                    fs.unlinkSync(path2file);
                 }
-            );
-        } else {
-            req.flash("fmessage", "The title or description is too short!");
-            res.redirect(`/events/edit/${id}`);
-            // Do not allow file to be saved
-            let fs = require("fs");
-            let path2file = "public/uploads/events/" + eventImage;
-            if (fs.existsSync(path2file)) {
-                fs.unlinkSync(path2file);
             }
+        } else {
+            req.flash("fmessage", "All fields are required!");
+            res.redirect(`/events/edit/${id}`);
         }
     } else {
-        req.flash("fmessage", "All fields are required!");
-        res.redirect(`/events/edit/${id}`);
+        req.flash("flashError", "Login to do your task!");
+        res.redirect("/panel/login");
     }
 });
 

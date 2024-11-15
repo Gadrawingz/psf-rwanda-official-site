@@ -14,17 +14,13 @@ const moment = require('moment/moment');
 
 // 01.
 router.get("/add", (req, res) => {
-  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+  if (req.session.in_user && req.session.in_user != undefined) {
     
     const internals = {
-      title: "Make a new post or press release",
+      title: "Make a new post (press release)",
       breadcrumbL1: "Post",
       breadcrumbL2: "New",
-      role: req.session.role,
-      user_id: req.session.user_id,
-      username: req.session.username,
-      telephone: req.session.telephone,
-      fullName: `${req.session.firstname} ${req.session.lastname}`,
+      inUser: req.session.in_user,
       funs: fun,
       moment: moment,
     };
@@ -86,11 +82,7 @@ router.post("/insert", (req, res) => {
       title: "Make a post (Press Release)",
       breadcrumbL1: "Post",
       breadcrumbL2: "New",
-      role: req.session.role,
-      user_id: req.session.user_id,
-      username: req.session.username,
-      telephone: req.session.telephone,
-      fullName: `${req.session.firstname} ${req.session.lastname}`,
+      inUser: req.session.in_user,
       funs: fun
     };
 
@@ -168,101 +160,112 @@ router.post("/insert", (req, res) => {
 
 // 03. View All Posts
 router.get(["/all"], (req, res) => {
-  con.query("SELECT * FROM posts ORDER BY post_date DESC", (error, rows) => {
-    const internals = {
-      title: "Press Releases (Posts)",
-      breadcrumbL1: "Posts",
-      breadcrumbL2: "All",
-      role: req.session.role,
-      user_id: req.session.user_id,
-      username: req.session.username,
-      telephone: req.session.telephone,
-      fullName: `${req.session.firstname} ${req.session.lastname}`,
-      data: rows,
-      funs: fun,
-    };
+  if (req.session.in_user && req.session.in_user != undefined) {
+    con.query("SELECT * FROM posts ORDER BY post_date DESC", (error, rows) => {
+      const internals = {
+        title: "Press Releases (Posts)",
+        breadcrumbL1: "Posts",
+        breadcrumbL2: "All",
+        inUser: req.session.in_user,
+        data: rows,
+        funs: fun,
+      };
 
-    if (!error) {
-      // @gadira
-      res.render("admin/posts/view-posts", {
-        layout: "./layouts/LAdmin",
-        internals,
-        message: "",
-      });
-    } else {
-      req.flash("fmessage", "There is an error occured");
-      res.render("admin/posts/view-posts", {
-        layout: "./layouts/LAdmin",
-        internals,
-        message: req.flash("fmessage"),
-      });
-    }
-  });
+      if (!error) {
+        // @gadira
+        res.render("admin/posts/view-posts", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: "",
+        });
+      } else {
+        req.flash("fmessage", "There is an error occured");
+        res.render("admin/posts/view-posts", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: req.flash("fmessage"),
+        });
+      }
+    });
+  } else {
+    req.flash("flashError", "Login to do your task!");
+    res.redirect("/panel/login");
+  }
 });
 
 
 // 04. Remove post record
 router.get("/delete/(:id)", (req, res) => {
   let id = req.params.id;
-  let sql3 = `SELECT * FROM posts WHERE post_id = ${id}`;
-  con.query(sql3, (err, rows, fields) => {
-    if (err) throw err;
-    if (rows.length > 0) {
-      // Remove the file 1st
-      let fs = require("fs");
-      let path2file = "public/uploads/posts/" + rows[0].post_image;
-      let newPath44 = "public/uploads/trash/posts/" + rows[0].post_image;
-      if (fs.existsSync(path2file)) {
-        fs.renameSync(path2file, newPath44);
-        let sql4 = `DELETE FROM posts WHERE post_id = ${id}`;
-        con.query(sql4, (error, result) => {
-          if (!error) {
-            req.flash("fmessage", `The record with ID: ${id} removed!`);
-            res.redirect("/posts/all");
-          } else {
-            req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
-            res.redirect("/posts/all");
-          }
-        });
+  if (req.session.in_user && req.session.in_user != undefined) {
+    let sql3 = `SELECT * FROM posts WHERE post_id = ${id}`;
+    con.query(sql3, (err, rows, fields) => {
+      if (err) throw err;
+      if (rows.length > 0) {
+        // Remove the file 1st
+        let fs = require("fs");
+        let path2file = "public/uploads/posts/" + rows[0].post_image;
+        let newPath44 = "public/uploads/trash/posts/" + rows[0].post_image;
+        if (fs.existsSync(path2file)) {
+          fs.renameSync(path2file, newPath44);
+          let sql4 = `DELETE FROM posts WHERE post_id = ${id}`;
+          con.query(sql4, (error, result) => {
+            if (!error) {
+              req.flash("fmessage", `The record with ID: ${id} removed!`);
+              res.redirect("/posts/all");
+            } else {
+              req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
+              res.redirect("/posts/all");
+            }
+          });
+        } else {
+          req.flash("fmessage", "No file to remove found!");
+          res.redirect("/posts/all");
+        }
       } else {
-        req.flash("fmessage", "No file to remove found!");
+        req.flash("fmessage", `Record was not found!`);
         res.redirect("/posts/all");
       }
-    } else {
-      req.flash("fmessage", `Record was not found!`);
-      res.redirect("/posts/all");
-    }
-  });
+    });
+  } else {
+    req.flash("flashError", "Login to do your task!");
+    res.redirect("/panel/login");
+  }
 });
 
 
 // 05. Edit published posts view:
 router.get("/edit/(:id)", (req, res, next) => {
   let id = req.params.id;
-  let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
-  con.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    const internals = {
-      title: "Update existing post",
-      post_id: rows[0].post_id,
-      post_title: rows[0].post_title,
-      post_text: rows[0].post_text,
-      post_category: rows[0].post_category,
-      has3RouteSegments: true,
-    };
+  if (req.session.in_user && req.session.in_user != undefined) {
+    let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
+    con.query(sql, (err, rows, fields) => {
+      if (err) throw err;
+      const internals = {
+        title: "Update existing post",
+        post_id: rows[0].post_id,
+        post_title: rows[0].post_title,
+        post_text: rows[0].post_text,
+        post_category: rows[0].post_category,
+        has3RouteSegments: true,
+      };
 
-    if (rows.length <= 0) {
-      req.flash("error", `Post not found id ${id}`);
-      res.redirect("/posts/all");
-    } else {
+      if (rows.length <= 0) {
+        req.flash("error", `Post not found id ${id}`);
+        res.redirect("/posts/all");
+      } else {
 
-      res.render("admin/posts/edit-post", {
-        layout: "./layouts/LAdmin",
-        internals,
-        message: req.flash("fmessage"),
-      });
-    }
-  });
+        res.render("admin/posts/edit-post", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: req.flash("fmessage"),
+        });
+      }
+    });
+  } else {
+    req.flash("flashError", "Login to do your task!");
+    res.redirect("/panel/login");
+  }
 });
 
 
@@ -334,28 +337,33 @@ router.post("/update/:id", (req, res, next) => {
 // 07. Get page view to update image:
 router.get("/edit-image/(:id)", (req, res, next) => {
   let id = req.params.id;
-  let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
-  con.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    const internals = {
-      title: "Update post image",
-      post_id: rows[0].post_id,
-      post_image: rows[0].post_image,
-      has3RouteSegments: true,
-    };
+  if (req.session.in_user && req.session.in_user != undefined) {
+    let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
+    con.query(sql, (err, rows, fields) => {
+      if (err) throw err;
+      const internals = {
+        title: "Update post image",
+        post_id: rows[0].post_id,
+        post_image: rows[0].post_image,
+        has3RouteSegments: true,
+      };
 
-    if (rows.length <= 0) {
-      req.flash("error", `Post not found id ${id}`);
-      res.redirect("/posts/all");
-    } else {
+      if (rows.length <= 0) {
+        req.flash("error", `Post not found id ${id}`);
+        res.redirect("/posts/all");
+      } else {
 
-      res.render("admin/posts/edit-post-img", {
-        layout: "./layouts/LAdmin",
-        internals,
-        message: req.flash("fmessage"),
-      });
-    }
-  });
+        res.render("admin/posts/edit-post-img", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: req.flash("fmessage"),
+        });
+      }
+    });
+  } else {
+    req.flash("flashError", "Login to do your task!");
+    res.redirect("/panel/login");
+  }
 });
 
 router.post("/update-image/(:id)", (req, res) => {

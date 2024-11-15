@@ -12,6 +12,7 @@ const con = require("../config/database");
 router.get("/add", (req, res) => {
   const internals = {
     title: "Add new publication",
+    inUser: req.session.in_user,
     description: "",
   };
 
@@ -74,98 +75,113 @@ router.post("/insert", upload1.single("file"), (req, res, next) => {
 
 // 03. View all publications
 router.get("/all", (req, res) => {
-  con.query(
-    "SELECT * FROM publication ORDER BY pub_date DESC",
-    (error, rows) => {
-      const internals = {
-        title: "View all publications",
-        user_id: req.session.user_id,
-        username: req.session.username,
-        telephone: req.session.telephone,
-        data: rows,
-      };
+  if (req.session.in_user && req.session.in_user != undefined) {
+    con.query(
+      "SELECT * FROM publication ORDER BY pub_date DESC",
+      (error, rows) => {
+        const internals = {
+          title: "View all publications",
+          inUser: req.session.in_user,
+          data: rows,
+        };
 
-      if (!error) {
-        // @gadira
-        res.render("admin/publica/all-publicas", {
-          layout: "./layouts/LAdmin",
-          internals,
-          message: "",
-        });
-      } else {
-        req.flash("fmessage", "There is an error occured");
-        res.render("admin/publica/all-publicas", {
-          layout: "./layouts/LAdmin",
-          internals,
-          message: req.flash("fmessage"),
-        });
+        if (!error) {
+          // @gadira
+          res.render("admin/publica/all-publicas", {
+            layout: "./layouts/LAdmin",
+            internals,
+            message: "",
+          });
+        } else {
+          req.flash("fmessage", "There is an error occured");
+          res.render("admin/publica/all-publicas", {
+            layout: "./layouts/LAdmin",
+            internals,
+            message: req.flash("fmessage"),
+          });
+        }
       }
-    }
-  );
+    );
+  } else {
+    req.flash("flashError", "Login to do your task!");
+    res.redirect("/panel/login");
+  }
 });
 
 
 // 04. Remove publication record
 router.get("/delete/(:id)", (req, res) => {
   let id = req.params.id;
-  // Get the item to remove
-  let sql3 = `SELECT * FROM publication WHERE pub_id = ${id}`;
-  con.query(sql3, (err, rows, fields) => {
-    if (err) throw err;
-    if (rows.length > 0) {
-      // Remove the file 1st
-      let fs = require("fs");
-      let path2file = "public/uploads/publica/" + rows[0].pub_file;
-      let newPath44 = "public/uploads/trash/publica/" + rows[0].pub_file;
 
-      if (fs.existsSync(path2file)) {
-        fs.renameSync(path2file, newPath44);
-        //fs.unlinkSync(.....);
-        let sql4 = `DELETE FROM publication WHERE pub_id = ${id}`;
-        con.query(sql4, (error, result) => {
-          if (!error) {
-            req.flash("fmessage", `The record with ID: ${id} removed!`);
-            res.redirect("/publica/all");
-          } else {
-            req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
-            res.redirect("/publica/all");
-          }
-        });
+  if (req.session.in_user && req.session.in_user != undefined) {
+    // Get the item to remove
+    let sql3 = `SELECT * FROM publication WHERE pub_id = ${id}`;
+    con.query(sql3, (err, rows, fields) => {
+      if (err) throw err;
+      if (rows.length > 0) {
+        // Remove the file 1st
+        let fs = require("fs");
+        let path2file = "public/uploads/publica/" + rows[0].pub_file;
+        let newPath44 = "public/uploads/trash/publica/" + rows[0].pub_file;
+
+        if (fs.existsSync(path2file)) {
+          fs.renameSync(path2file, newPath44);
+          //fs.unlinkSync(.....);
+          let sql4 = `DELETE FROM publication WHERE pub_id = ${id}`;
+          con.query(sql4, (error, result) => {
+            if (!error) {
+              req.flash("fmessage", `The record with ID: ${id} removed!`);
+              res.redirect("/publica/all");
+            } else {
+              req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
+              res.redirect("/publica/all");
+            }
+          });
+        } else {
+          req.flash("fmessage", "No file to remove found!");
+          res.redirect("/publica/all");
+        }
       } else {
-        req.flash("fmessage", "No file to remove found!");
+        req.flash("fmessage", `Record was not found!`);
         res.redirect("/publica/all");
       }
-    } else {
-      req.flash("fmessage", `Record was not found!`);
-      res.redirect("/publica/all");
-    }
-  });
+    });
+  } else {
+    req.flash("flashError", "Login to do your task!");
+    res.redirect("/panel/login");
+  }
 });
+
 
 // 05. Edit published document view:
 router.get("/edit/(:id)", (req, res, next) => {
   let id = req.params.id;
-  let sql = `SELECT * FROM publication WHERE pub_id= ${id}`;
-  con.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    const internals = {
-      title: "Update existing publication",
-      pub_id: rows[0].pub_id,
-      p_title: rows[0].title,
-      p_description: rows[0].description,
-      has3RouteSegments: true,
-    };
-    if (rows.length <= 0) {
-      req.flash("error", `Publication not found id ${id}`);
-      res.redirect("/all");
-    } else {
-      res.render("admin/publica/edit-pub", {
-        layout: "./layouts/LAdmin",
-        internals,
-        message: req.flash("fmessage"),
-      });
-    }
-  });
+  if (req.session.in_user && req.session.in_user != undefined) {
+    let sql = `SELECT * FROM publication WHERE pub_id= ${id}`;
+    con.query(sql, (err, rows, fields) => {
+      if (err) throw err;
+      const internals = {
+        title: "Update existing publication",
+        pub_id: rows[0].pub_id,
+        p_title: rows[0].title,
+        p_description: rows[0].description,
+        has3RouteSegments: true,
+      };
+      if (rows.length <= 0) {
+        req.flash("error", `Publication not found id ${id}`);
+        res.redirect("/all");
+      } else {
+        res.render("admin/publica/edit-pub", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: req.flash("fmessage"),
+        });
+      }
+    });
+  } else {
+    req.flash("flashError", "Login to do your task!");
+    res.redirect("/panel/login");
+  }
 });
 
 

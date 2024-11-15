@@ -15,30 +15,35 @@ const moment = require('moment/moment');
 router.get("/post/(:slug)", (req, res) => {
     let slug = req.params.slug;
     con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.firstname AS author_fn, ad.lastname AS author_ln, ad.gender, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author WHERE po.post_slug='" + slug + "'", (error, rows) => {
+        
+        if(rows.length!=0) {
+            // Inside, We fetch all related posts but limited to 8
+            con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_title ASC LIMIT 8", (error2, rows2) => {
+                let internals = {
+                    title: rows[0].post_title,
+                    description: "",
+                    hasFullFooter: true,
+                    inUser: req.session.in_user,
+                    has3RouteSegments: true,
+                    data: rows,
+                    asideData: rows2,
+                    stripTags: stripTags,
+                    funs: fun, // 2use fx in ejs
+                    moment: moment,
+                };
 
-        // Inside, We fetch all related posts but limited to 8
-        con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_title ASC LIMIT 8", (error2, rows2) => {
-            let internals = {
-                title: rows[0].post_title,
-                description: "",
-                hasFullFooter: true,
-                inUser: req.session.in_user,
-                has3RouteSegments: true,
-                data: rows,
-                asideData: rows2,
-                stripTags: stripTags,
-                funs: fun, // 2use fx in ejs
-                moment: moment,
-            };
-
-            if (!error) {
-                // @gadira
-                res.render("clients/media/post-view", { internals });
-            } else {
-                req.flash("fmessage", "There is an error occured");
-                res.render("clients/media/post-view", { internals });
-            }
-        });
+                if (!error) {
+                    // @gadira
+                    res.render("clients/media/post-view", { internals });
+                } else {
+                    req.flash("fmessage", "There is an error occured");
+                    res.render("clients/media/post-view", { internals });
+                }
+            });
+        } else {
+            // No press release(post) found at the moment!");
+            res.redirect("/view/error/404");
+        }
     });
 });
 
@@ -57,41 +62,54 @@ router.get("/docs/(:theId)", (req, res) => {
             has3RouteSegments: true,
             data: rows,
             stripTags: stripTags,
-            funs: fun, // 2use fx in ejs
+            funs: fun,
             moment: moment,
         };
 
-        if (!error) {
-            res.render("clients/media/docs-view-monthly", { internals });
+        if(rows.length!=0) {
+            if (!error) {
+                if ((req.session.in_user && req.session.in_user.role == 'Admin') 
+                    || (req.session.in_user && req.session.in_user.role == 'Lead')) {
+                    res.render("clients/media/docs-view-monthly", { internals });
+                } else {
+                    req.flash("fmessage", "Login here to access document section as board member!");
+                    res.redirect("/login-documents");
+                }
+            } else {
+                res.redirect("/view/error/404");
+            }
         } else {
-            req.flash("fmessage", "There is an error occured");
             res.render("clients/media/docs-view-monthly", { internals });
         }
     });
 });
 
 
-
 // 03. Routes for View single doc. by one
 router.get("/read-doc/(:theId)", (req, res) => {
     let theId = req.params.theId;
-    con.query("SELECT * FROM documents", (error, rows) => {
-
-        let internals = {
-            title: "Read this document",
-            description: "",
-            hasFullFooter: true,
-            inUser: req.session.in_user,
-            has3RouteSegments: true,
-            doc_title: rows[0].doc_title,
-            attachment: rows[0].attachment
-        };
-
-        if (!error) {
-            res.render("clients/media/docs-view-full", { internals });
+    con.query(`SELECT * FROM documents WHERE doc_id =${theId}`, (error, rows) => {
+        if(rows.length!=0) {
+            let internals = {
+                title: "Read this document",
+                description: "",
+                hasFullFooter: true,
+                inUser: req.session.in_user,
+                has3RouteSegments: true,
+                doc_title: rows[0].doc_title,
+                attachment: rows[0].attachment
+            };
+            if (!error) {
+                if ((req.session.in_user && req.session.in_user.role == 'Admin') 
+                    || (req.session.in_user && req.session.in_user.role == 'Lead')) {
+                    res.render("clients/media/docs-view-full", { internals });
+                } else {
+                    req.flash("fmessage", "Login here to access document section as board member!");
+                    res.redirect("/login-documents");
+                }
+            }
         } else {
-            req.flash("fmessage", "There is an error occured");
-            res.render("clients/media/docs-view-full", { internals });
+            res.redirect("/view/error/404");
         }
     });
 });
@@ -121,18 +139,57 @@ router.get('/cluster/(:slug)', async(req, res) => {
                         res.render("clients/membership/clusters", { data: rows2, internals });
                     });
                 } else {
-                    console.log("There is internal error occured");
+                    // There is internal error occured
+                    res.redirect("/view/error/500");
                 }
             });
         } else {
             // This cluster doesn't exist;
-            console.log("This cluster doesn't exist");
+            res.redirect("/view/error/404");
         }
     } else {
         // Handle error that page not found
-        console.log("This page not found");
+        res.redirect("/view/error/404");
     }
 });
+
+
+// ERROR PAGE MAKER
+router.get("/error/(:code)", (req, res) => {
+    let code = req.params.code;
+    if(code == 404) {
+        let internals = {
+            title: "Oops! We lost this page.",
+            codeMessage: "404 Page Not Fund!",
+            description: "",
+            hasFullFooter: true,
+            inUser: req.session.in_user,
+            has3RouteSegments: true,
+        };
+        res.render("clients/errors/error-code", { internals });
+    } else if(code == 500) {
+        let internals = {
+            title: "Something wrong with the request",
+            codeMessage: "505: Internal Server Error!",
+            description: "",
+            hasFullFooter: true,
+            inUser: req.session.in_user,
+            has3RouteSegments: true,
+        };
+        res.render("clients/errors/error-code", { internals });
+    } else {
+        let internals = {
+            title: "Page Not Found",
+            codeMessage: "404: No page found!",
+            description: "",
+            hasFullFooter: true,
+            inUser: req.session.in_user,
+            has3RouteSegments: true,
+        };
+        res.render("clients/errors/error-code", { internals });     
+    }
+});
+
 
 
 // Export this router

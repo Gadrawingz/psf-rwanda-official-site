@@ -12,16 +12,12 @@ const fun = require("../config/functions");
 
 // 01. Get Gallery view
 router.get("/add", (req, res) => {
-    if (req.session.loggedin === true && req.session.loggedin != undefined) {
+    if (req.session.in_user && req.session.in_user != undefined) {
         const internals = {
             title: "Upload new gallery content",
             breadcrumbL1: "Gallery",
             breadcrumbL2: "New",
-            role: req.session.role,
-            user_id: req.session.user_id,
-            username: req.session.username,
-            telephone: req.session.telephone,
-            fullName: `${req.session.firstname} ${req.session.lastname}`,
+            inUser: req.session.in_user,
         };
 
         res.render("admin/gallery/add-gallery", {
@@ -98,7 +94,7 @@ router.post("/insert", (req, res) => {
                     let path2file = "public/uploads/gallery/" + file_name;
                     if (fs.existsSync(path2file)) {
                         fs.unlinkSync(path2file);
-                    }           
+                    }        
                 }
             } else {
                 req.flash("fmessage", "No file uploaded");
@@ -114,99 +110,111 @@ router.post("/insert", (req, res) => {
 
 // 03. View all images
 router.get('/all', (req, res) => {
-    con.query("SELECT * FROM gallery ORDER BY created_at DESC", (error, rows) => {
-        const internals = {
-            title: "View all gallery items",
-            breadcrumbL1: "Gallery",
-            breadcrumbL2: "All",
-            role: req.session.role,
-            user_id: req.session.user_id,
-            username: req.session.username,
-            telephone: req.session.telephone,
-            fullName: `${req.session.firstname} ${req.session.lastname}`,
-            data: rows,
-            funs: fun,
-        };
-        
-        if (!error) {
-            // @gadira
-            res.render("admin/gallery/view-gallery", {
-                layout: "./layouts/LAdmin",internals,
-                message: "",
-            });
-        } else {
-            req.flash("fmessage", "There is an error occured");
-            res.render("admin/gallery/view-gallery", {
-                layout: "./layouts/LAdmin",
-                internals,
-                message: req.flash("fmessage"),
-            });
-        }
-    });
+    if (req.session.in_user && req.session.in_user != undefined) {
+        con.query("SELECT * FROM gallery ORDER BY created_at DESC", (error, rows) => {
+            const internals = {
+                title: "View all gallery items",
+                breadcrumbL1: "Gallery",
+                breadcrumbL2: "All",
+                inUser: req.session.in_user,
+                data: rows,
+                funs: fun,
+            };
+            
+            if (!error) {
+                // @gadira
+                res.render("admin/gallery/view-gallery", {
+                    layout: "./layouts/LAdmin",internals,
+                    message: "",
+                });
+            } else {
+                req.flash("fmessage", "There is an error occured");
+                res.render("admin/gallery/view-gallery", {
+                    layout: "./layouts/LAdmin",
+                    internals,
+                    message: req.flash("fmessage"),
+                });
+            }
+        });
+    } else {
+        req.flash("flashError", "Login to do your task!");
+        res.redirect("/panel/login");
+    }
 });
 
 
 // 04. Remove gallery item
 router.get("/delete/(:id)", (req, res) => {
-    let id = req.params.id;
-    let sql3 = `SELECT * FROM gallery WHERE gallery_id = ${id}`;
-    
-    con.query(sql3, (err, rows, fields) => {
-        if (err) throw err;
-        if (rows.length > 0) {
-        // Remove the file 1st
-        let fs = require("fs");
-        let path2file = "public/uploads/gallery/" + rows[0].file_name;
-        let newPath44 = "public/uploads/trash/gallery/" + rows[0].file_name;
-        if (fs.existsSync(path2file)) {
-            fs.renameSync(path2file, newPath44);
-            let sql4 = `DELETE FROM gallery WHERE gallery_id = ${id}`;
-            con.query(sql4, (error, result) => {
-                if (!error) {
-                    req.flash("fmessage", `The record with ID: ${id} removed!`);
-                    res.redirect("/gallery/all");
-                } else {
-                    req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
-                    res.redirect("/gallery/all");
-                }
-            });
+    if (req.session.in_user && req.session.in_user != undefined) {
+        let id = req.params.id;
+        let sql3 = `SELECT * FROM gallery WHERE gallery_id = ${id}`;
+        
+        con.query(sql3, (err, rows, fields) => {
+            if (err) throw err;
+            if (rows.length > 0) {
+
+            // Remove the file 1st
+            let fs = require("fs");
+            let path2file = "public/uploads/gallery/" + rows[0].file_name;
+            let newPath44 = "public/uploads/trash/gallery/" + rows[0].file_name;
+            if (fs.existsSync(path2file)) {
+                fs.renameSync(path2file, newPath44);
+                let sql4 = `DELETE FROM gallery WHERE gallery_id = ${id}`;
+                con.query(sql4, (error, result) => {
+                    if (!error) {
+                        req.flash("fmessage", `The record with ID: ${id} removed!`);
+                        res.redirect("/gallery/all");
+                    } else {
+                        req.flash("fmessage", `Cannot remove a record with ID: ${id}!`);
+                        res.redirect("/gallery/all");
+                    }
+                });
+            } else {
+            req.flash("fmessage", "No file to remove found!");
+            res.redirect("/gallery/all");
+            }
         } else {
-          req.flash("fmessage", "No file to remove found!");
-          res.redirect("/gallery/all");
+            req.flash("fmessage", `Record was not found!`);
+            res.redirect("/gallery/all");
         }
+    });
     } else {
-        req.flash("fmessage", `Record was not found!`);
-        res.redirect("/gallery/all");
+        req.flash("flashError", "Login to do your task!");
+        res.redirect("/panel/login");
     }
-});
 });
 
 
 // 05. Edit gallery item:
 router.get("/edit/(:id)", (req, res, next) => {
     let id = req.params.id;
-    let sql = `SELECT * FROM gallery WHERE gallery_id= ${id}`;
-    con.query(sql, (err, rows, fields) => {
-        if (err) throw err;
-        const internals = {
-            title: "Update this record",
-            gallery_id: rows[0].gallery_id,
-            img_title: rows[0].img_title,
-            img_description: rows[0].img_description,
-            has3RouteSegments: true,
-        };
-        
-        if (rows.length <= 0) {
-            req.flash("error", `No ID:${id} is found`);
-            res.redirect("/gallery/all");
-        } else {
-            res.render("admin/gallery/edit-gallery", {
-                layout: "./layouts/LAdmin",
-                internals,
-                message: req.flash("fmessage"),
-            });
-        }
-    });
+    if (req.session.in_user && req.session.in_user != undefined) {
+        let sql = `SELECT * FROM gallery WHERE gallery_id= ${id}`;
+        con.query(sql, (err, rows, fields) => {
+            if (err) throw err;
+            const internals = {
+                title: "Update this record",
+                gallery_id: rows[0].gallery_id,
+                img_title: rows[0].img_title,
+                img_description: rows[0].img_description,
+                has3RouteSegments: true,
+            };
+            
+            if (rows.length <= 0) {
+                req.flash("error", `No ID:${id} is found`);
+                res.redirect("/gallery/all");
+            } else {
+                res.render("admin/gallery/edit-gallery", {
+                    layout: "./layouts/LAdmin",
+                    internals,
+                    message: req.flash("fmessage"),
+                });
+            }
+        });
+    } else {
+        req.flash("flashError", "Login to do your task!");
+        res.redirect("/panel/login");
+    }
 });
 
 

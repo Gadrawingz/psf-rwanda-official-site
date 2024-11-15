@@ -5969,8 +5969,10 @@ border-radius: 100px;
 	height: 100%;
 }
 .error-title{
-	font-size: 90px;
+	font-size: 60px;
 	padding-bottom: 80px;
+	color: var(--orange-higher);
+	font-family: 'Ink Free';
 }
 .error-box-section{
 	padding: 90px 0px;

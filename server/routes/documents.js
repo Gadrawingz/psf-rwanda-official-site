@@ -18,7 +18,7 @@ router.use(flash());
 
 // 01. Add documents (route)
 router.get("/add", (req, res) => {
-  if (req.session.loggedin === true && req.session.loggedin != undefined) {
+  if (req.session.in_user && req.session.in_user.role == 'Admin') {
     con.query("SELECT * FROM `doc_timeline` ORDER BY dt_year DESC", (error, rows) => {
       const internals = {
         title: "Upload new document",
@@ -79,13 +79,12 @@ const upload4document = multer({
 }).single('attachment');
 
 
-// 18. Post document with file:
 router.post('/insert', (req, res) => {
   upload4document(req, res, (err) => {
     let Ymonth = req.body.year_month;
     let Dtitle = req.body.doc_title;
     let Describe = req.body.description;
-    let userId = req.session.user_id;
+    let userId = req.session.in_user.user_id;
 
     if (Dtitle.length != 0 && Ymonth.length != 0 && Describe.length != 0 && userId.length != 0) {
       
@@ -115,37 +114,37 @@ router.post('/insert', (req, res) => {
 
 // 03. View all uploaded documents
 router.get('/all', (req, res) => {
-  con.query("SELECT dc.doc_id, dc.dt_id_ref, dc.doc_title, dc.description, dc.attachment, dc.status, dc.upload_date, su.firstname, su.lastname, su.telephone, su.position, su.role FROM documents dc LEFT JOIN site_users su ON su.user_id=dc.uploader ORDER BY created_at DESC", (error, rows) => {
-      const internals = {
-          title: "View all uploaded documents",
-          breadcrumbL1: "Documents",
-          breadcrumbL2: "All",
-          role: req.session.role,
-          user_id: req.session.user_id,
-          username: req.session.username,
-          telephone: req.session.telephone,
-          fullName: `${req.session.firstname} ${req.session.lastname}`,
-          data: rows,
-          funs: fun,
-          moment: moment,
-      };
-      
-      if (!error) {
-          res.render("admin/docs/view-docs", {
-              layout: "./layouts/LAdmin",internals,
-              message: "",
-          });
-      } else {
-          req.flash("fmessage", "There is an error occured");
-          res.render("admin/docs/view-docs", {
-              layout: "./layouts/LAdmin",
-              internals,
-              message: req.flash("fmessage"),
-          });
-      }
-  });
+  if (req.session.in_user && req.session.in_user != undefined) {
+    con.query("SELECT dc.doc_id, dc.dt_id_ref, dc.doc_title, dc.description, dc.attachment, dc.status, dc.upload_date, su.firstname, su.lastname, su.telephone, su.position, su.role FROM documents dc LEFT JOIN site_users su ON su.user_id=dc.uploader ORDER BY created_at DESC", (error, rows) => {
+        const internals = {
+            title: "View all uploaded documents",
+            breadcrumbL1: "Documents",
+            breadcrumbL2: "All",
+            inUser: req.session.in_user,
+            data: rows,
+            funs: fun,
+            moment: moment,
+        };
+        
+        if (!error) {
+            res.render("admin/docs/view-docs", {
+                layout: "./layouts/LAdmin",internals,
+                message: "",
+            });
+        } else {
+            req.flash("fmessage", "There is an error occured");
+            res.render("admin/docs/view-docs", {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash("fmessage"),
+            });
+        }
+    });
+  } else {
+    req.flash("flashError", "Login to view users");
+    res.redirect("/panel/login");
+  }
 });
-
 
 
 

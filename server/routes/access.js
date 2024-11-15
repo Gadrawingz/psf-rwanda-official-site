@@ -3,11 +3,9 @@ This page shows all the routes specific to accounts,
 registration, app dashboard, login and authentication
 This page will use: layout: 'layouts/LAccess'
 ***********************************/
-
 const express = require("express");
 const bcrypt = require('bcrypt');
 const router = express.Router();
-
 const multer = require("multer");
 const path = require('path')
 const con = require("../config/database");
@@ -148,7 +146,6 @@ router.get("/logout", (req, res) => {
 // 07. Register a new user
 router.get("/register", (req, res) => {
   if (req.session.in_user && req.session.in_user != undefined) {
-    
     const internals = {
       title: "Register new sytem user",
       breadcrumbL1: "Admin",
@@ -173,7 +170,6 @@ router.get("/register", (req, res) => {
 
 // 07.B. POST register user
 router.post('/register-user', (req, res) => {
-
   let internals = {
     title: "Register new user",
     breadcrumbL1: "Admin",
@@ -302,6 +298,7 @@ router.get("/users", (req, res) => {
 
 // 09. Change user status to 'Inactive'
 router.get('/deactivate/(:theId)', (req, res) => {
+  if (req.session.in_user && req.session.in_user.role == 'Admin') {
     let id = req.params.theId;
     let sql = "UPDATE site_users SET status = ? WHERE user_id = ?";
     con.query(sql, ['Inactive', id], (error, result, fields) => {
@@ -313,56 +310,71 @@ router.get('/deactivate/(:theId)', (req, res) => {
             res.redirect('/panel/users');
         } 
     })
+  } else {
+    req.flash("flashError", "You need to be admin for de-activation!");
+    res.redirect("/panel/login");
+  }
+  console.log(req.session.in_user.role)
 })
 
 // 10. Change user status to 'Active'
 router.get('/activate/(:theId)', (req, res) => {
-  let id = req.params.theId;
-  let sql = "UPDATE site_users SET status = ? WHERE user_id = ?";
-  con.query(sql, ['Active', id], (error, result, fields) => {
-      if(error) {
-          req.flash('flashError', "Cannot change the status");
-          res.redirect('/panel/users');
-      } else {
-          req.flash('success', "Admin status chenged to Inactive!");
-          res.redirect('/panel/users');
-      } 
-  })
+  if (req.session.in_user && req.session.in_user.role == 'Admin') {
+    let id = req.params.theId;
+    let sql = "UPDATE site_users SET status = ? WHERE user_id = ?";
+    con.query(sql, ['Active', id], (error, result, fields) => {
+        if(error) {
+            req.flash('flashError', "Cannot change the status");
+            res.redirect('/panel/users');
+        } else {
+            req.flash('success', "Admin status chenged to Inactive!");
+            res.redirect('/panel/users');
+        } 
+    })
+  } else {
+    req.flash("flashError", "You need to be admin for activation!");
+    res.redirect("/panel/login");
+  }
 })
 
 
 
 // 11. Edit published posts view:
 router.get("/edit/(:id)", (req, res, next) => {
-  let id = req.params.id;
-  let sql = `SELECT * FROM site_users WHERE user_id= ${id}`;
-  con.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    const internals = {
-      title: `Update ${rows[0].firstname}'s info`,
-      user_id: rows[0].user_id,
-      firstname: rows[0].firstname,
-      lastname: rows[0].lastname,
-      username: rows[0].username,
-      gender: rows[0].gender,
-      telephone: rows[0].telephone,
-      email: rows[0].email,
-      role: rows[0].role,
-      position: rows[0].position,
-      has3RouteSegments: true,
-    };
+  if (req.session.in_user && req.session.in_user != undefined) {
+    let id = req.params.id;
+    let sql = `SELECT * FROM site_users WHERE user_id= ${id}`;
+    con.query(sql, (err, rows, fields) => {
+      if (err) throw err;
+      const internals = {
+        title: `Update ${rows[0].firstname}'s info`,
+        user_id: rows[0].user_id,
+        firstname: rows[0].firstname,
+        lastname: rows[0].lastname,
+        username: rows[0].username,
+        gender: rows[0].gender,
+        telephone: rows[0].telephone,
+        email: rows[0].email,
+        role: rows[0].role,
+        position: rows[0].position,
+        has3RouteSegments: true,
+      };
 
-    if (rows.length <= 0) {
-      req.flash("error", `Admin not found id ${id}`);
-      res.redirect("/panel/users");
-    } else {
-      res.render("admin/account/edit-profile", {
-        layout: "./layouts/LAdmin",
-        internals,
-        message: req.flash("fmessage"),
-      });
-    }
-  });
+      if (rows.length <= 0) {
+        req.flash("error", `Admin not found id ${id}`);
+        res.redirect("/panel/users");
+      } else {
+        res.render("admin/account/edit-profile", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: req.flash("fmessage"),
+        });
+      }
+    });
+  } else {
+    req.flash("flashError", "You need to be logged in");
+    res.redirect("/panel/login");
+  }
 });
 
 
@@ -523,105 +535,115 @@ router.get('/change-password', (req, res) => {
 
 // 16. Change pass posting
 router.post('/change-password', (req, res) => {
-  let oldPass = req.body.old_pass;
-  let newPass = req.body.new_pass;
-  let user_id = req.body.user_id;
+  if (req.session.in_user && req.session.in_user != undefined) {
+    let oldPass = req.body.old_pass;
+    let newPass = req.body.new_pass;
+    let user_id = req.body.user_id;
 
-  const internals = {
-    title: `Change your passoword`,
-    user_id: user_id,
-    inUser: req.session.in_user,
-  };
+    const internals = {
+      title: `Change your passoword`,
+      user_id: user_id,
+      inUser: req.session.in_user,
+    };
 
-  if (oldPass.length != 0 && newPass.length != 0 && user_id.length != 0) {
-      // Regular Expression for strong password validation
+    if (oldPass.length != 0 && newPass.length != 0 && user_id.length != 0) {
+        // Regular Expression for strong password validation
 
-      let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
-      if(regex.test(newPass)==true) {
-        let sqlCheck = "SELECT * FROM site_users WHERE user_id='"+user_id+"' ";
-        con.query(sqlCheck, (err, results) => {
-        
-          if (err) {
-            req.flash("fmessage", "Internal Error with DB!");
-            res.render("admin/account/change-pass", {
-              layout: "./layouts/LAdmin",
-              internals,
-              message: req.flash("fmessage"),
-            })
-          }
+        let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+        if(regex.test(newPass)==true) {
+          let sqlCheck = "SELECT * FROM site_users WHERE user_id='"+user_id+"' ";
+          con.query(sqlCheck, (err, results) => {
+          
+            if (err) {
+              req.flash("fmessage", "Internal Error with DB!");
+              res.render("admin/account/change-pass", {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash("fmessage"),
+              })
+            }
 
-          // If no tel|email already exist add sh**
-          if(bcrypt.compareSync(oldPass, results[0].password)) {
-            // Hashing Password
-            const saltRounds = 10;
-            const salt = bcrypt.genSaltSync(saltRounds);
-            const hashedPass = bcrypt.hashSync(newPass, salt);
+            // If no tel|email already exist add sh**
+            if(bcrypt.compareSync(oldPass, results[0].password)) {
+              // Hashing Password
+              const saltRounds = 10;
+              const salt = bcrypt.genSaltSync(saltRounds);
+              const hashedPass = bcrypt.hashSync(newPass, salt);
 
-            con.query('UPDATE site_users SET password = ? WHERE user_id = ?', [hashedPass, user_id], (err, result) => {
-              if(!err) {
-                res.redirect('/panel/profile');
-              }
-            })
-          } else {
-            req.flash("fmessage", "Your old password is incorrect!");
-            res.render("admin/account/change-pass", {
-              layout: "./layouts/LAdmin",
-              internals,
-              message: req.flash("fmessage"),
-            })
-          }
-        });
-      } else {
-        req.flash("fmessage", "Password should contain number, letters & over 8 characters");
-        res.render("admin/account/change-pass", {
-          layout: "./layouts/LAdmin",
-          internals,
-          message: req.flash("fmessage"),
-        })
-      }
+              con.query('UPDATE site_users SET password = ? WHERE user_id = ?', [hashedPass, user_id], (err, result) => {
+                if(!err) {
+                  res.redirect('/panel/profile');
+                }
+              })
+            } else {
+              req.flash("fmessage", "Your old password is incorrect!");
+              res.render("admin/account/change-pass", {
+                layout: "./layouts/LAdmin",
+                internals,
+                message: req.flash("fmessage"),
+              })
+            }
+          });
+        } else {
+          req.flash("fmessage", "Password should contain number, letters & over 8 characters");
+          res.render("admin/account/change-pass", {
+            layout: "./layouts/LAdmin",
+            internals,
+            message: req.flash("fmessage"),
+          })
+        }
+    } else {
+      req.flash("fmessage", "Please fill all required fields!");
+      res.render("admin/account/change-pass", {
+        layout: "./layouts/LAdmin",
+        internals,
+        message: req.flash("fmessage"),
+      });
+    }
   } else {
-    req.flash("fmessage", "Please fill all required fields!");
-    res.render("admin/account/change-pass", {
-      layout: "./layouts/LAdmin",
-      internals,
-      message: req.flash("fmessage"),
-    });
+    req.flash("flashError", "Login to do your task!");
+    res.redirect("/panel/login");
   }
 })
 
 
 // 17. Add more info for users
 router.get("/add-more/(:id)", (req, res, next) => {
-  let id = req.params.id;
-  let sql = `SELECT * FROM site_users us LEFT JOIN users_info ui ON ui.staff_id = us.user_id WHERE us.user_id= ${id}`;
-  con.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    const internals = {
-      title: `Extra info about (${rows[0].username})`,
-      user_id: rows[0].user_id,
-      inUser: req.session.in_user,
-      has3RouteSegments: true,
-    };
+  if (req.session.in_user && req.session.in_user.role == 'Admin') {
+    let id = req.params.id;
+    let sql = `SELECT * FROM site_users us LEFT JOIN users_info ui ON ui.staff_id = us.user_id WHERE us.user_id= ${id}`;
+    con.query(sql, (err, rows, fields) => {
+      if (err) throw err;
+      const internals = {
+        title: `Extra info about (${rows[0].username})`,
+        user_id: rows[0].user_id,
+        inUser: req.session.in_user,
+        has3RouteSegments: true,
+      };
 
-    let profile = rows[0].profile_pic;
-    let depart = rows[0].department;
-    let abbrev = rows[0].position_abbrev;
-    let biography = rows[0].biography;
-    let tw_link = rows[0].twitter_link;
-    let lk_link = rows[0].linkedin_link;
+      let profile = rows[0].profile_pic;
+      let depart = rows[0].department;
+      let abbrev = rows[0].position_abbrev;
+      let biography = rows[0].biography;
+      let tw_link = rows[0].twitter_link;
+      let lk_link = rows[0].linkedin_link;
 
-    if (rows.length <= 0) {
-      req.flash("error", `Admin not found id ${id}`);
-      res.redirect("/panel/users");
-    } else {
-      res.render("admin/account/add-user-info", {
-        layout: "./layouts/LAdmin",
-        internals,
-        message: req.flash("fmessage"),
-        profile, depart, abbrev, biography, tw_link, lk_link
-      });
-    }
-  });
+      if (rows.length <= 0) {
+        req.flash("error", `Admin not found id ${id}`);
+        res.redirect("/panel/users");
+      } else {
+        res.render("admin/account/add-user-info", {
+          layout: "./layouts/LAdmin",
+          internals,
+          message: req.flash("fmessage"),
+          profile, depart, abbrev, biography, tw_link, lk_link
+        });
+      }
+    });
+  } else {
+    req.flash("flashError", "You need to be admin for this role!");
+    res.redirect("/panel/login");
+  }
 });
 
 
@@ -669,7 +691,6 @@ router.post('/update-user-info/(:id)', (req, res) => {
     //let pex = req.body.profile_exist;
     //forProfile = pex=='true'?req.body.profile:req.file.filename
     
-
     // Date Handling
     const dt4 = new Date();
     const padLine = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
@@ -691,6 +712,8 @@ router.post('/update-user-info/(:id)', (req, res) => {
     }
   })
 });
+
+
 
 
 
