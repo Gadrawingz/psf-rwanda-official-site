@@ -18,12 +18,9 @@ router.get("/add", (req, res) => {
             title: "Event Registration",
             breadcrumbL1: "Events",
             breadcrumbL2: "New",
-            role: req.session.role,
-            admin_id: req.session.admin_id,
-            username: req.session.username,
-            telephone: req.session.telephone,
-            fullName: `${req.session.firstname} ${req.session.lastname}`,
+            inUser: req.session.in_user,
         };
+        
         res.render("admin/events/add-event", {
             layout: "./layouts/LAdmin",
             internals,

@@ -37,7 +37,7 @@
       <ul class="header-actions">
         <li class="dropdown">
           <a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
-            <span class="user-name d-none d-md-block">Hi, <b><%- internals.inUser.firstname %> <%= internals.inUser.lastname %></b>
+            <span class="user-name d-none d-md-block" title="<%- internals.inUser.firstname %> <%= internals.inUser.lastname %>">Hi, <b><%- internals.inUser.username %></b>
             </span>
             <span class="avatar">
               <img src="<%= internals.has3RouteSegments === true ? '../':'' %>../admin/images/profile/user-avatar.jpg" alt="Admin">

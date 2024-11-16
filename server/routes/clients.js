@@ -230,6 +230,7 @@ router.get('/team-management', (req, res) => {
         hasFullFooter: true,
         inUser: req.session.in_user,
     }
+    
     res.render('clients/teams/management', { internals });
 });
 
@@ -319,7 +320,6 @@ router.get('/extract-documents', async (req, res) => {
                 description: "",
                 hasFullFooter: true,
                 inUser: req.session.in_user,
-                inUserInfo: req.session.in_user,
             }
 
             // Fetching data from multiple tables

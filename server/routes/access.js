@@ -7,8 +7,10 @@ const express = require("express");
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const multer = require("multer");
+const moment = require("moment");
 const path = require('path')
 const con = require("../config/database");
+const con2 = require("../config/database2");
 const fun = require("../config/functions");
 
 // To be able to send flash
@@ -102,31 +104,40 @@ router.post("/login-auth", (req, res) => {
 
 
 // 05. Admin dashboard view
-router.get(["", "/dashboard"], (req, res) => {
+router.get(["", "/dashboard"], async (req, res) => {
   if (req.session.in_user && (req.session.in_user.loggedin) == true) {
-    // Local stuffs:
-    const internals = {
-      title: "Dashboard Page",
-      breadcrumbL1: "Dashboard",
-      breadcrumbL2: "Home",
-      inUser: req.session.in_user,
-    };
+    try {
+      // Fetching all necessary counts
+      let publiCount = await con2.query("SELECT COUNT(*) AS pubs_count FROM `publication`");
+      let postsCount = await con2.query("SELECT COUNT(*) AS posts_count FROM `posts`");
+      let galleryCount = await con2.query("SELECT COUNT(*) AS gallery_count FROM `gallery`");
+      let eventsCount = await con2.query("SELECT COUNT(*) AS events_count FROM `events` WHERE is_happened=0");
+      let appManagers = await con2.query("SELECT COUNT(*) AS users_count FROM `site_users`");
 
-    let publiCount = "X";
-    let postsCount = "X";
-    let galleryNum = "X";
-    let appManagers = "X";
+      const internals = {
+        title: "Dashboard Page",
+        breadcrumbL1: "Dashboard",
+        breadcrumbL2: "Home",
+        inUser: req.session.in_user,  
+        // Main 4 counts to be taken
+        publicationsNum : publiCount,
+        postsNumber : postsCount,
+        eventsNumber : eventsCount,
+        allUsersNumber: appManagers
+      };
 
-    res.render("admin/dashboard", { 
-      layout: "./layouts/LAdmin", 
-      internals, publiCount, postsCount, galleryNum, appManagers
-    });
+      res.render("admin/dashboard", { 
+        layout: "./layouts/LAdmin", 
+        internals
+      });
+
+    } catch (error) {
+      console.log("ERROR:"+error);
+    }
   } else {
-    // Please get back here and login
     req.flash("flashError", "Please login to access dashboard!");
     res.redirect("/panel/login");
   }
-  res.end();
 });
  
 
@@ -219,8 +230,13 @@ router.post('/register-user', (req, res) => {
               telephone: te, email: em, role: ro, position: po, password: hashedPass,
             }
 
-            con.query('INSERT INTO `site_users` SET ?', userData, (err, result) => {
+            con.query('INSERT INTO `site_users` SET ?', userData, async (err, result) => {
               if(!err) {
+
+                // ADD BASIC INFO IN 'users_info' TABLE
+                let lastUser = await con2.query(`SELECT user_id, created_at FROM site_users WHERE email='${em}'`)
+                let formattedDate = moment(lastUser[0][0].created_at).format('YYYY-MM-DD HH:mm:ss');
+                await con2.query(`INSERT INTO users_info (staff_id, department, profile_pic, biography, position_abbrev, twitter_link, linkedin_link, modified_at) VALUES (${lastUser[0][0].user_id}, 'NONE', '', '', '', '', '', '${formattedDate}')`);
                 res.redirect('/panel/users');
               }
             })
@@ -338,7 +354,7 @@ router.get('/activate/(:theId)', (req, res) => {
 
 
 
-// 11. Edit published posts view:
+// 11. Edit published user:
 router.get("/edit/(:id)", (req, res, next) => {
   if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let id = req.params.id;
@@ -347,6 +363,7 @@ router.get("/edit/(:id)", (req, res, next) => {
       if (err) throw err;
       const internals = {
         title: `Update ${rows[0].firstname}'s info`,
+        inUser: req.session.in_user,
         user_id: rows[0].user_id,
         firstname: rows[0].firstname,
         lastname: rows[0].lastname,
@@ -608,7 +625,7 @@ router.post('/change-password', (req, res) => {
 
 // 17. Add more info for users
 router.get("/add-more/(:id)", (req, res, next) => {
-  if (req.session.in_user && req.session.in_user.role == 'Admin') {
+  if (req.session.in_user && req.session.in_user.loggedin == true) {
     let id = req.params.id;
     let sql = `SELECT * FROM site_users us LEFT JOIN users_info ui ON ui.staff_id = us.user_id WHERE us.user_id= ${id}`;
     con.query(sql, (err, rows, fields) => {
@@ -686,6 +703,7 @@ router.post('/update-user-info/(:id)', (req, res) => {
     let abr = req.body.abbreviation;
     let bio = req.body.biography;
     let tlk = req.body.tw_link;
+    let llk = req.body.lk_link;
     let img = req.file.filename;
     //let pex = req.body.profile_exist;
     //forProfile = pex=='true'?req.body.profile:req.file.filename

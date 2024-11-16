@@ -1,52 +1,56 @@
 <!-- Row start -->
 <div class="row">
-    <div class="col-xxl-3 col-sm-6 col-12">
-      <div class="stats-tile">
-        <div class="sale-icon shade-red">
-          <i class="bi bi-pie-chart"></i>
-        </div>
-        <div class="sale-details">
-          <h3 class="text-red"><%- postsCount %></h3>
-          <p>Press Releases</p>
-        </div>
+  <div class="col-xxl-3 col-sm-6 col-12">
+    <div class="stats-tile">
+      <div class="sale-icon shade-green">
+        <i class="bi bi-handbag"></i>
+      </div>
+      <div class="sale-details">
+        <h3 class="text-green"><%- internals.allUsersNumber[0][0].users_count %></h3>
+        <p>All app users</p>
       </div>
     </div>
-    <div class="col-xxl-3 col-sm-6 col-12">
-      <div class="stats-tile">
-        <div class="sale-icon shade-blue">
-          <i class="bi bi-emoji-smile"></i>
-        </div>
-        <div class="sale-details">
-          <h3 class="text-blue"><%- publiCount %></h3></h3>
-          <p>Publications</p>
-        </div>
+  </div>
+
+  <div class="col-xxl-3 col-sm-6 col-12">
+    <div class="stats-tile">
+      <div class="sale-icon shade-red">
+        <i class="bi bi-pie-chart"></i>
+      </div>
+      <div class="sale-details">
+        <h3 class="text-red"><%- internals.postsNumber[0][0].posts_count %></h3>
+        <p>Press Releases</p>
       </div>
     </div>
-    <div class="col-xxl-3 col-sm-6 col-12">
-      <div class="stats-tile">
-        <div class="sale-icon shade-yellow">
-          <i class="bi bi-box-seam"></i>
-        </div>
-        <div class="sale-details">
-          <h3 class="text-yellow"><%- galleryNum %></h3>
-          <p>In Gallery</p>
-        </div>
+  </div>
+
+  <div class="col-xxl-3 col-sm-6 col-12">
+    <div class="stats-tile">
+      <div class="sale-icon shade-blue">
+        <i class="bi bi-emoji-smile"></i>
+      </div>
+      <div class="sale-details">
+        <h3 class="text-blue"><%- internals.publicationsNum[0][0].pubs_count %></h3>
+        </h3>
+        <p>Publications</p>
       </div>
     </div>
-    <div class="col-xxl-3 col-sm-6 col-12">
-      <div class="stats-tile">
-        <div class="sale-icon shade-green">
-          <i class="bi bi-handbag"></i>
-        </div>
-        <div class="sale-details">
-          <h3 class="text-green"><%- appManagers %></h3>
-          <p>All app users</p>
-        </div>
+  </div>
+
+  <div class="col-xxl-3 col-sm-6 col-12">
+    <div class="stats-tile">
+      <div class="sale-icon shade-yellow">
+        <i class="bi bi-box-seam"></i>
+      </div>
+      <div class="sale-details">
+        <h3 class="text-yellow"><%- internals.eventsNumber[0][0].events_count %></h3>
+        <p>Upcoming Events</p>
       </div>
     </div>
+  </div>
 </div>
 <!-- Row end -->
- 
+
 <!-- Row start -->
 <div class="row">
   <div class="col-sm-12 col-12">
