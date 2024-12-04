@@ -8,7 +8,7 @@
             </ul>
         </div>
         <div class="page-banner-title">
-            <h3>PSF Management</h3>
+            <h3>PSF Staff Members</h3>
         </div>
     </div>
 </section>
@@ -17,11 +17,70 @@
 <section class="team-section">
     <div class="container">
         <div class="section-title-box text-center">
-            <div class="section-tagline">PSF Staff</div>
+            <div class="section-tagline">Regional Managers (Provinces)</div>
         </div><hr>
 
-        <div class="row row-gutter-y-30">
+        <% if(internals.dataReg.length > 0) { %>
+        <div class="row row-gutter-y-30" style="display: flex; justify-content: center;"> 
+            <% for(let g=0; g < internals.dataReg.length; g++ ) { %>
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="team-card cst-orange-border-sm">
+                    <div class="team-card-img">
+                        <% if(internals.dataReg[g].profile_pic > 0 ) { %> 
+                        <img src="clients/images/team/<%= internals.dataReg[g].profile_pic; %>" class="img-fluid" alt="img-78">
+                        <% } else if(internals.dataReg[g].gender=='Female') { %>
+                        <img src="clients/images/team/profile-female.png" class="img-fluid" alt="img-78">
+                        <% } else { %>
+                        <img src="clients/images/team/profile-male.jpg" class="img-fluid" alt="img-78">
+                        <% } %>
 
+                        <div class="team-card-icon">
+                            <a href="mailto:<%= internals.dataReg[g].email; %>" class="twitter"><i class="fa-brands fa-microsoft"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-card-content">
+                        <h4><a href="#"><%= internals.dataReg[g].firstname; %> <%= internals.dataReg[g].lastname; %></a></h4>
+                        <p title="<%= internals.dataReg[g].position; %>"><%= internals.dataReg[g].position; %></p>
+                        <p class="team-mail-blue"><%= internals.dataReg[g].email; %></p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
         </div>
+        <% } else { } %>
+
+
+        <div class="section-title-box text-center" style="margin-top: 20px!important;">
+            <div class="section-tagline">District Managers</div>
+        </div><hr>
+
+        <% if(internals.dataDst.length > 0) { %>
+        <div class="row row-gutter-y-30" style="display: flex; justify-content: center;"> 
+            <% for(let g=0; g < internals.dataDst.length; g++ ) { %>
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="team-card cst-orange-border-sm">
+                    <div class="team-card-img">
+                        <% if(internals.dataDst[g].profile_pic > 0 ) { %> 
+                        <img src="clients/images/team/<%= internals.dataDst[g].profile_pic; %>" class="img-fluid" alt="img-78">
+                        <% } else if(internals.dataDst[g].gender=='Female') { %>
+                        <img src="clients/images/team/profile-female.png" class="img-fluid" alt="img-78">
+                        <% } else { %>
+                        <img src="clients/images/team/profile-male.jpg" class="img-fluid" alt="img-78">
+                        <% } %>
+
+                        <div class="team-card-icon">
+                            <a href="mailto:<%= internals.dataDst[g].email; %>" class="twitter"><i class="fa-brands fa-microsoft"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-card-content">
+                        <h4><a href="#"><%= internals.dataDst[g].firstname; %> <%= internals.dataDst[g].lastname; %></a></h4>
+                        <p title="<%= internals.dataDst[g].position; %>"><%= internals.dataDst[g].position; %></p>
+                        <p class="team-mail-blue"><%= internals.dataDst[g].email; %></p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <% } else { } %>
     </div>
 </section>

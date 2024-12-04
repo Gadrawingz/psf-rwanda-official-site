@@ -4476,6 +4476,12 @@ a.search-toggler{
 		margin-bottom: 40px;
 	}
 }
+
+.team-mail-blue {
+	color: #A94501!important;
+	font-size: 14px!important;
+}
+
 .team-card{
 	padding: 15px 15px;
 	background-color: var(--thm-white);	

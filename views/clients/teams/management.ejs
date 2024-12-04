@@ -20,233 +20,34 @@
             <div class="section-tagline">PSF Management</div>
         </div><hr>
 
-        <div class="row row-gutter-y-30">
-
-            <!-- First Row for Employees -->
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-1.jpg" class="img-fluid" alt="img-78">
-                        <div class="team-card-icon">
-                            <a href="mailto:felixm@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
+        <% if(internals.dataMainOp.length > 0) { %>
+            <div class="row row-gutter-y-30" style="display: flex; justify-content: center;"> 
+                <% for(let g=0; g < internals.dataMainOp.length; g++ ) { %>
+                <div class="col-12 col-md-6 col-xl-4">
+                    <div class="team-card cst-orange-border-sm">
+                        <div class="team-card-img">
+                            <% if(internals.dataMainOp[g].profile_pic > 0 ) { %> 
+                            <img src="clients/images/team/<%= internals.dataMainOp[g].profile_pic; %>" class="img-fluid" alt="img-78">
+                            <% } else if(internals.dataMainOp[g].gender=='Female') { %>
+                            <img src="clients/images/team/profile-female.png" class="img-fluid" alt="img-78">
+                            <% } else { %>
+                            <img src="clients/images/team/profile-male.jpg" class="img-fluid" alt="img-78">
+                            <% } %>
+    
+                            <div class="team-card-icon">
+                                <a href="mailto:<%= internals.dataMainOp[g].email; %>" class="twitter"><i class="fa-brands fa-microsoft"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-card-content">
+                            <h4><a href="#"><%= internals.dataMainOp[g].firstname; %> <%= internals.dataMainOp[g].lastname; %></a></h4>
+                            <p title="<%= internals.dataMainOp[g].position; %>"><%= internals.dataMainOp[g].position; %></p>
+                            <p class="team-mail-blue"><%= internals.dataMainOp[g].email; %></p>
                         </div>
                     </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">MUTAGOMA Felix</a></h4>
-                        <p title="Director of Human Resources">Director of Human Resources</p>
-                    </div>
-                </div>
+                </div><br>
+                <% } %>
             </div>
-
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-1.jpg" class="img-fluid" alt="img-78">
-                        <div class="team-card-icon">
-                            <a href="mailto:walterh@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">HUNDE Walter</a></h4>
-                        <p title="Director of Internal Audit">Director of Internal Audit</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-1.jpg" class="img-fluid" alt="img-78">
-                        <div class="team-card-icon">
-                            <a href="mailto:jamesn@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">NGABO James</a></h4>
-                        <p title="Acting Director of Finance">Acting Director of Finance</p>
-                    </div>
-                </div>
-            </div>
-
-            <!--  Second Row for Employees -->
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-penny-burabyo.jpg" class="img-fluid" alt="img-78">
-                        <div class="team-card-icon">
-                            <a href="mailto:peninnahb@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">BURABYO Musoni Peninah</a></h4>
-                        <p title="Director of SPIU">Director of SPIU</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-3.jpg" class="img-fluid" alt="img-80">
-                        <div class="team-card-icon">
-                            <a href="mailto:ruthk@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">KABANA Ruth</a></h4>
-                        <p title="Accountant">Accountant</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-4.jpg" class="img-fluid" alt="img-81">
-                        <div class="team-card-icon">
-                            <a href="mailto:emmanuelg@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">GAKWAVU Emmanuel</a></h4>
-                        <p title="Accountant">Accountant</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-2.jpg" class="img-fluid" alt="img-79">
-                        <div class="team-card-icon">
-                            <a href="mailto:benjaminn@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">NDAHIRWA Benjamin</a></h4>
-                        <p title="HEAD OF MONITORING AND EVALUATION (M&E)">HEAD OF MONITORING & EVALUATION</p>
-                    </div>
-                </div>
-            </div>
-
-            <!--  Third Row for Employees -->
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-1.jpg" class="img-fluid" alt="img-78">
-                        <div class="team-card-icon">
-                            <a href="mailto:marieclaireu@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">UWASE Marie Claire</a></h4>
-                        <p title="Legal Advisor">Legal Advisor</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-3.jpg" class="img-fluid" alt="img-80">
-                        <div class="team-card-icon">
-                            <a href="mailto:christiang@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">GISA Christian</a></h4>
-                        <p title="Executive Advisor to the CEO">Executive Advisor to the CEO</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-4.jpg" class="img-fluid" alt="img-81">
-                        <div class="team-card-icon">
-                            <a href="mailto:nehemier@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">RUGANZA Rumanzi Nehemie</a></h4>
-                        <p title="PSF Health Scheme Verification Specialist">PSF Health Scheme Verification Specialist</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-2.jpg" class="img-fluid" alt="img-79">
-                        <div class="team-card-icon">
-                            <a href="mailto:ntezi.dodos78@gmail.com" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">Nteziryayo Dieudonne</a></h4>
-                        <p title="Driver">Main Driver</p>
-                    </div>
-                </div>
-            </div>
-
-        </div><br><br>
-
-        <div class="section-title-box text-center">
-            <div class="section-tagline">Advocacy</div>
-        </div><hr>
-        <div class="row row-gutter-y-30">
-            <!--  First Row for Employees -->
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-1.jpg" class="img-fluid" alt="img-78">
-                        <div class="team-card-icon">
-                            <a href="mailto:josephm@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">MUTABAZI Joseph </a></h4>
-                        <p title="Director of Trade and Business Development">Director of Trade and Business Development</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-1.jpg" class="img-fluid" alt="img-78">
-                        <div class="team-card-icon">
-                            <a href="mailto:alaindm@psf.org.rw" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">Alain Didier MUHIZI</a></h4>
-                        <p title="Head of Policy Analysis">Head of Policy Analysis</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <img src="clients/images/team/team-1.jpg" class="img-fluid" alt="img-78">
-                        <div class="team-card-icon">
-                            <a href="mailto:ndoyif@gmail.com" class="twitter"><i class="fa-brands fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#">NDOYI Fofo</a></h4>
-                        <p title="Call Center Agent">Call Center Agent</p>
-                    </div>
-                </div>
-            </div>
-
-            <!--  Second Row for Employees -->
-
-
-        </div>
-
+        <% } else { } %><br>
 
     </div>
 </section>
