@@ -2,14 +2,111 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="text-center"><%- internals.doc_title %></h2><hr>
-                <div class="pdf-container">
-                    <iframe id="pdf-iframe" src="../../uploads/docs/<%= internals.attachment %>#toolbar=0" class="pdf-viewer"></iframe>
-                    <div class="pdf-controls">
+                <h2 class="text-center">View (<%- internals.doc_title %>)</h2>
+                <hr>
+                <div id="pdf-container">
+                    <div id="pdf-controls">
+                        <div>
+                            <button id="prev">Previous</button>
+                            <button id="next">Next</button>
+                            <span>Page: <span id="page-num"></span> / <span id="page-count"></span></span>
+                        </div>
+                        <div>
+                            <button disabled id="download">Download PDF</button>
+                            <button disabled id="print">Print PDF</button>
+                        </div>
                     </div>
+                    <canvas id="pdf-canvas"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script>
+    // PDF.js setup
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+    // PDF Viewer Configuration
+    // The placement of PDF URL
+    const url = '../../uploads/docs/<%= internals.attachment %>';
+    let pdfDoc = null,
+        pageNum = 1,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1.5,
+        canvas = document.getElementById('pdf-canvas'),
+        ctx = canvas.getContext('2d');
+
+    // Render the page
+    function renderPage(num) {
+        pageRendering = true;
+        pdfDoc.getPage(num).then(function (page) {
+            const viewport = page.getViewport({ scale: scale });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+
+            const renderTask = page.render(renderContext);
+            renderTask.promise.then(function () {
+                pageRendering = false;
+                if (pageNumPending !== null) {
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
+            });
+        });
+
+        document.getElementById('page-num').textContent = num;
+    }
+
+    // Check pending pages
+    function queueRenderPage(num) {
+        if (pageRendering) {
+            pageNumPending = num;
+        } else {
+            renderPage(num);
+        }
+    }
+
+    // Navigate to previous page
+    document.getElementById('prev').addEventListener('click', function () {
+        if (pageNum <= 1) return;
+        pageNum--;
+        queueRenderPage(pageNum);
+    });
+
+    // Navigate to next page
+    document.getElementById('next').addEventListener('click', function () {
+        if (pageNum >= pdfDoc.numPages) return;
+        pageNum++;
+        queueRenderPage(pageNum);
+    });
+
+    // Download PDF
+    document.getElementById('download').addEventListener('click', function () {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'document32.pdf';
+        link.click();
+    });
+
+    // Print PDF
+    document.getElementById('print').addEventListener('click', function () {
+        const printWindow = window.open(url, '_blank');
+        printWindow.print();
+    });
+
+    // Load PDF
+    pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('page-count').textContent = pdfDoc.numPages;
+        renderPage(pageNum);
+    });
+</script>

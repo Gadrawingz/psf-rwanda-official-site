@@ -254,7 +254,6 @@
     border-bottom: 2px solid blue!important;
 }
 
-
 @media screen and (max-width: 600px) {
     .cst-outable,
     .cst-outable thead,
@@ -304,7 +303,6 @@
     margin: 40px 0!important;
 }
 
-
 /* PDF Preview */
 .pdf-container {
     width: 100%;
@@ -315,12 +313,6 @@
     padding: 10px;
 }
 
-iframe.pdf-viewer {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
 .pdf-controls {
     position: absolute;
     top: 10px;
@@ -328,16 +320,35 @@ iframe.pdf-viewer {
     z-index: 10;
 }
 
-.pdf-controls button {
-    padding: 10px;
-    margin: 5px;
-    background-color: #13b75a;
+#pdf-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#pdf-canvas {
+    border: 3px solid #034a11;
+    border-radius: 4px;
+    width: 100%;
+}
+
+#pdf-controls>div>button {
+    padding: 8px;
+    margin: 4px;
+    background-color: #0e753b;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
 }
 
+#pdf-controls>div>span {
+    font-weight: bolder;
+    font-size: larger;
+    color: #000;
+}
+
+/* Misc. */
 .cst-form-label {
     font-weight: bolder!important;
     color: var(--green-dark);
@@ -348,4 +359,49 @@ iframe.pdf-viewer {
 .cst-red {
     color: red;
     font-weight: bolder;
+}
+
+
+/* Documents view tables */
+.table8-block {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.table8 {
+    display: table;
+    width: auto;
+    min-width: 20%;
+    border-collapse: collapse;
+}
+
+.table8-row {
+    display: table-row;
+}
+
+.table8-cell {
+    padding: 8px;
+    display: table-cell;
+    border: 1px solid #000;
+    text-align: left;
+}
+
+.table8-cell a {
+    color: var(--green-main);
+    font-weight: bolder;
+}
+
+.table8-header {
+    border-bottom: 2px solid #075c123d;
+    padding: 10px!important;
+    margin-bottom: 15px!important;
+    text-align: center!important;
+}
+
+.header {
+    background-color: #17351c;
+    color: #FFF;
+    font-weight: bold;
 }
