@@ -405,3 +405,30 @@
     color: #FFF;
     font-weight: bold;
 }
+
+/* Top banner */
+.top-banner {
+    background-color: #052802;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.top-banner button {
+    background-color: #9c5005;
+    border: none;
+    outline: none;
+    color: #FFF;
+    font-weight: bolder;
+    border-radius: 3px;
+    padding: 4px 8px;
+}
+
+.top-banner span a {
+    color: #FFF;
+    margin-right: 20px!important;
+}
+
+.top-banner span a:hover {
+    color: #f5c394;
+}

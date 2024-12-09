@@ -3849,7 +3849,7 @@ a.search-toggler{
 	border-radius: 50%;
 	text-align: center;
 	border: 1.5px solid #FFF;
-	background-color: #CC5500;
+	background-color: #ed6809;
 	color: var(--thm-white);
 }
 .footer-widget-socials a:hover{
@@ -3874,8 +3874,12 @@ a.search-toggler{
 }
 .footer-widget-title{
 	font-size: 18px;
-	color: var(--thm-white);
+	color: #b8ecae;
 	margin-bottom: 35px;
+	font-weight: bold;
+	border-bottom: 2px solid #69f20c3d;
+	padding-bottom: 6px;
+	
 }
 @media(max-width: 991px){
 	.footer-widget-title{
