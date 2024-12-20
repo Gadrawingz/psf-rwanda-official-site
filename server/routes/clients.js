@@ -18,22 +18,25 @@ const flash = require('express-flash');
 router.use(flash())
 
 
-// Home page
+// Home page:
 router.get(['', '/home'], (req, res) => {
-    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_date DESC LIMIT 3", (error, rows) => {
-        const internals = {
-            title: "Home page",
-            description: "Welcome official website for PSF Rwanda",
-            inUser: req.session.in_user,
-            hasFullFooter: true,
-            data: rows,
-            funs: fun,
-            moment: moment,
-        }
+    con.query("SELECT po.post_title, po.post_slug, po.post_text, po.post_date, po.post_image, po.post_category, ad.role FROM posts po LEFT JOIN site_users ad ON ad.user_id = po.post_author ORDER BY po.post_date DESC LIMIT 3", async (error, rows) => {
+        con.query("SELECT * FROM feedback WHERE rating >=3 AND published=1 ORDER BY rating DESC LIMIT 5", (error, fbRows) => {
+            const internals = {
+                title: "Home page",
+                description: "Welcome official website for PSF Rwanda",
+                inUser: req.session.in_user,
+                hasFullFooter: true,
+                data: rows,
+                funs: fun,
+                feedback: fbRows,
+                moment: moment,
+            }
+            if (!error) {
+                res.render("clients/home", { internals });
+            }
+        });
 
-        if (!error) {
-            res.render("clients/home", { internals });
-        }
     });
 });
 
@@ -480,6 +483,66 @@ router.post('/contact-to-db', (req, res) => {
         res.redirect("/contact");
     }
 })
+
+
+// Route for adding feedback
+router.get('/add-feedback', (req, res) => {
+    const internals = {
+        title: "Clients Feedback",
+        description: "",
+        hasFullFooter: true,
+        inUser: req.session.in_user,
+    }
+
+    let names, email, telephone, subject, rating, company, message = '';
+    res.render('clients/about/add-feedback', { 
+        internals,
+        names, email, telephone, subject, rating, company, message,
+        message: req.flash("fmessage"),
+    });
+
+});
+
+// Post customer feedback:
+router.post('/post-feedback', (req, res) => {
+    let names = req.body.names;
+    let email = req.body.email;
+    let telephone = req.body.telephone;
+    let subject = req.body.subject;
+    let rating = req.body.rating;
+    let company = req.body.company;
+    let isMember = req.body.is_member;
+    let message = fun.addSlashes(req.body.message);
+
+    if (names.length != 0 && email.length != 0 && subject.length != 0 && message.length != 0 && rating.length != 0) {
+        if(message.length > 10) {
+            let inData = {
+                names: names, 
+                email: email, 
+                telephone: telephone, 
+                user_type: isMember, 
+                subject: subject, 
+                rating: rating, 
+                message: message,
+                company: company
+            };
+
+            con.query("INSERT INTO feedback SET ?", inData, (err, results, fields) => {
+                if (!err) {
+                    req.flash("fmessage", "Your feedback has been received!");
+                    res.redirect('/add-feedback');
+                }
+            })
+        } else {
+            req.flash("fmessage", "Your message/description is too short!");
+            res.redirect("/add-feedback");
+        }
+    } else {
+        req.flash("fmessage", "Fill All required fields!");
+        res.redirect("/add-feedback");
+    }
+})
+
 
 
 router.get('/support', (req, res) => {

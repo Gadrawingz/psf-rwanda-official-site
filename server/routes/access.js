@@ -714,6 +714,7 @@ router.post('/update-user-info/(:id)', (req, res) => {
     const finalDate = `${dt4.getFullYear()}-${padLine(dt4.getMonth()+1)}-${padLine(dt4.getDate())} ${padLine(dt4.getHours())}:${padLine(dt4.getMinutes())}:${padLine(dt4.getSeconds())}`;
 
     if (dpt.length != 0) {
+      
       // If SUCCESS...     
       con.query('UPDATE users_info SET department = ?, biography = ?, position_abbrev = ?, twitter_link = ?, linkedin_link = ?, profile_pic = ?, modified_at = ? WHERE staff_id = ?', [dpt, bio, abr, tlk, llk, img, finalDate, id], (err, result) => {
         if(err) {
@@ -729,7 +730,6 @@ router.post('/update-user-info/(:id)', (req, res) => {
     }
   })
 });
-
 
 
 

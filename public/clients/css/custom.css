@@ -337,3 +337,15 @@ iframe.pdf-viewer {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.cst-form-label {
+    font-weight: bolder!important;
+    color: var(--green-dark);
+    margin-bottom: 5px;
+    border-bottom: 2px solid var(--orange-lower);
+}
+
+.cst-red {
+    color: red;
+    font-weight: bolder;
+}
