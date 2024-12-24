@@ -36,7 +36,6 @@ router.get(['', '/home'], (req, res) => {
                 res.render("clients/home", { internals });
             }
         });
-
     });
 });
 
