@@ -1,6 +1,6 @@
 # PSF OFFICIAL WEBSITE README
 
-## SUGGESTED CHANGES TO DO:
+## SUGGESTED CHANGES TO DO :
 
 - Changing green colors to match with the one resembles PSF logo.
 - Adding PSF's MoU under PSF Partners (But Publishing to website need approval)
