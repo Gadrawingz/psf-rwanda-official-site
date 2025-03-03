@@ -346,8 +346,12 @@ router.get('/extract-documents', async (req, res) => {
             // Fetching data from multiple tables
             const [doc2024] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2024' ORDER BY dt_id ASC");
             const [doc2025] = await con2.query("SELECT * FROM doc_timeline WHERE dt_year='2025' ORDER BY dt_id ASC");
+
+            // Misc. changes:
+            const [counts25] = await con2.query("SELECT COUNT(*) AS counts_25 FROM doc_timeline WHERE dt_year='2025' ");
+
             // Render data with combined data
-            const combinedData = { table24: doc2024, table25: doc2025 };
+            const combinedData = { table24: doc2024, table25: doc2025, counts25: counts25 };
 
             // Receive session initialized from login_auth 
             // Here we get: loggedin, role, user_id, username, firstname,...

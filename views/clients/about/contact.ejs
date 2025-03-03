@@ -20,32 +20,36 @@
                 <div class="contact-box">
                     <div class="section-tagline">
                         GET IN TOUCH
-                    </div><hr>
-                    <p>We value your feedback and are committed to providing exceptional service.<br>If you have any questions, comments, or suggestions about our services, please don't hesitate to contact us using the information below.
+                    </div>
+                    <hr>
+                    <p>We value your feedback and are committed to providing exceptional service.<br>If you have any
+                        questions, comments, or suggestions about our services, please don't hesitate to contact us
+                        using the information below.
                     </p>
                 </div>
 
                 <div class="col-md-12 col-lg-12 col-xl-12 cst-contact-orange-box">
-					<div class="col-md-6 col-lg-6 col-xl-6">
-						<div class="cta-four-content">
-							<i class="flaticon-envelope-3"></i>
-							<div class="cta-four-content-box">
-								<span><strong>Write Email</strong></span>
-								<p>secretariat@psf.org.rw</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-6 col-xl-6">
-						<div class="cta-four-content">
-							<i class="flaticon-location-pin"></i>
-							<div class="cta-four-content-box">
-								<span><strong>Visit Office</strong></span>
-								<p>Rwanda, Kicukiro</p>
-							</div>
-						</div>
-					</div>
-					
-                </div><br><hr>
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="cta-four-content">
+                            <i class="flaticon-envelope-3"></i>
+                            <div class="cta-four-content-box">
+                                <span><strong>Write Email</strong></span>
+                                <p>secretariat@psf.org.rw</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                        <div class="cta-four-content">
+                            <i class="flaticon-location-pin"></i>
+                            <div class="cta-four-content-box">
+                                <span><strong>Visit Office</strong></span>
+                                <p>Rwanda, Kicukiro</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><br>
+                <hr>
 
                 <div class="about-two-author-content">
                     <div class="about-two-author-content-box">
@@ -54,15 +58,16 @@
                         </div>
                         <div class="about-two-author-content-contact">
                             <h5>Have a question?</h5>
-                            <a href="tel:+250783564098">+250-(783)-564-098</a>
+                            <a href="tel:+250783564098">+250-(XXX)-XXX-XXX</a>
                         </div>
                     </div>
-                    
+
                     <div class="about-two-author-content-socials">
                         <a href="https://twitter.com/PSF_Rwanda"><i class="fa-brands fa-twitter"></i></a>
                         <a href="https://www.facebook.com/PSFRwanda"><i class="fa-brands fa-facebook"></i></a>
                         <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                        <a href="https://www.youtube.com/channel/UCBigXEtzbp3Fg0T7WtF6Zhw"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.youtube.com/channel/UCBigXEtzbp3Fg0T7WtF6Zhw"><i
+                                class="fa-brands fa-youtube"></i></a>
                     </div>
                 </div>
 
@@ -70,41 +75,50 @@
 
             <div class="col-lg-6">
                 <% if (message.length!=0) { %>
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <i class="bi bi-x-circle alert-icon"></i>
-                    <%- message %> 
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <% } %>
-                <form action="/contact-to-db" class="contact-form" method="post">
-                    <div class="row row-gutter-10">
-                        <div class="col-12 col-lg-6">
-                            <input type="text" id="names" class="input-text" placeholder="Your names" name="names" value="<%= names %>">
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <input type="email" id="email" class="input-text" placeholder="Email address" name="email" value="<%= email %>">
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <input type="number" id="phone" class="input-text" placeholder="Phone number" name="phone" value="<%= phone %>">
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <input type="text" id="subject" class="input-text" placeholder="Subject" name="subject" value="<%= subject %>">
-                        </div>
-                        <div class="col-12 col-lg-12">
-                            <textarea name="cmessage" placeholder="Write a message" class="input-text"><%= cmessage %></textarea>
-                        </div>
-                        <div class="col-12 col-lg-12">
-                            <button type="submit" class="btn btn-primary">Send a Message</button>
-                        </div>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <i class="bi bi-x-circle alert-icon"></i>
+                        <%- message %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                </form>
+                    <% } %>
+                        <form action="/contact-to-db" class="contact-form" method="post">
+                            <div class="row row-gutter-10">
+                                <div class="col-12 col-lg-6">
+                                    <input type="text" id="names" class="input-text" placeholder="Your names"
+                                        name="names" value="<%= names %>">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <input type="email" id="email" class="input-text" placeholder="Email address"
+                                        name="email" value="<%= email %>">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <input type="number" id="phone" class="input-text" placeholder="Phone number"
+                                        name="phone" value="<%= phone %>">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <input type="text" id="subject" class="input-text" placeholder="Subject"
+                                        name="subject" value="<%= subject %>">
+                                </div>
+                                <div class="col-12 col-lg-12">
+                                    <textarea name="cmessage" placeholder="Write a message"
+                                        class="input-text"><%= cmessage %></textarea>
+                                </div>
+                                <div class="col-12 col-lg-12">
+                                    <button type="submit" class="btn btn-primary">Send a Message</button>
+                                </div>
+                            </div>
+                        </form>
             </div>
-        </div><br><hr><br>
+        </div><br>
+        <hr><br>
 
         <div class="row cst-orange-border-0">
             <!-- Map embedding -->
             <div class="responsive-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4446921170497!2d30.0932239!3d-1.9764642000000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca63ef96f8acf%3A0xcd686322634fb2a2!2sKK%2034%20Ave%2C%20Kigali!5e0!3m2!1sen!2srw!4v1726475319858!5m2!1sen!2srw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4446921170497!2d30.0932239!3d-1.9764642000000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca63ef96f8acf%3A0xcd686322634fb2a2!2sKK%2034%20Ave%2C%20Kigali!5e0!3m2!1sen!2srw!4v1726475319858!5m2!1sen!2srw"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </div>

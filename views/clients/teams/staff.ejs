@@ -23,7 +23,7 @@
         <% if(internals.dataReg.length > 0) { %>
         <div class="row row-gutter-y-30" style="display: flex; justify-content: center;"> 
             <% for(let g=0; g < internals.dataReg.length; g++ ) { %>
-            <div class="col-12 col-md-6 col-xl-3">
+            <div class="col-12 col-md-6 col-xl-4">
                 <div class="team-card cst-orange-border-sm">
                     <div class="team-card-img">
                         <% if(internals.dataReg[g].profile_pic > 0 ) { %> 
@@ -49,38 +49,55 @@
         </div>
         <% } else { } %>
 
-
+        <br><br>
         <div class="section-title-box text-center" style="margin-top: 20px!important;">
             <div class="section-tagline">District Managers</div>
-        </div><hr>
+        </div><hr><br>
 
         <% if(internals.dataDst.length > 0) { %>
-        <div class="row row-gutter-y-30" style="display: flex; justify-content: center;"> 
-            <% for(let g=0; g < internals.dataDst.length; g++ ) { %>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="team-card cst-orange-border-sm">
-                    <div class="team-card-img">
-                        <% if(internals.dataDst[g].profile_pic > 0 ) { %> 
-                        <img src="clients/images/team/<%= internals.dataDst[g].profile_pic; %>" class="img-fluid" alt="img-78">
-                        <% } else if(internals.dataDst[g].gender=='Female') { %>
-                        <img src="clients/images/team/profile-female.png" class="img-fluid" alt="img-78">
-                        <% } else { %>
-                        <img src="clients/images/team/profile-male.jpg" class="img-fluid" alt="img-78">
-                        <% } %>
+            <table class="cst-outable">
+                <thead>
+                    <tr>
+                        <th>N<sup>o</sup></th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>E-mail</th>
+                        <th>Profile</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <% for(let g=0; g < internals.dataDst.length; g++ ) { %>
+                    <tr>
+                        <td>#</td>
+                        <td><%= internals.dataDst[g].firstname; %> <%= internals.dataDst[g].lastname; %></td>
+                        <td>
+                            <% 
+                            const position = internals.dataDst[g].position;
 
-                        <div class="team-card-icon">
-                            <a href="mailto:<%= internals.dataDst[g].email; %>" class="twitter"><i class="fa-brands fa-microsoft"></i></a>
-                        </div>
-                    </div>
-                    <div class="team-card-content">
-                        <h4><a href="#"><%= internals.dataDst[g].firstname; %> <%= internals.dataDst[g].lastname; %></a></h4>
-                        <p title="<%= internals.dataDst[g].position; %>"><%= internals.dataDst[g].position; %></p>
-                        <p class="team-mail-blue"><%= internals.dataDst[g].email; %></p>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-        </div>
-        <% } else { } %>
+                            const extractParentheses = (str) => {
+                                const matches = str.match(/\(([^)]+)\)/);
+                                return matches ? matches[1] : '';
+                            };
+                            const locationText = extractParentheses(position);
+                            %>
+                            <span><%= position %></span>
+                        </td>
+                        <td><%= internals.dataDst[g].email; %></td>
+                        <td>
+                            <img src="clients/images/team/profile-male.jpg" class="img-fluid" alt="img-78" style="width: 20px!important; height: 20px;">
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+                <% } else { %>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" class="text-center">No Data Found At The Moment!</td>
+                    </tr>
+                </tfoot>
+                <% } %>
+                </tr>
+            </table>
     </div>
 </section>

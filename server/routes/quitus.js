@@ -36,7 +36,6 @@ router.get("/data", (req, res) => {
 // GET user by ID
 router.get("/lookup/(:tin)", (req, res) => {
     const tinNo = req.params.tin;
-    /*if (req.session.in_user && req.session.in_user.loggedin == true) { */
       con.query(`SELECT tin_number AS TaxpayerTIN, company AS TaxPayerName, telephone AS PhoneNumber, CONCAT(firstname,' ', lastname)AS RepresentativeName, telephone AS RepresentativePhone, '2024' AS fiscalYear, paid_status AS eligibility, request_date FROM members WHERE tin_number = '${tinNo}'`,
         (error, rows) => {
           const internals = {
@@ -55,10 +54,7 @@ router.get("/lookup/(:tin)", (req, res) => {
           }
         }
     );
-    /*} else {
-      req.flash("flashError", "Login for access to API!");
-      res.redirect("/panel/login");
-    }*/
+
 });
 
 
