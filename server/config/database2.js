@@ -4,7 +4,7 @@ const connection = mysql2.createPool({
     host: 'localhost',
     user: 'root',
     password: 'g!1234',
-    database: 'psf_website'
+    database: 'psf_website_bkp'
 });
 
 module.exports = connection;
