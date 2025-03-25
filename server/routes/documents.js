@@ -18,7 +18,7 @@ router.use(flash());
 
 // 01. Add documents (route)
 router.get("/add", (req, res) => {
-  if (req.session.in_user && req.session.in_user.role == 'Admin') {
+  if (req.session.in_user) {
     con.query("SELECT * FROM `doc_timeline` ORDER BY dt_year DESC", (error, rows) => {
       const internals = {
         title: "Upload new document",

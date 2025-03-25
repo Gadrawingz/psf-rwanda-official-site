@@ -10,7 +10,7 @@
     <meta property="og:description" content="<%- internals.title %>" />
     <meta property="og:type" content="Website" />
     <meta property="og:site_name" content="PSF Rwanda" />
-    <link rel="shortcut icon" href="../admin/images/favicon.svg" />
+    <link rel="shortcut icon" href="<%= internals.has3RouteSegments === true ? '../':'' %>../admin/images/favicon.svg" />
     <title><%- internals.title %></title>
     <link rel="stylesheet" href="<%= internals.has3RouteSegments === true ? '../':'' %>../admin/css/animate.css" />
     <link rel="stylesheet" href="<%= internals.has3RouteSegments === true ? '../':'' %>../admin/fonts/bootstrap/bootstrap-icons.css" />

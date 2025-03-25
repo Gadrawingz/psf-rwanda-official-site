@@ -11,11 +11,10 @@ const con = require("../config/database");
 const fun = require("../config/functions");
 const moment = require('moment/moment');
 
-
 // 01.
 router.get("/add", (req, res) => {
   if (req.session.in_user && (req.session.in_user.loggedin) == true) {
-    
+        
     const internals = {
       title: "Make a new post (press release)",
       breadcrumbL1: "Post",
@@ -95,14 +94,14 @@ router.post("/insert", (req, res) => {
                         post_title: fun.addSlashes(post_title),
                         post_text: fun.addSlashes(post_text),
                         post_image: post_image,
-                        post_author: req.session.user_id,
+                        post_author: req.session.in_user.user_id,
                         post_slug: "p-"+fun.slugify(post_title),
                         post_category: post_category
                       };
 
                       con.query("INSERT INTO posts SET ?", postsData, (err, results, fields) => {
                           if (err) {
-                              req.flash("fmessage", "Error occurred in database!");
+                              req.flash("fmessage", "Error:1 occurred in database!");
                               res.render("admin/posts/add-post", {
                                   layout: "./layouts/LAdmin",
                                   internals,
@@ -156,7 +155,6 @@ router.post("/insert", (req, res) => {
       }
   })
 });
-
 
 // 03. View All Posts
 router.get(["/all"], (req, res) => {
@@ -237,7 +235,8 @@ router.get("/delete/(:id)", (req, res) => {
 // 05. Edit published posts view:
 router.get("/edit/(:id)", (req, res, next) => {
   let id = req.params.id;
-  if (req.session.in_user && (req.session.in_user.loggedin) == true) {
+  //if (req.session.in_user && (req.session.in_user.loggedin) == true) {
+  if (req.session.in_user) {
     let sql = `SELECT * FROM posts WHERE post_id= ${id}`;
     con.query(sql, (err, rows, fields) => {
       if (err) throw err;

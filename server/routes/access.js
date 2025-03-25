@@ -451,7 +451,7 @@ router.post('/update-user/(:id)', (req, res) => {
 // 13. Admin dashboard view
 router.get('/profile', (req, res) => {
   if (req.session.in_user && (req.session.in_user.loggedin) == true) {
-    let id = req.session.user_id;
+    let id = req.session.in_user.user_id;
     let sql5 = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql5, (err, rows, fields) => {
       if (err) throw err;
@@ -527,7 +527,7 @@ router.post('/update-self/(:id)', (req, res) => {
 // 15. Change password by user ...self
 router.get('/change-password', (req, res) => {
   if (req.session.in_user && (req.session.in_user.loggedin) == true) {
-    let id = req.session.user_id;
+    let id = req.session.in_user.user_id;
     let sql5 = `SELECT * FROM site_users WHERE user_id= ${id}`;
     con.query(sql5, (err, rows, fields) => {
       if (err) throw err;

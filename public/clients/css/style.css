@@ -4498,7 +4498,7 @@ a.search-toggler{
 	margin-bottom: 30px;
 }
 .team-card-img img{
-	height: 210px;
+	min-height: 250px;
 	width: 210px;
 	padding: 10px 10px;
 	background-color: var(--thm-white);

@@ -141,40 +141,6 @@
                     </div>
                 </div>
             </div>
-        </div><hr><br><hr><br>
-
-        <div class="section-title-box text-center">
-            <div class="section-tagline">PSF Staff Members</div>
-        </div><hr>
-                
-        <% if(internals.dataMainOp.length > 0) { %>
-            <div class="row row-gutter-y-30" style="display: flex; justify-content: center;"> 
-                <% for(let g=0; g < internals.dataMainOp.length; g++ ) { %>
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="team-card cst-orange-border-sm">
-                        <div class="team-card-img">
-                            <% if(internals.dataMainOp[g].profile_pic > 0 ) { %> 
-                            <img src="clients/images/team/<%= internals.dataMainOp[g].profile_pic; %>" class="img-fluid" alt="img-78">
-                            <% } else if(internals.dataMainOp[g].gender=='Female') { %>
-                            <img src="clients/images/team/profile-female.png" class="img-fluid" alt="img-78">
-                            <% } else { %>
-                            <img src="clients/images/team/profile-male.jpg" class="img-fluid" alt="img-78">
-                            <% } %>
-    
-                            <div class="team-card-icon">
-                                <a href="mailto:<%= internals.dataMainOp[g].email; %>" class="twitter"><i class="fa-brands fa-microsoft"></i></a>
-                            </div>
-                        </div>
-                        <div class="team-card-content">
-                            <h4><a href="#"><%= internals.dataMainOp[g].firstname; %> <%= internals.dataMainOp[g].lastname; %></a></h4>
-                            <p title="<%= internals.dataMainOp[g].position; %>"><%= internals.dataMainOp[g].position; %></p>
-                            <p class="team-mail-blue"><%= internals.dataMainOp[g].email; %></p>
-                        </div>
-                    </div>
-                </div><br>
-                <% } %>
-            </div>
-        <% } else { } %><br>
-
+        </div><hr><br>
     </div>
 </section>
