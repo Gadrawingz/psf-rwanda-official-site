@@ -531,7 +531,7 @@ a{
 .topbar-one-middle .topbar-info {
 	padding-left: 0;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.topbar-one-middle .topbar-info{
 		display: none;
 	}
@@ -588,7 +588,7 @@ a{
 .topbar-right{
 	padding: 10px 0px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.topbar-right{
 		display: none;
 	}
@@ -749,7 +749,7 @@ a{
 	margin: 0;
 	padding: 0;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.main-menu .main-menu-list{
 		display: none;
 	}
@@ -856,7 +856,7 @@ a{
 	margin-left: 30px;
 	margin-right: 30px;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.mobile-menu-button{
 		display: block;		
 	}	
@@ -914,7 +914,7 @@ a.search-toggler{
 	margin-right: 40px;
 	padding: 12px 20px;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.main-menu-right-button{
 		display: none;		
 	}	
@@ -923,7 +923,7 @@ a.search-toggler{
  color: var(--thm-white);
  padding: 10px 0px;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.main-menu-right-button .btn-primary{
 		padding: 13px 20px;		
 	}	
@@ -936,7 +936,7 @@ a.search-toggler{
 	position: relative;
 	z-index: 99;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.main-menu-one-inner {
 		background-color: inherit;
 		justify-content: end;
@@ -975,7 +975,7 @@ a.search-toggler{
 	margin-left: 15px;
 	background-color: var(--green-main);
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.topbar-one-button .btn-primary{
 		display: none;
 	}
@@ -1712,7 +1712,7 @@ a.search-toggler{
 	position: relative;
 	top: -140px;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.about-image .img-one{
 		top: 0px;
 	}
@@ -1777,7 +1777,7 @@ a.search-toggler{
 	display: flex;
 	align-items: center;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.about-image-caption-inner{
 		display: none;
 	}
@@ -1839,7 +1839,7 @@ a.search-toggler{
 	padding-left: 60px;
 	padding-top: 53px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.about-inner{
 		padding-top: 13px;
 	}
@@ -2061,7 +2061,7 @@ a.search-toggler{
 	padding-left: 60px;
 	padding-top: 20px;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
  .about-two-inner{
 		margin-left: 30px;
 	}
@@ -2116,7 +2116,7 @@ a.search-toggler{
 	display: flex;
 	align-items: center;
 }
-@media(max-width:1399px){
+@media(max-width:1200px){
 	.about-two-author-content{
 		display: block;
 	}
@@ -2131,7 +2131,7 @@ a.search-toggler{
 	flex-wrap: wrap;
 	align-items: center;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.about-two-author-content-box{
 		margin-bottom: 20px;
 	}
@@ -2165,7 +2165,7 @@ a.search-toggler{
 .about-two-author-content-socials{
 	margin-left: 60px;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
  .about-two-author-content-socials{
 		margin-left: 0px;
 	}
@@ -3684,7 +3684,7 @@ a.search-toggler{
 	overflow: hidden;
 	position: relative;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.cta-five-card {
 		display: block;
 		text-align: center;	
@@ -3705,7 +3705,7 @@ a.search-toggler{
 	justify-content: center;
 	margin-right: 50px;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.cta-five-card-icon {
 		margin: 0 auto;
 		margin-bottom: 35px;
@@ -3725,7 +3725,7 @@ a.search-toggler{
 	font-size: 65px;
 	color: var(--thm-white);
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.cta-five-content {
 		margin-bottom: 30px
 	}
@@ -3986,7 +3986,7 @@ a.search-toggler{
 	background-color: var(--thm-light-bg);
 	padding: 120px 80px 110px;
 }
-@media (max-width: 1399px) {
+@media (max-width: 1200px) {
 	.event-section .event-section-inner {
 		padding: 80px 80px 60px;
 	}
@@ -4498,7 +4498,7 @@ a.search-toggler{
 	margin-bottom: 30px;
 }
 .team-card-img img{
-	min-height: 250px;
+	height: 210px;
 	width: 210px;
 	padding: 10px 10px;
 	background-color: var(--thm-white);
@@ -5212,7 +5212,7 @@ border-radius: 100px;
 		padding: 70px 0px;
 	}
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.causes-card-imgbox img{
 		width: 100%;
 	}
@@ -5439,7 +5439,7 @@ border-radius: 100px;
 	display: flex;
 	justify-content: center;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.cause-two-box-button{
 		justify-content: left;
 	}
@@ -6039,7 +6039,7 @@ border-radius: 100px;
 .mobile-nav-toggler span{
 	background-color: var(--thm-black);
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
  .menu-two .mobile-nav-toggler span{
 	 	background-color: var(--thm-white);
 	 }
@@ -6922,7 +6922,7 @@ label {
 	border: 1px dashed;
 	height: 72px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.history-card-meta:before{
 		display: none;
 	}
@@ -7029,7 +7029,7 @@ label {
 	bottom: 0;
 	top: 100px;
 }
-@media(max-width:1399px){
+@media(max-width:1200px){
 	.history-card-detail:before{
 		display: none;
 	}
@@ -7042,7 +7042,7 @@ label {
 	left: -101px;
 	width: 312px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.history-card-detail:after{
 		display: none;
 	}
@@ -7058,7 +7058,7 @@ label {
 	height: 154px;
 	bottom: 39px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.history-card-option:before{
 		display: none;
 	}
@@ -7071,7 +7071,7 @@ label {
 	bottom: 39px;
 	width: 314px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.history-card-option:after{
 		display: none;
 	}
@@ -7100,7 +7100,7 @@ label {
 .document-section{
 	padding: 100px 0px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.document-section{
 		padding: 70px 0px;
 	}
@@ -7112,7 +7112,7 @@ label {
 	width: 100%;
 	margin-top: 14px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.document-card img{
 		margin-top: 7px;
 	}
@@ -7205,7 +7205,7 @@ label {
 	background-color: var(--thm-primary);
 	outline: none;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.document-section ul .nav-item{
 		margin-bottom: 10px;
 	}
@@ -7307,7 +7307,7 @@ label {
 .donate-box-image img{
 	width: 100%;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.donate-box-image img{
 		width: 100%;
 	}
@@ -7375,7 +7375,7 @@ label {
 .donate-box-inner .btn-primary{
 	margin-top: 20px;
 }
-@media(max-width: 1399px){
+@media(max-width: 1200px){
 	.donation .btn-primary{
 		width: 100%;
 	}

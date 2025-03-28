@@ -1,3 +1,13 @@
+<script>
+	function adjustBreakpoints() {
+    const zoomLevel = window.devicePixelRatio || 1;
+    const adjustedWidth = window.innerWidth / zoomLevel;
+    // Adjust media queries based on adjustedWidth
+}
+window.addEventListener('resize', adjustBreakpoints);
+window.addEventListener('load', adjustBreakpoints);
+
+</script>
 <section class="footer">
 	<div class="footer-inner cst-bg-green-main">		
 		<div class="container">
