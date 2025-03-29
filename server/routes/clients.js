@@ -225,24 +225,15 @@ router.get('/team-board', (req, res) => {
     res.render('clients/teams/board', { internals });
 });
 
-router.get('/team-management', async(req, res) => {
-    try {
-        const [usersFromOperations] = await con2.query("SELECT * FROM site_users su LEFT JOIN users_info ui ON ui.staff_id = su.user_id WHERE su.position!='Chief Executive Officer' AND su.position!='Chief Operating Officer' AND su.position!='Chief Advocacy Officer' AND su.position NOT LIKE 'District Manager%' AND su.position NOT LIKE 'Regional Manager%' ORDER BY su.firstname ASC");
+router.get('/team-management', (req, res) => {
 
-        const internals = {
-            title: "PSF Management Team & Staff",
-            description: "",
-            hasFullFooter: true,
-            inUser: req.session.in_user,
-            funs: fun,
-            dataMainOp: usersFromOperations,
-            //dataMgt: mainFromOperations,
-        }
-        // mainOps
-        res.render('clients/teams/management', { internals });
-    } catch (error) {
-        console.log('Server Error: Error with DB');
+    const internals = {
+        title: "PSF Board",
+        description: "",
+        hasFullFooter: true,
+        inUser: req.session.in_user,
     }
+    res.render('clients/teams/management', { internals });
 });
 
 
