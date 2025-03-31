@@ -226,7 +226,7 @@ router.get('/team-board', (req, res) => {
 });
 
 router.get('/team-management', (req, res) => {
-
+    
     const internals = {
         title: "PSF Board",
         description: "",
