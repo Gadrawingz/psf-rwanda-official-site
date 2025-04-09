@@ -51,7 +51,7 @@ const postsImageStorage = multer.diskStorage({
 
 // B. Custom function to check the file type
 function gadCheckFileType(file, cb) {
-  const filetypes = /jpeg|jpg|png|gif|webp/;
+  const filetypes = /jpeg|jpg|png|gif|avif|webp/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
   if (mimetype && extname) {

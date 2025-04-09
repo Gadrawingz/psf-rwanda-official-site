@@ -13,6 +13,7 @@ const con2 = require("../config/database2");
 const fun = require("../config/functions");
 const moment = require('moment/moment');
 
+
 // To be able to send flash...
 const flash = require('express-flash');
 router.use(flash())
@@ -95,6 +96,7 @@ router.get('/clusters', (req, res) => {
 });
 
 router.get('/associations', async(req, res) => {
+    
     let internals = {
         title: "Associations per clusters",
         description: "",
@@ -104,7 +106,7 @@ router.get('/associations', async(req, res) => {
         funs: fun,
         moment: moment
     };
-
+    
     try {
         // Fetching data...
         const [infoAgro] = await con2.query(
@@ -131,12 +133,10 @@ router.get('/associations', async(req, res) => {
         res.render('clients/membership/associations', { 
             data: combinedData, internals
         });
-
     } catch (error) {
         console.log('Server Error: Error with DB');
     }
 });
-
 
 router.get('/golden-circle', (req, res) => {
     const internals = {

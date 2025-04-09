@@ -24,7 +24,7 @@
 - Exhibitions (Info to be given by Ruth)
 - Business Clinic And Advisory (Patrick for info)
 
-## OTHER FEATURES :
+## OTHER FEATURES:
 
 - Home page (William reviews)
 - About Us & PSF Strategies (Joel should give us info)

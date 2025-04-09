@@ -111,7 +111,6 @@ router.get(["", "/dashboard"], async (req, res) => {
       // Fetching all necessary counts
       let publiCount = await con2.query("SELECT COUNT(*) AS pubs_count FROM `publication`");
       let postsCount = await con2.query("SELECT COUNT(*) AS posts_count FROM `posts`");
-      let galleryCount = await con2.query("SELECT COUNT(*) AS gallery_count FROM `gallery`");
       let eventsCount = await con2.query("SELECT COUNT(*) AS events_count FROM `events` WHERE is_happened=0");
       let appManagers = await con2.query("SELECT COUNT(*) AS users_count FROM `site_users`");
 
@@ -448,7 +447,7 @@ router.post('/update-user/(:id)', (req, res) => {
 });
 
 // PAUSE: X
-// 13. Admin dashboard view
+// 13. Profile view
 router.get('/profile', (req, res) => {
   if (req.session.in_user && (req.session.in_user.loggedin) == true) {
     let id = req.session.in_user.user_id;
