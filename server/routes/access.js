@@ -105,22 +105,39 @@ router.post("/login-auth", (req, res) => {
 
 
 // 05. Admin dashboard view
-router.get(["", "/dashboard"], (req, res) => {
+// 05. Admin dashboard view
+router.get(["", "/dashboard"], async (req, res) => {
   if (req.session.in_user && (req.session.in_user.loggedin) == true) {
-      const internals = {
-        title: "Dashboard Page",
-        breadcrumbL1: "Dashboard",
-        breadcrumbL2: "Home",
-        inUser: req.session.in_user,  
-      };
+      try {
+          // Fetching all necessary counts
+          let publiCount = await con2.query("SELECT COUNT(*) AS pubs_count FROM `publication`");
+          let postsCount = await con2.query("SELECT COUNT(*) AS posts_count FROM `posts`");
+          let eventsCount = await con2.query("SELECT COUNT(*) AS events_count FROM `events` WHERE is_happened=0");
+          let appManagers = await con2.query("SELECT COUNT(*) AS users_count FROM `site_users`");
 
-      res.render("admin/dashboard", { 
-        layout: "./layouts/LAdmin", 
-        internals
-    });
+          const internals = {
+              title: "Dashboard Page",
+              breadcrumbL1: "Dashboard",
+              breadcrumbL2: "Home",
+              inUser: req.session.in_user,
+              // Main 4 counts to be taken
+              publicationsNum : publiCount,
+                  postsNumber : postsCount,
+                  eventsNumber : eventsCount,
+                  allUsersNumber: appManagers
+          };
+
+          res.render("admin/dashboard", {
+              layout: "./layouts/LAdmin",
+              internals
+          });
+
+      } catch (error) {
+          console.log("ERROR:"+error);
+      }
   } else {
-    req.flash("flashError", "Please login to access dashboard!");
-    res.redirect("/panel/login");
+      req.flash("flashError", "Please login to access dashboard!");
+      res.redirect("/panel/login");
   }
 });
  

@@ -1,6 +1,6 @@
 // Main imports and definition
 require('dotenv').config();
-
+const helmet = require('helmet');
 const express = require('express');
 const session = require('express-session');
 const eLayout = require('express-ejs-layouts');
@@ -29,7 +29,12 @@ app.use(session({
     }
 }))
 
-
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: false,
+    referrerPolicy: { policy: 'no-referrer' },
+}));
 app.use(express.static('public/'));
 app.use(eLayout);
 

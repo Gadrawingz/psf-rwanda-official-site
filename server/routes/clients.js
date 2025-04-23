@@ -52,6 +52,32 @@ router.get('/background', (req, res) => {
     res.render('clients/about/background', { internals });
 });
 
+
+// Routes for for subsidiary websites
+router.get('/psf-websites', (req, res) => {
+    const internals = {
+        title: "PSF Websites",
+        description: "",
+        inUser: req.session.in_user,
+        hasFullFooter: true,
+    }
+
+    res.render('clients/about/psf-websites', { internals });
+});
+
+
+// Routes for for missions
+router.get('/mission', (req, res) => {
+    const internals = {
+        title: "Our Vision & Mission",
+        description: "",
+        inUser: req.session.in_user,
+        hasFullFooter: true,
+    }
+
+    res.render('clients/about/mission', { internals });
+});
+
 router.get('/psf-25', (req, res) => {
     const internals = {
         title: "PSF 25",
@@ -95,14 +121,14 @@ router.get('/clusters', (req, res) => {
     res.render('clients/membership/clusters', { internals });
 });
 
-router.get('/associationz', async(req, res) => {
+router.get('/associations', async(req, res) => {
     let internals = {
-        title: "All associations per clusters",
+        title: "PSF associations",
         description: "",
         hasFullFooter: true,
         inUser: req.session.in_user,
     };
-    res.render('clients/membership/associationz', { internals });
+    res.render('clients/membership/associations', { internals });
 });
 
 router.get('/golden-circle', (req, res) => {
@@ -138,7 +164,7 @@ router.get('/associate-members', (req, res) => {
 
 // Routes for Events
 router.get('/exhibitions', (req, res) => {
-    con.query("SELECT * FROM events ORDER BY event_id DESC LIMIT 18", (error, rows) => {
+    con.query("SELECT * FROM events ORDER BY start_date ASC LIMIT 18", (error, rows) => {
         let internals = {
             title: "Events - Exhibitions",
             description: "",
