@@ -28,3 +28,84 @@
 	<link rel="manifest" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicons/site.webmanifest">
 </head>
 
+<!-- Start Top banner -->
+<div class="top-banner">
+    <style>
+        .top-banner {
+            background: #000;
+			background-size: 100% 100%;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            position: relative;
+			border-bottom: 0.5px solid #ffffff88;
+        }
+        .banner-left img {
+            height: auto;
+            max-height: 60px;
+            width: auto;
+            border: 1px solid #fff;
+        }
+
+        .banner-center {
+            text-align: center;
+        }
+        
+		.banner-countdown {
+            font-size: 0.9em;
+            margin-top: 5px;
+            color: #f8c369da;
+        }
+        
+		.banner-right {
+            border: 3px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+			font-weight: bolder;
+        }
+        
+		.close-banner {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+
+    <div class="banner-left">
+        <img src="clients/images/logo/kwibuka-psf.png" alt="PSF Logo">
+    </div>
+	<a href="https://kwibuka.rw/" style="color: #FFFFFF;" target="_blank">
+		<div class="banner-center">
+			<div class="banner-text">Remember - Unite - Renew</div>
+			<div class="banner-countdown" id="countdown"></div>
+		</div>
+	</a>
+    <div class="banner-right">31</div>
+    <span class="close-banner">&times;</span>
+
+    <script>
+        function updateCountdown() {
+            const startDate = new Date('2025-04-07');
+            const today = new Date();
+            const elapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+            const remaining = Math.max(0, 100 - elapsed);
+            document.getElementById('countdown').textContent = `The ${elapsed}th day of the 100-day #Kwibuka31 commemoration.`;
+        }
+        
+        document.querySelector('.close-banner').addEventListener('click', function() {
+            document.querySelector('.top-banner').style.display = 'none';
+        });
+
+        updateCountdown();
+        setInterval(updateCountdown, 86400000);
+    </script>
+</div>
+<!-- End Top banner -->

@@ -267,7 +267,7 @@ router.get('/press', (req, res) => {
             // @gadira
             res.render("clients/media/press-release", { internals });
         } else {
-            req.flash("fmessage", "There is an error occured");
+            req.flash("fmessage", "There is an error occurred");
             res.render("clients/media/press-release", { internals });
         }
     });
