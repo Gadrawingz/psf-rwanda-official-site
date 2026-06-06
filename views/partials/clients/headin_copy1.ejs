@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<%# @gadrawingz powered SEO %>
+	<title><%- internals.title %> | PSF</title>
+	<meta name="description" content="<%- internals.description %>">
+	<!-- google font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<!-- plugins css -->
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/reey-font/stylesheet.css">
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/font-awesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/animate/animate.min.css">
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/flaticon/css/flaticon_towngov.css">
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/owl-carousel/owl.carousel.min.css">
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/swiper/swiper-bundle.min.css">
+	<link rel="stylesheet" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/youtube-popup/youtube-popup.css">
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/css/custom.css">
+	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/css/style.css">
+	<!-- favicons Icons -->
+	<link rel="apple-touch-icon" sizes="180x180" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/cropped-psf-logo.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/cropped-psf-logo.png">
+	<link rel="manifest" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicons/site.webmanifest">
+</head>
+
+<!-- Start Top banner -->
+<style>
+    .banner-container {
+        border-image: linear-gradient(45deg, #FF8C00, #228B22, #FF8C00) 1;
+        box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3);
+        min-height: inherit;
+        
+    }
+
+    .banner-v1 {
+        background: linear-gradient(135deg, #FF8C00 0%, #0a930a 25%, #FF8C00 50%, #228B22 75%, #FF8C00 100%);
+        background-size: 200% 200%;
+        animation: gradientShift 4s ease infinite;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 80px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .banner-v1::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.1);
+        pointer-events: none;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .banner-v1 .left-section {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .banner-v1 .countdown {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+        backdrop-filter: blur(10px);
+        padding: 12px 18px;
+        border-radius: 12px;
+        font-weight: 900;
+        font-size: 18px;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        font-family: 'Arial Black', sans-serif;
+        letter-spacing: 1.5px;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .banner-v1 .event-info {
+        position: relative;
+        z-index: 2;
+    }
+
+    .banner-v1 .event-info h2 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 900;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+        background: linear-gradient(45deg, #FFE4B5, #FFFFFF, #FFE4B5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .banner-v1 .event-info .subtitle {
+        margin: 6px 0 0 0;
+        font-size: 16px;
+        font-weight: 700;
+        color: #FFE4B5;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .banner-v1 .right-section {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.4;
+        position: relative;
+        z-index: 2;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .banner-v1 .ussd {
+        background: linear-gradient(145deg, #FF6B35, #FF8C00);
+        color: white;
+        padding: 10px 16px;
+        border-radius: 10px;
+        font-weight: 900;
+        font-size: 20px;
+        margin-top: 8px;
+        display: inline-block;
+        border: 2px solid #FFF;
+        box-shadow: 0 6px 15px rgba(255, 107, 53, 0.4);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+        from { box-shadow: 0 6px 15px rgba(255, 107, 53, 0.4); }
+        to { box-shadow: 0 6px 25px rgba(255, 107, 53, 0.7); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .banner-v1 {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .banner-v1 .left-section {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .banner-v1 .event-info h2 {
+            font-size: 22px;
+        }
+
+        .banner-v1 .countdown {
+            font-size: 16px;
+            padding: 10px 15px;
+        }
+
+        .banner-v1 .ussd {
+            font-size: 18px;
+            padding: 8px 14px;
+        }
+    }
+
+    .countdown-timer {
+        font-family: 'Arial Black', sans-serif;
+        letter-spacing: 2px;
+    }
+</style>
+
+<div class="banner-container">
+    <div class="banner-v1">
+        <div class="left-section">
+            <div class="countdown countdown-timer" id="countdown1">
+                Loading...
+            </div>
+            <div class="event-info">
+                <h2>EXPO 2025 - RITF 28<sup>th</sup> International Trade Fair</h2>
+                <div class="subtitle">July 29 - August 17, 2025 • Gikondo Expo Grounds</div>
+            </div>
+        </div>
+        <div class="right-section">
+            You can buy your tickets via:<br>
+            <span class="ussd">*779#</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateCountdown() {
+        const eventDate = new Date('2025-07-29T00:00:00');
+        const now = new Date();
+        const timeDiff = eventDate - now;
+
+        if (timeDiff > 0) {
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+            const countdownText = `${days}d ${hours}h ${minutes}m`;
+            document.getElementById('countdown1').textContent = countdownText;
+        } else {
+            document.getElementById('countdown1').textContent = 'Event Started!';
+        }
+    }
+
+    // Update countdown every minute
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+</script>
+<!-- End Top banner -->

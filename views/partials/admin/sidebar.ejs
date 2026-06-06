@@ -1,489 +1,664 @@
 <% if ((internals.inUser.loggedin) == true) { %>
-<nav class="sidebar-wrapper">
-    <!-- Sidebar brand starts -->
+<nav aria-label="o" class="sidebar-wrapper">
+  <!-- Sidebar brand starts -->
 
-    <% if ((internals.inUser.role) == 'Admin') { %>
+  <% if ((internals.inUser.role) == 'Admin') { %>
+  <div class="sidebar-brand">
+    <a href="/panel/dashboard" class="logo">
+      <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
+    </a>
+  </div>
+  <!-- Sidebar menu starts -->
+  <div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+      <ul>
+        <li>
+          <a href="/panel/dashboard">
+            <i class="bi bi-house"></i>
+            <span class="menu-text">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-journal-check"></i>
+            <span class="menu-text">2025 Elections</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/app-admin/applicants">All applicants</a>
+              </li>
+              <li>
+                <a href="/app-admin/feedback">Send Feedback</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+      
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-journal-check"></i>
+            <span class="menu-text">Publications</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/publica/add">Publish New</a>
+              </li>
+              <li>
+                <a href="/publica/all">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-list-stars"></i>
+            <span class="menu-text">Documents</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/documents/add">Add New</a>
+              </li>
+              <li>
+                <a href="/documents/all">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-journal-check"></i>
+            <span class="menu-text">Posts</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/posts/add">New Post</a>
+              </li>
+              <li>
+                <a href="/posts/all">View Posts</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-book"></i>
+            <span class="menu-text">Events</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/events/add">New Event</a>
+              </li>
+              <li>
+                <a href="/events/all">View Events</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-card-image"></i>
+            <span class="menu-text">Gallery</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/gallery/add">Add New</a>
+              </li>
+              <li>
+                <a href="/gallery/all">View Gallery</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-envelope"></i>
+            <span class="menu-text">Inbox</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/messages/inbox">Messages</a>
+              </li>
+              <li>
+                <a href="/messages/feedback">Feedback</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-disc-fill"></i>
+            <span class="menu-text">Manage Users</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/panel/register">Register</a>
+              </li>
+              <li>
+                <a href="/panel/users">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+        <li>
+          <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
+            <i class="bi bi-box-arrow-left"></i>
+            <span class="menu-text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Sidebar menu ends -->
+  <% } else if ((internals.inUser.role) == 'Legal') { %>
+  <div class="sidebar-brand">
+    <a href="/panel/dashboard" class="logo">
+      <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
+    </a>
+  </div>
+
+  <div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+      <ul>
+        <li>
+          <a href="/panel/dashboard">
+            <i class="bi bi-house"></i>
+            <span class="menu-text">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-journal-check"></i>
+            <span class="menu-text">Publications</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/publica/add">Publish New</a>
+              </li>
+              <li>
+                <a href="/publica/all">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-list-stars"></i>
+            <span class="menu-text">Documents</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/documents/add">Add New</a>
+              </li>
+              <li>
+                <a href="/documents/all">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
+            <i class="bi bi-box-arrow-left"></i>
+            <span class="menu-text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <% } else if ((internals.inUser.role) == 'Author') { %>
+  <div class="sidebar-brand">
+    <a href="/panel/dashboard" class="logo">
+      <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
+    </a>
+  </div>
+
+  <!-- Sidebar menu starts -->
+  <div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+      <ul>
+        <li>
+          <a href="/panel/dashboard">
+            <i class="bi bi-house"></i>
+            <span class="menu-text">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-journal-check"></i>
+            <span class="menu-text">Publications</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/publica/add">Publish New</a>
+              </li>
+              <li>
+                <a href="/publica/all">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-list-stars"></i>
+            <span class="menu-text">Documents</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/documents/add">Add New</a>
+              </li>
+              <li>
+                <a href="/documents/all">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-journal-check"></i>
+            <span class="menu-text">Posts</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/posts/add">New Post</a>
+              </li>
+              <li>
+                <a href="/posts/all">View Posts</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-book"></i>
+            <span class="menu-text">Events</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/events/add">New Event</a>
+              </li>
+              <li>
+                <a href="/events/all">View Events</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-card-image"></i>
+            <span class="menu-text">Gallery</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/gallery/add">Add New!</a>
+              </li>
+              <li>
+                <a href="/gallery/all">View Gallery</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
+            <i class="bi bi-box-arrow-left"></i>
+            <span class="menu-text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <% } else if ((internals.inUser.role) == 'Lead') { %>
+  <div class="sidebar-brand">
+    <a href="/panel/dashboard" class="logo">
+      <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
+    </a>
+  </div>
+  <!-- Sidebar menu starts -->
+  <div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+      <ul>
+        <li>
+          <a href="/panel/dashboard">
+            <i class="bi bi-house"></i>
+            <span class="menu-text">Dashboard</span>
+          </a>
+        </li>
+
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-journal-check"></i>
+            <span class="menu-text">Publications</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/publica/add">Publish New</a>
+              </li>
+              <li>
+                <a href="/publica/all">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-list-stars"></i>
+            <span class="menu-text">Documents</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/documents/add">Add New</a>
+              </li>
+              <li>
+                <a href="/documents/all">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-journal-check"></i>
+            <span class="menu-text">Posts</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/posts/add">New Post</a>
+              </li>
+              <li>
+                <a href="/posts/all">View Posts</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-book"></i>
+            <span class="menu-text">Events</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/events/add">New Event</a>
+              </li>
+              <li>
+                <a href="/events/all">View Events</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-card-image"></i>
+            <span class="menu-text">Gallery</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/gallery/add">Add New</a>
+              </li>
+              <li>
+                <a href="/gallery/all">View Gallery</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-envelope"></i>
+            <span class="menu-text">Inbox</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/messages/inbox">Messages</a>
+              </li>
+              <li>
+                <a href="/messages/feedback">Feedback</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="bi bi-disc-fill"></i>
+            <span class="menu-text">Manage Users</span>
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="/panel/register">Register</a>
+              </li>
+              <li>
+                <a href="/panel/users">View All</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
+            <i class="bi bi-box-arrow-left"></i>
+            <span class="menu-text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <% } else if ( (internals.inUser.role) == 'Staff' || (internals.inUser.role) == 'Support' ) { %>
     <div class="sidebar-brand">
-        <a href="/panel/dashboard" class="logo">
-            <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
-        </a>
+      <a href="/panel/dashboard" class="logo">
+        <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
+      </a>
     </div>
     <!-- Sidebar menu starts -->
     <div class="sidebar-menu">
-        <div class="sidebarMenuScroll">
-            <ul>
-                <li>
-                    <a href="/panel/dashboard">
-                        <i class="bi bi-house"></i>
-                        <span class="menu-text">Dashboard</span>
-                    </a>
-                </li>
+      <div class="sidebarMenuScroll">
+        <ul>
+          <li>
+            <a href="/panel/dashboard">
+              <i class="bi bi-house"></i>
+              <span class="menu-text">Dashboard</span>
+            </a>
+          </li>
 
+          <!--
+          <li class="sidebar-dropdown">
             
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-journal-check"></i>
-                        <span class="menu-text">Publications</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="/publica/add">Publish New</a>
-                            </li>
-                            <li>
-                                <a href="/publica/all">View All</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-list-stars"></i>
-                        <span class="menu-text">Documents</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="/documents/add">Add New</a>
-                            </li>
-                            <li>
-                                <a href="/documents/all">View All</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-journal-check"></i>
-                        <span class="menu-text">Posts</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="/posts/add">New Post</a>
-                            </li>
-                            <li>
-                                <a href="/posts/all">View Posts</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-book"></i>
-                        <span class="menu-text">Events</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="/events/add">New Event</a>
-                            </li>
-                            <li>
-                                <a href="/events/all">View Events</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-card-image"></i>
-                        <span class="menu-text">Gallery</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="/gallery/add">Add New</a>
-                            </li>
-                            <li>
-                                <a href="/gallery/all">View Gallery</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-envelope"></i>
-                        <span class="menu-text">Inbox</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="/messages/inbox">Messages</a>
-                            </li>
-                            <li>
-                                <a href="/messages/feedback">Feedback</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="bi bi-disc-fill"></i>
-                        <span class="menu-text">Manage Users</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="/panel/register">Register</a>
-                            </li>
-                            <li>
-                                <a href="/panel/users">View All</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            
-
+            <a href="#">
+              <i class="bi bi-diamond-half"></i>
+              <span class="menu-text">Manage Clusters</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
                 <li>
-                    <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
-                        <i class="bi bi-box-arrow-left"></i>
-                        <span class="menu-text">Logout</span>
-                    </a>
+                  <a onclick="return alert('Wait a moment...')" href="#">View all clusters</a>
                 </li>
-            </ul>
-        </div>
+                <li>
+                  <a onclick="return alert('Wait a moment...')" href="#">Register Association</a>
+                </li>
+                <li>
+                  <a onclick="return alert('Wait a moment...')" href="#">View Associations</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          -->
+    
+          <li>
+            <a href="/business-sectors/all">
+              <i class="bi bi-calculator"></i>
+              <span class="menu-text">Business Sectors</span>
+            </a>
+          </li>
+
+          <!--
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="bi bi-currency-euro"></i>
+              <span class="menu-text">Fee Structure</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="/fee-structure/all">Fee Structure(s)</a>
+                </li>
+                <li>
+                  <a href="/fee-structure/create">Register New</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="bi bi-file-diff"></i>
+              <span class="menu-text">All Categories</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="/categories/all">Categories</a>
+                </li>
+                <li>
+                  <a href="/categories/create">Register Category</a>
+                </li>
+                <li>
+                  <a href="/sub-categories/all">View Sub-Categories</a>
+                </li>
+                <li>
+                  <a href="/sub-categories/create">Register Sub-Category</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="bi bi-disc-fill"></i>
+              <span class="menu-text">Manage Users</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="/panel/register">Register</a>
+                </li>
+                <li>
+                  <a href="/panel/users">View All</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          -->
+        
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="bi bi-people"></i>
+              <span class="menu-text">PSF Members</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="/companies/create">New Member</a>
+                </li>
+                <li>
+                  <a href="/companies/all">View Members</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="bi bi-people"></i>
+              <span class="menu-text">Documentation</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="/companies/member-manual">Membership Doc</a>
+                </li>
+              
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <a href="/panel/profile">
+              <i class="bi bi-person"></i>
+              <span class="menu-text">My Profile</span>
+            </a>
+          </li>
+
+    
+          <li>
+            <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
+              <i class="bi bi-box-arrow-left"></i>
+              <span class="menu-text">Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <!-- Sidebar menu ends -->
-    <% } else if ((internals.inUser.role) == 'Legal') { %>
-        <div class="sidebar-brand">
-            <a href="/panel/dashboard" class="logo">
-                <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
-            </a>
-        </div>
-        
-        <div class="sidebar-menu">
-            <div class="sidebarMenuScroll">
-                <ul>
-                    <li>
-                        <a href="/panel/dashboard">
-                            <i class="bi bi-house"></i>
-                            <span class="menu-text">Dashboard</span>
-                        </a>
-                    </li>
-                
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-journal-check"></i>
-                            <span class="menu-text">Publications</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/publica/add">Publish New</a>
-                                </li>
-                                <li>
-                                    <a href="/publica/all">View All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-list-stars"></i>
-                            <span class="menu-text">Documents</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/documents/add">Add New</a>
-                                </li>
-                                <li>
-                                    <a href="/documents/all">View All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
-                            <i class="bi bi-box-arrow-left"></i>
-                            <span class="menu-text">Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    <% } else if ((internals.inUser.role) == 'Author') { %>
-        <div class="sidebar-brand">
-            <a href="/panel/dashboard" class="logo">
-                <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
-            </a>
-        </div>
-
-        <!-- Sidebar menu starts -->
-        <div class="sidebar-menu">
-            <div class="sidebarMenuScroll">
-                <ul>
-                    <li>
-                        <a href="/panel/dashboard">
-                            <i class="bi bi-house"></i>
-                            <span class="menu-text">Dashboard</span>
-                        </a>
-                    </li>
-                                    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-journal-check"></i>
-                            <span class="menu-text">Publications</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/publica/add">Publish New</a>
-                                </li>
-                                <li>
-                                    <a href="/publica/all">View All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-list-stars"></i>
-                            <span class="menu-text">Documents</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/documents/add">Add New</a>
-                                </li>
-                                <li>
-                                    <a href="/documents/all">View All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-journal-check"></i>
-                            <span class="menu-text">Posts</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/posts/add">New Post</a>
-                                </li>
-                                <li>
-                                    <a href="/posts/all">View Posts</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-book"></i>
-                            <span class="menu-text">Events</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/events/add">New Event</a>
-                                </li>
-                                <li>
-                                    <a href="/events/all">View Events</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-card-image"></i>
-                            <span class="menu-text">Gallery</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/gallery/add">Add New</a>
-                                </li>
-                                <li>
-                                    <a href="/gallery/all">View Gallery</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-        
-                    <li>
-                        <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
-                            <i class="bi bi-box-arrow-left"></i>
-                            <span class="menu-text">Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    <% } else if ((internals.inUser.role) == 'Lead') { %>
-        <div class="sidebar-brand">
-            <a href="/panel/dashboard" class="logo">
-                <img src="../admin/images/logo.svg" alt="Admin Dashboard" />
-            </a>
-        </div>
-        <!-- Sidebar menu starts -->
-        <div class="sidebar-menu">
-            <div class="sidebarMenuScroll">
-                <ul>
-                    <li>
-                        <a href="/panel/dashboard">
-                            <i class="bi bi-house"></i>
-                            <span class="menu-text">Dashboard</span>
-                        </a>
-                    </li>
-    
-                
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-journal-check"></i>
-                            <span class="menu-text">Publications</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/publica/add">Publish New</a>
-                                </li>
-                                <li>
-                                    <a href="/publica/all">View All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-list-stars"></i>
-                            <span class="menu-text">Documents</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/documents/add">Add New</a>
-                                </li>
-                                <li>
-                                    <a href="/documents/all">View All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-journal-check"></i>
-                            <span class="menu-text">Posts</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/posts/add">New Post</a>
-                                </li>
-                                <li>
-                                    <a href="/posts/all">View Posts</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-book"></i>
-                            <span class="menu-text">Events</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/events/add">New Event</a>
-                                </li>
-                                <li>
-                                    <a href="/events/all">View Events</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-card-image"></i>
-                            <span class="menu-text">Gallery</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/gallery/add">Add New</a>
-                                </li>
-                                <li>
-                                    <a href="/gallery/all">View Gallery</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-envelope"></i>
-                            <span class="menu-text">Inbox</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/messages/inbox">Messages</a>
-                                </li>
-                                <li>
-                                    <a href="/messages/feedback">Feedback</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="bi bi-disc-fill"></i>
-                            <span class="menu-text">Manage Users</span>
-                        </a>
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="/panel/register">Register</a>
-                                </li>
-                                <li>
-                                    <a href="/panel/users">View All</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                
-    
-                    <li>
-                        <a href="/panel/logout" onclick="return confirm('Are you sure you want to logout?')">
-                            <i class="bi bi-box-arrow-left"></i>
-                            <span class="menu-text">Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    <% } %>
+  <% } %>
 </nav>
+
+
 <% } else { %>
 <nav class="sidebar-wrapper">
-    <!-- Sidebar menu ends -->
-    <div class="sidebar-brand">
-        <a href="/panel/dashboard" class="logo">
-            <img src="../admin/images/logo.svg" alt="Admin (No Login)" />
-        </a>
-    </div>
+  <!-- Sidebar menu ends -->
+  <div class="sidebar-brand">
+    <a href="/panel/dashboard" class="logo">
+      <img src="../admin/images/logo.svg" alt="Admin (No Login)" />
+    </a>
+  </div>
 </nav>
 <% } %>

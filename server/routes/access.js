@@ -41,7 +41,7 @@ router.post("/forgot-password-post", (req, res) => {
 // 03. Admin Login view
 router.get("/login", (req, res) => {
   const internals = {
-    title: "Staff Login",
+    title: "Login Page",
     description: "PSF Staff member login page",
     message: req.flash("flashError"),
   };
@@ -115,6 +115,16 @@ router.get(["", "/dashboard"], async (req, res) => {
           let eventsCount = await con2.query("SELECT COUNT(*) AS events_count FROM `events` WHERE is_happened=0");
           let appManagers = await con2.query("SELECT COUNT(*) AS users_count FROM `site_users`");
 
+          let kigaliCounts = await con2.query("SELECT COUNT(c.company_id) AS count_kigali FROM membership_companies c LEFT JOIN membership_representatives r ON c.company_id = r.company_id LEFT JOIN associations ass ON ass.assoc_id= c.association_id LEFT JOIN clusters cr ON cr.cluster_id = ass.cluster_id LEFT JOIN membership_co_types ct ON ct.type_id = c.company_type_id LEFT JOIN membership_ownerships mo ON mo.ownership_id = c.ownership_id LEFT JOIN membership_categories mc ON mc.category_id = c.membership_category LEFT JOIN villages vl ON vl.village_id = c.village_id LEFT JOIN cells cl ON cl.cell_id = c.cell_id LEFT JOIN sectors sc ON sc.sector_id = c.sector_id LEFT JOIN districts d ON c.district_id = d.district_id LEFT JOIN provinces p ON d.province_id = p.province_id WHERE p.province_id = 2");
+
+          let eastCounts = await con2.query("SELECT COUNT(c.company_id) AS count_east FROM membership_companies c LEFT JOIN membership_representatives r ON c.company_id = r.company_id LEFT JOIN associations ass ON ass.assoc_id= c.association_id LEFT JOIN clusters cr ON cr.cluster_id = ass.cluster_id LEFT JOIN membership_co_types ct ON ct.type_id = c.company_type_id LEFT JOIN membership_ownerships mo ON mo.ownership_id = c.ownership_id LEFT JOIN membership_categories mc ON mc.category_id = c.membership_category LEFT JOIN villages vl ON vl.village_id = c.village_id LEFT JOIN cells cl ON cl.cell_id = c.cell_id LEFT JOIN sectors sc ON sc.sector_id = c.sector_id LEFT JOIN districts d ON c.district_id = d.district_id LEFT JOIN provinces p ON d.province_id = p.province_id WHERE p.province_id = 1");
+
+          let southCounts = await con2.query("SELECT COUNT(c.company_id) AS count_south FROM membership_companies c LEFT JOIN membership_representatives r ON c.company_id = r.company_id LEFT JOIN associations ass ON ass.assoc_id= c.association_id LEFT JOIN clusters cr ON cr.cluster_id = ass.cluster_id LEFT JOIN membership_co_types ct ON ct.type_id = c.company_type_id LEFT JOIN membership_ownerships mo ON mo.ownership_id = c.ownership_id LEFT JOIN membership_categories mc ON mc.category_id = c.membership_category LEFT JOIN villages vl ON vl.village_id = c.village_id LEFT JOIN cells cl ON cl.cell_id = c.cell_id LEFT JOIN sectors sc ON sc.sector_id = c.sector_id LEFT JOIN districts d ON c.district_id = d.district_id LEFT JOIN provinces p ON d.province_id = p.province_id WHERE p.province_id = 4");
+
+          let northCounts = await con2.query("SELECT COUNT(c.company_id) AS count_north FROM membership_companies c LEFT JOIN membership_representatives r ON c.company_id = r.company_id LEFT JOIN associations ass ON ass.assoc_id= c.association_id LEFT JOIN clusters cr ON cr.cluster_id = ass.cluster_id LEFT JOIN membership_co_types ct ON ct.type_id = c.company_type_id LEFT JOIN membership_ownerships mo ON mo.ownership_id = c.ownership_id LEFT JOIN membership_categories mc ON mc.category_id = c.membership_category LEFT JOIN villages vl ON vl.village_id = c.village_id LEFT JOIN cells cl ON cl.cell_id = c.cell_id LEFT JOIN sectors sc ON sc.sector_id = c.sector_id LEFT JOIN districts d ON c.district_id = d.district_id LEFT JOIN provinces p ON d.province_id = p.province_id WHERE p.province_id = 3");
+
+          let westCounts = await con2.query("SELECT COUNT(c.company_id) AS count_west FROM membership_companies c LEFT JOIN membership_representatives r ON c.company_id = r.company_id LEFT JOIN associations ass ON ass.assoc_id= c.association_id LEFT JOIN clusters cr ON cr.cluster_id = ass.cluster_id LEFT JOIN membership_co_types ct ON ct.type_id = c.company_type_id LEFT JOIN membership_ownerships mo ON mo.ownership_id = c.ownership_id LEFT JOIN membership_categories mc ON mc.category_id = c.membership_category LEFT JOIN villages vl ON vl.village_id = c.village_id LEFT JOIN cells cl ON cl.cell_id = c.cell_id LEFT JOIN sectors sc ON sc.sector_id = c.sector_id LEFT JOIN districts d ON c.district_id = d.district_id LEFT JOIN provinces p ON d.province_id = p.province_id WHERE p.province_id = 5");
+
           const internals = {
               title: "Dashboard Page",
               breadcrumbL1: "Dashboard",
@@ -124,7 +134,12 @@ router.get(["", "/dashboard"], async (req, res) => {
               publicationsNum : publiCount,
                   postsNumber : postsCount,
                   eventsNumber : eventsCount,
-                  allUsersNumber: appManagers
+                  allUsersNumber: appManagers,
+                  kigaliCounts: kigaliCounts,
+                  eastCounts: eastCounts,
+                  southCounts: southCounts,
+                  northCounts: northCounts,
+                  westCounts: westCounts
           };
 
           res.render("admin/dashboard", {
@@ -463,6 +478,7 @@ router.get('/profile', (req, res) => {
         username: rows[0].username,
         gender: rows[0].gender,
         telephone: rows[0].telephone,
+        inUser: req.session.in_user,
         email: rows[0].email,
         status: rows[0].status,
         has3RouteSegments: true,
@@ -534,6 +550,9 @@ router.get('/change-password', (req, res) => {
       const internals = {
         title: `Change your passoword (${rows[0].firstname})`,
         user_id: id,
+        inUser: req.session.in_user,
+        has3RouteSegments: true,
+        message: req.flash("fmessage"),
       };
 
       res.render("admin/account/change-pass", {

@@ -121,7 +121,7 @@ router.get('/clusters', (req, res) => {
     res.render('clients/membership/clusters', { internals });
 });
 
-router.get('/associations', async(req, res) => {
+router.get('/associations', async (req, res) => {
     let internals = {
         title: "PSF associations",
         description: "",
@@ -195,6 +195,26 @@ router.get('/gbf', (req, res) => {
     res.render('clients/events/gbf', { internals });
 });
 
+router.get('/elections-2026', (req, res) => {
+    const internals = {
+        title: "PSF - Elections",
+        description: "",
+        hasFullFooter: true,
+        inUser: req.session.in_user,
+    }
+    res.render('clients/events/elections', { internals });
+});
+
+router.get('/made-in-rwanda', (req, res) => {
+    const internals = {
+        title: "Made in Rwanda",
+        description: "",
+        hasFullFooter: true,
+        inUser: req.session.in_user,
+    }
+    res.render('clients/events/made-in-rwanda', { internals });
+});
+
 router.get('/ritf-expo', (req, res) => {
     const internals = {
         title: "RITF EXPO",
@@ -218,9 +238,9 @@ router.get('/team-board', (req, res) => {
 });
 
 router.get('/team-management', (req, res) => {
-    
+
     const internals = {
-        title: "PSF Board",
+        title: "PSF Management",
         description: "",
         hasFullFooter: true,
         inUser: req.session.in_user,
@@ -244,7 +264,7 @@ router.get('/team-staff', (req, res) => {
             if (!error) {
                 res.render('clients/teams/staff', { internals });
             }
-        });  
+        });
     });
 });
 
@@ -274,7 +294,7 @@ router.get('/press', (req, res) => {
 });
 
 
-// X. Gallery 
+// X. Gallery
 router.get('/gallery', (req, res) => {
     con.query("SELECT * FROM gallery ORDER BY created_at DESC LIMIT 18", (error, rows) => {
         let internals = {
@@ -303,7 +323,7 @@ router.get('/gallery', (req, res) => {
 router.get('/publications', (req, res) => {
     con.query("SELECT * FROM publication ORDER BY pub_date DESC", (error, rows) => {
         const internals = {
-            title : "View all publications",
+            title: "View all publications",
             description: "",
             hasFullFooter: true,
             inUser: req.session.in_user,
@@ -316,11 +336,11 @@ router.get('/publications', (req, res) => {
 
 // Media (Public & Private documents)
 router.get('/extract-documents', async (req, res) => {
-    if ((req.session.in_user && req.session.in_user.role == 'Admin') 
+    if ((req.session.in_user && req.session.in_user.role == 'Admin')
         || (req.session.in_user && req.session.in_user.role == 'Lead')) {
         try {
             const internals = {
-                title : "Extract - Documents",
+                title: "Extract - Documents",
                 description: "",
                 hasFullFooter: true,
                 inUser: req.session.in_user,
@@ -336,7 +356,7 @@ router.get('/extract-documents', async (req, res) => {
             // Render data with combined data
             const combinedData = { table24: doc2024, table25: doc2025, counts25: counts25 };
 
-            // Receive session initialized from login_auth 
+            // Receive session initialized from login_auth
             // Here we get: loggedin, role, user_id, username, firstname,...
             const inUser = req.session.in_user;
             res.render('clients/media/extract-docs', { data: combinedData, internals, inUser });
@@ -348,7 +368,7 @@ router.get('/extract-documents', async (req, res) => {
     } else {
         req.flash("fmessage", "Login here to access document section as board member!");
         res.redirect("/login-documents");
-    } 
+    }
 });
 
 
@@ -356,13 +376,13 @@ router.get('/extract-documents', async (req, res) => {
 router.get('/login-documents', (req, res) => {
     try {
         const internals = {
-            title : "Board member login",
+            title: "Board member login",
             description: "Enter valid credentials to access board documents...",
             hasFullFooter: true,
             inUser: req.session.in_user,
         }
 
-        if (req.session.in_user.loggedin==true) {
+        if (req.session.in_user.loggedin == true) {
             res.redirect("/extract-documents?access_allowed=true");
         } else {
             const message = req.flash("fmessage"); // 2 make flash msg appear
@@ -382,30 +402,30 @@ router.post('/login-documents-auth', (req, res) => {
         let password = req.body.password;
         let loginTime = fun.currentDateTime();
 
-        if(email.length!=0 && password.length!=0) {
+        if (email.length != 0 && password.length != 0) {
             let sqlLogin = "SELECT * FROM site_users WHERE email = ? AND role = 'Lead' ";
             con.query(sqlLogin, [email], (error, results, fields) => {
                 if (error) {
                     req.flash("fmessage", `Internal Error (in the system)!`);
                     res.redirect("/login-documents");
                 }
-                
+
                 // DATA : 01
-                if(results.length > 0) {
+                if (results.length > 0) {
                     let match = bcrypt.compareSync(password, results[0].password);
-                    if(match==true) {
-                        if(results[0].status=='Active') {
-                            
+                    if (match == true) {
+                        if (results[0].status == 'Active') {
+
                             // Initialize session for logged in user
-                            req.session.in_user = { 
-                                loggedin : true,
+                            req.session.in_user = {
+                                loggedin: true,
                                 inFromOutSite: true,
                                 role: results[0].role,
-                                user_id: results[0].user_id, 
+                                user_id: results[0].user_id,
                                 username: results[0].username,
-                                position: results[0].position, 
-                                firstname: results[0].firstname, 
-                                lastname: results[0].lastname 
+                                position: results[0].position,
+                                firstname: results[0].firstname,
+                                lastname: results[0].lastname
                             };
                             res.redirect(`/extract-documents?access_allowed=true`);
                         } else {
@@ -454,7 +474,7 @@ router.get('/contact', (req, res) => {
         inUser: req.session.in_user,
     }
     let names, email, phone, subject, cmessage = '';
-    res.render('clients/about/contact', { 
+    res.render('clients/about/contact', {
         internals,
         names, email, phone, subject, cmessage,
         message: req.flash("fmessage"),
@@ -470,9 +490,9 @@ router.post('/contact-to-db', (req, res) => {
     let subject = req.body.subject;
     let cmessage = fun.addSlashes(req.body.cmessage);
 
-    if (names.length != 0 && email.length != 0 && phone.length != 0 && subject.length != 0 && cmessage.length != 0 ) {
-        if(cmessage.length > 20) {
-            let inData = {names: names, email: email, phone: phone, subject: subject, message: cmessage}
+    if (names.length != 0 && email.length != 0 && phone.length != 0 && subject.length != 0 && cmessage.length != 0) {
+        if (cmessage.length > 20) {
+            let inData = { names: names, email: email, phone: phone, subject: subject, message: cmessage }
             con.query("INSERT INTO messages SET ?", inData, (err, results, fields) => {
                 if (!err) {
                     req.flash("fmessage", "Your message has been sent!");
@@ -500,7 +520,7 @@ router.get('/add-feedback', (req, res) => {
     }
 
     let names, email, telephone, subject, rating, company, message = '';
-    res.render('clients/about/add-feedback', { 
+    res.render('clients/about/add-feedback', {
         internals,
         names, email, telephone, subject, rating, company, message,
         message: req.flash("fmessage"),
@@ -520,14 +540,14 @@ router.post('/post-feedback', (req, res) => {
     let message = fun.addSlashes(req.body.message);
 
     if (names.length != 0 && email.length != 0 && subject.length != 0 && message.length != 0 && rating.length != 0) {
-        if(message.length > 10) {
+        if (message.length > 10) {
             let inData = {
-                names: names, 
-                email: email, 
-                telephone: telephone, 
-                user_type: isMember, 
-                subject: subject, 
-                rating: rating, 
+                names: names,
+                email: email,
+                telephone: telephone,
+                user_type: isMember,
+                subject: subject,
+                rating: rating,
                 message: message,
                 company: company
             };

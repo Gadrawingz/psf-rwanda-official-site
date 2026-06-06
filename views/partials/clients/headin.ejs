@@ -1,111 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<%# @gadrawingz powered SEO %>
-	<title><%- internals.title %> | PSF</title>
-	<meta name="description" content="<%- internals.description %>">
-	<!-- google font -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-	<!-- plugins css -->
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/reey-font/stylesheet.css">
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/font-awesome/css/all.min.css">
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/animate/animate.min.css">
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/flaticon/css/flaticon_towngov.css">
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/owl-carousel/owl.carousel.min.css">
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/swiper/swiper-bundle.min.css">
-	<link rel="stylesheet" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/youtube-popup/youtube-popup.css">
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/css/custom.css">
-	<link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/css/style.css">
-	<!-- favicons Icons -->
-	<link rel="apple-touch-icon" sizes="180x180" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/cropped-psf-logo.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/cropped-psf-logo.png">
-	<link rel="manifest" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicons/site.webmanifest">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%# @gadrawingz powered SEO %>
+  <title><%- internals.title %> | PSF</title>
+  <meta name="description" content="<%- internals.description %>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;1,400&family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/reey-font/stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/font-awesome/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/animate/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/flaticon/css/flaticon_towngov.css">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/owl-carousel/owl.carousel.min.css">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/swiper/swiper-bundle.min.css">
+  <link rel="stylesheet" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/youtube-popup/youtube-popup.css">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/css/style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/cropped-psf-logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/cropped-psf-logo.png">
+  <link rel="manifest" href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicons/site.webmanifest">
 </head>
 
-<!-- Start Top banner -->
-<div class="top-banner">
-    <style>
-        .top-banner {
-            background: #000;
-			background-size: 100% 100%;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            position: relative;
-			border-bottom: 0.5px solid #ffffff88;
-        }
-        .banner-left img {
-            height: auto;
-            max-height: 60px;
-            width: auto;
-            border: 1px solid #fff;
-        }
+<style>
+#B,#B *{box-sizing:border-box!important;margin:0!important;padding:0!important;border:none!important;outline:none!important;text-decoration:none!important;list-style:none!important;float:none!important}
+#B{display:flex!important;align-items:stretch!important;justify-content:space-between!important;width:100%!important;height:68px!important;padding:0 12px!important;gap:14px!important;overflow:hidden!important;position:relative!important;z-index:99999!important;background:linear-gradient(90deg,#111 0%,#1e1e1e 25%,#272727 50%,#1e1e1e 75%,#111 100%)!important;border-top:1px solid rgba(140,140,140,.15)!important;border-bottom:1px solid rgba(140,140,140,.15)!important;font-family:'Barlow Condensed',Arial Narrow,Arial,sans-serif!important}
+#B .bl{width:32px!important;flex-shrink:0!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;align-self:center!important;padding:2px 0!important}
+#B .bl img{width:32px!important;height:auto!important;max-height:64px!important;object-fit:contain!important;display:block!important}
+#B .bc{flex:1!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:18px!important;min-width:0!important;overflow:hidden!important}
+#B .bv{width:1px!important;height:38px!important;flex-shrink:0!important;background:rgba(150,150,150,.25)!important;display:block!important}
+#B .bfw{position:relative!important;width:26px!important;height:50px!important;flex-shrink:0!important;display:flex!important;align-items:center!important;justify-content:center!important}
+#B .bfg{position:absolute!important;width:44px!important;height:44px!important;border-radius:50%!important;background:radial-gradient(circle,rgba(225,105,8,.22) 0%,transparent 65%)!important;top:50%!important;left:50%!important;transform:translate(-50%,-54%)!important;animation:bGl 2.2s ease-in-out infinite!important}
+@keyframes bGl{0%,100%{transform:translate(-50%,-54%) scale(1);opacity:.3}50%{transform:translate(-50%,-54%) scale(1.5);opacity:.9}}
+#B .bfs{display:block!important;animation:bFl 1.8s ease-in-out infinite alternate!important;transform-origin:50% 92%!important}
+@keyframes bFl{0%{transform:scaleY(1) scaleX(1) rotate(-1deg)}30%{transform:scaleY(1.09) scaleX(.92) rotate(1.5deg)}60%{transform:scaleY(.95) scaleX(1.05) rotate(-.5deg)}100%{transform:scaleY(1.04) scaleX(.97) rotate(-1.5deg)}}
+#B .bt{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:1px!important}
+#B .bt-w{font-family:'EB Garamond',Georgia,serif!important;font-style:italic!important;font-weight:400!important;font-size:21px!important;color:#e0e0e0!important;letter-spacing:4px!important;line-height:1!important;display:block!important}
+#B .bt-r{display:flex!important;align-items:center!important;gap:10px!important}
+#B .bt-n{font-family:'EB Garamond',Georgia,serif!important;font-weight:400!important;font-size:38px!important;color:#f5f5f5!important;letter-spacing:-1px!important;line-height:.9!important;flex-shrink:0!important;display:block!important}
+#B .bt-s{font-family:'Barlow Condensed',Arial Narrow,Arial,sans-serif!important;font-weight:700!important;font-size:13px!important;color:#e8e8e8!important;letter-spacing:1.5px!important;text-transform:uppercase!important;display:block!important;line-height:1.2!important}
+#B .bcd{display:flex!important;flex-direction:column!important;align-items:center!important;flex-shrink:0!important}
+#B .bcd-n{font-family:'Barlow Condensed',Arial Narrow,Arial,sans-serif!important;font-weight:800!important;font-size:38px!important;color:#ffffff!important;line-height:1!important;font-variant-numeric:tabular-nums!important;letter-spacing:-1px!important;display:block!important}
+#B .bcd-l{font-family:'Barlow Condensed',Arial Narrow,Arial,sans-serif!important;font-weight:700!important;font-size:10px!important;color:#686868!important;letter-spacing:2.5px!important;text-transform:uppercase!important;margin-top:2px!important;display:block!important}
+#B .btk{font-family:'EB Garamond',Georgia,serif!important;font-style:italic!important;font-weight:600!important;font-size:16px!important;color:#ffffff!important;max-width:200px!important;text-align:center!important;line-height:1.35!important;min-width:0!important;display:block!important}
+@keyframes bFQ{from{opacity:0}to{opacity:1}}
+@media(max-width:640px){#B{height:auto!important;min-height:56px!important;padding:6px 10px!important;flex-wrap:wrap!important}#B .btk{display:none!important}}
+</style>
 
-        .banner-center {
-            text-align: center;
-        }
-        
-		.banner-countdown {
-            font-size: 0.9em;
-            margin-top: 5px;
-            color: #f8c369da;
-        }
-        
-		.banner-right {
-            border: 3px solid #fff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-			font-weight: bolder;
-        }
-        
-		.close-banner {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            cursor: pointer;
-            font-size: 20px;
-        }
-    </style>
-
-    <div class="banner-left">
-        <img src="clients/images/logo/kwibuka-psf.png" alt="PSF Logo">
+<div id="B" role="banner" aria-label="Kwibuka 32 — PSF Banner">
+  <div class="bl">
+    <a href="https://www.kwibuka.rw" target="_blank" rel="noopener noreferrer">
+        <img src="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/banner-logo-kwibuka.png" alt="Kwibuka 32">
+    </a>
+  </div>
+  <div class="bc">
+    <div class="bfw" aria-hidden="true">
+      <div class="bfg"></div>
+      <svg class="bfs" width="24" height="40" viewBox="0 0 24 40" fill="none">
+        <path d="M12 1C12 1 21 10 21 20c0 7.5-3.8 13.5-9 16C6.8 33.5 3 27.5 3 20 3 10 12 1 12 1Z" fill="#9c3d05"/>
+        <path d="M12 6C12 6 19 13 19 21c0 6-3 11-7 13C8 32 5 27 5 21 5 13 12 6 12 6Z" fill="#e06e09"/>
+        <path d="M12 12C12 12 17 17 17 22.5c0 4.3-2.2 8-5 9.5C9.2 30.5 7 26.8 7 22.5c0-5.5 5-10.5 5-10.5Z" fill="#f4a128"/>
+        <path d="M12 17C12 17 15 20 15 23.5c0 2.7-1.3 5-3 5.5C10.3 28.5 9 26.2 9 23.5c0-3.5 3-6.5 3-6.5Z" fill="#fff1b0"/>
+        <ellipse cx="12" cy="37.5" rx="4.5" ry="1.4" fill="rgba(156,61,5,.17)"/>
+      </svg>
     </div>
-	<a href="https://kwibuka.rw/" style="color: #FFFFFF;" target="_blank">
-		<div class="banner-center">
-			<div class="banner-text">Remember - Unite - Renew</div>
-			<div class="banner-countdown" id="countdown"></div>
-		</div>
-	</a>
-    <div class="banner-right">31</div>
-    <span class="close-banner">&times;</span>
-
-    <script>
-        function updateCountdown() {
-            const startDate = new Date('2025-04-07');
-            const today = new Date();
-            const elapsed = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-            const remaining = Math.max(0, 100 - elapsed);
-            document.getElementById('countdown').textContent = `The ${elapsed}th day of the 100-day #Kwibuka31 commemoration.`;
-        }
-        
-        document.querySelector('.close-banner').addEventListener('click', function() {
-            document.querySelector('.top-banner').style.display = 'none';
-        });
-
-        updateCountdown();
-        setInterval(updateCountdown, 86400000);
-    </script>
+    <div class="bt">
+      <span class="bt-w">Kwibuka</span>
+      <div class="bt-r">
+        <span class="bt-n">32</span>
+        <span class="bt-s">Remember · Unite · Renew</span>
+      </div>
+    </div>
+    <span class="bv" aria-hidden="true"></span>
+    <div class="bcd" aria-live="polite">
+      <span class="bcd-n" id="B-days">98</span>
+      <span class="bcd-l">Days left</span>
+    </div>
+    <span class="bv" aria-hidden="true"></span>
+    <span class="btk" id="B-ticker" aria-live="polite">Kwibuka Twiyubaka &mdash; Urumuri rw&#8217;icyizere</span>
+  </div>
+  <div class="bl"><img src="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/banner-logo-psf.png" alt="PSF Rwanda"></div>
 </div>
-<!-- End Top banner -->
+
+<script>
+(function(){
+  var curYear = new Date().getFullYear();
+  var KS = new Date(curYear + '-04-07T00:00:00+02:00');
+  var KE = new Date(curYear + '-07-16T00:00:00+02:00');
+  var MSG = 'Kwibuka Twiyubaka \u2014 Urumuri rw\u2019icyizere';
+  var rot = 0;
+
+  function pad(n){return String(Math.max(0, Math.floor(n))).padStart(2, '0');}
+
+  function calcDays(){
+    var now = new Date();
+    if (now < KS) return 100;
+    var diff = KE - now;
+    var days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    return days > 0 ? days : 0;
+  }
+
+  function updateCounter(){
+    var dEl = document.getElementById('B-days');
+    if(dEl) dEl.textContent = pad(calcDays());
+  }
+
+  function checkVisibility(){
+    var now = new Date();
+    var banner = document.getElementById('B');
+    if(banner) banner.style.display = (now >= KS && now < KE) ? '' : 'none';
+  }
+
+  function rotateTicker(){
+    if(rot >= 5) return;
+    var tEl = document.getElementById('B-ticker');
+    if(!tEl) return;
+    tEl.style.animation = 'none';
+    void tEl.offsetWidth;
+    tEl.innerHTML = MSG;
+    tEl.style.animation = 'bFQ 1s ease-in';
+    rot++;
+    if(rot < 5) setTimeout(rotateTicker, 4000);
+  }
+
+  updateCounter();
+  checkVisibility();
+  setInterval(updateCounter, 60000);
+  rotateTicker();
+}());
+</script>

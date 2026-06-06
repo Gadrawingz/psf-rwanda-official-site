@@ -1,0 +1,567 @@
+<style>
+    .admin-nav {
+        display: flex;
+        gap: 15px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08)
+    }
+    
+    .admin-nav .btn {
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s
+    }
+    
+    .admin-nav .btn-primary {
+        background: #2ecc71;
+        border: none;
+        color: #fff
+    }
+    
+    .admin-nav .btn-primary:hover,
+    .admin-nav .btn-primary.active {
+        background: #27ae60;
+        transform: translateY(-2px)
+    }
+    
+    .admin-nav .btn-success {
+        background: #ff8c00;
+        border: none;
+        color: #fff
+    }
+    
+    .admin-nav .btn-success:hover,
+    .admin-nav .btn-success.active {
+        background: #e67e00;
+        transform: translateY(-2px)
+    }
+    
+    .stats-container,
+    .filter-section,
+    .export-section,
+    .table-container,
+    .notification-form {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        margin-bottom: 25px
+    }
+    
+    .stats-container h4,
+    .filter-section h4,
+    .export-section h4,
+    .table-container h4,
+    .notification-form h4 {
+        color: #2ecc71;
+        margin-bottom: 20px;
+        font-weight: bold
+    }
+    
+    .stat-card {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        color: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+        transition: transform 0.3s
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px)
+    }
+    
+    .stat-title {
+        font-size: 18px;
+        margin-bottom: 10px;
+        opacity: 0.9
+    }
+    
+    .stat-number {
+        font-size: 42px;
+        font-weight: bold;
+        margin: 15px 0
+    }
+    
+    .stat-breakdown {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.3)
+    }
+    
+    .stat-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        font-size: 14px
+    }
+    
+    .stat-card-sm {
+        background: linear-gradient(135deg, #ff8c00, #e67e00);
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(255, 140, 0, 0.3)
+    }
+    
+    .stat-card-sm h6 {
+        margin-bottom: 10px;
+        opacity: 0.9
+    }
+    
+    .stat-number-sm {
+        font-size: 32px;
+        font-weight: bold
+    }
+    
+    .filter-section .form-select,
+    .filter-section .form-label {
+        margin-bottom: 10px
+    }
+    
+    .btn-excel {
+        background: #217346;
+        color: #fff;
+        padding: 12px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block
+    }
+    
+    .btn-excel:hover {
+        background: #1a5c37;
+        transform: translateY(-2px);
+        color: #fff
+    }
+    
+    .btn-pdf {
+        background: #dc3545;
+        color: #fff;
+        padding: 12px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block
+    }
+    
+    .btn-pdf:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+        color: #fff
+    }
+    
+    .applicants-table {
+        font-size: 14px
+    }
+    
+    .applicants-table thead {
+        background: #2ecc71;
+        color: #fff
+    }
+    
+    .applicants-table th {
+        padding: 15px 10px;
+        font-weight: 600;
+        white-space: nowrap
+    }
+    
+    .applicants-table td {
+        padding: 12px 10px;
+        vertical-align: middle
+    }
+    
+    .applicants-table tbody tr:hover {
+        background: #f8f9fa
+    }
+    
+    .badge {
+        padding: 6px 12px;
+        font-size: 12px;
+        font-weight: 600
+    }
+    
+    .notification-form .section {
+        background: #f8f9fa;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        border-left: 4px solid #ff8c00
+    }
+    
+    .notification-form h5 {
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 20px;
+        font-size: 18px
+    }
+    
+    .form-check-group {
+        display: flex;
+        gap: 20px;
+        padding: 10px 0
+    }
+    
+    .form-check-group label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        padding: 10px 20px;
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        transition: all 0.3s
+    }
+    
+    .form-check-group label:hover {
+        border-color: #2ecc71;
+        background: #f0f9f4
+    }
+    
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        cursor: pointer
+    }
+    
+    .message-textarea {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 14px;
+        transition: border 0.3s
+    }
+    
+    .message-textarea:focus {
+        border-color: #2ecc71;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1)
+    }
+    
+    .btn-submit-lg {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        color: #fff;
+        border: none;
+        padding: 18px 60px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3)
+    }
+    
+    .btn-submit-lg:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4)
+    }
+    
+    .success-card {
+        background: #fff;
+        padding: 60px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        text-align: center
+    }
+    
+    .success-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: bounceIn 0.8s
+    }
+    
+    .success-details {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        margin: 20px 0
+    }
+    
+    .success-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap
+    }
+    
+    @keyframes bounceIn {
+        0% {
+            transform: scale(0);
+            opacity: 0
+        }
+    
+        50% {
+            transform: scale(1.1)
+        }
+    
+        100% {
+            transform: scale(1);
+            opacity: 1
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .admin-nav {
+            flex-direction: column
+        }
+    
+        .stat-card {
+            margin-bottom: 15px
+        }
+    
+        .table-responsive {
+            overflow-x: auto
+        }
+    
+        .applicants-table {
+            font-size: 12px
+        }
+    
+        .applicants-table th,
+        .applicants-table td {
+            padding: 8px 5px
+        }
+    
+        .success-card {
+            padding: 30px
+        }
+    
+        .success-actions {
+            flex-direction: column
+        }
+    }   
+</style>
+
+<div class="container-fluid my-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="admin-nav">
+                <a href="/app-admin/applicants" class="btn btn-primary">View Applicants</a>
+                <a href="/app-admin/feedback" class="btn btn-success active">Send Notifications</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="stats-container">
+                <h4 class="mb-3">📊 Quick Statistics</h4>
+                <div class="row">
+                    <%
+                        const levelStats = { District: 0, Province: 0, Chamber: 0, National: 0 };
+                        stats.forEach(s => {
+                            levelStats[s.election_level] += parseInt(s.count);
+                        });
+                        Object.keys(levelStats).forEach(level => {
+                    %>
+                    <div class="col-md-3">
+                        <div class="stat-card-sm">
+                            <h6><%= level %></h6>
+                            <div class="stat-number-sm"><%= levelStats[level] %></div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="notification-form">
+                <h4 class="mb-4">📨 Send Notification to Applicants</h4>
+                
+                <form action="/app-admin/feedback/send" method="POST" id="notificationForm">
+                    
+                    <div class="section">
+                        <h5>1. Select Recipients</h5>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Filter Type</label>
+                            <select name="filter_type" class="form-select" id="filterType" onchange="toggleFilters()" required>
+                                <option value="">Choose...</option>
+                                <option value="all">All Applicants</option>
+                                <option value="filter">Filter by Criteria</option>
+                                <option value="specific">Select Specific Applicants</option>
+                            </select>
+                        </div>
+                        
+                        <div id="filterCriteria" style="display:none">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Election Level</label>
+                                    <select name="election_level" class="form-select" id="filterLevel" onchange="updateApplicantList()">
+                                        <option value="">All</option>
+                                        <option value="District">District</option>
+                                        <option value="Province">Province</option>
+                                        <option value="Chamber">Chamber</option>
+                                        <option value="National">National</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Position</label>
+                                    <select name="position_role" class="form-select" id="filterPosition" onchange="updateApplicantList()">
+                                        <option value="">All</option>
+                                        <option value="Chairperson">Chairperson</option>
+                                        <option value="First Vice Chairperson">First Vice Chairperson</option>
+                                        <option value="Second Vice Chairperson">Second Vice Chairperson</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Chamber</label>
+                                    <select name="chamber" class="form-select">
+                                        <option value="">All</option>
+                                        <option value="Agriculture">Agriculture</option>
+                                        <option value="Service">Service</option>
+                                        <option value="Trade">Trade</option>
+                                        <option value="Industry">Industry</option>
+                                        <option value="Specialized">Specialized</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Province</label>
+                                    <select name="province" class="form-select">
+                                        <option value="">All</option>
+                                        <option value="Eastern">Eastern</option>
+                                        <option value="Western">Western</option>
+                                        <option value="Northern">Northern</option>
+                                        <option value="Southern">Southern</option>
+                                        <option value="Kigali City">Kigali City</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">District</label>
+                                    <select name="district" class="form-select">
+                                        <option value="">All</option>
+                                        <option value="Gasabo">Gasabo</option>
+                                        <option value="Kicukiro">Kicukiro</option>
+                                        <option value="Nyarugenge">Nyarugenge</option>
+                                        <option value="Bugesera">Bugesera</option>
+                                        <option value="Gatsibo">Gatsibo</option>
+                                        <option value="Kayonza">Kayonza</option>
+                                        <option value="Kirehe">Kirehe</option>
+                                        <option value="Ngoma">Ngoma</option>
+                                        <option value="Rwamagana">Rwamagana</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Membership</label>
+                                    <select name="is_member" class="form-select">
+                                        <option value="">All</option>
+                                        <option value="Yes">Members Only</option>
+                                        <option value="No">Non-Members</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="specificRecipients" style="display:none">
+                            <label class="form-label">Select Applicants (Hold Ctrl/Cmd for multiple)</label>
+                            <select name="recipient_ids" class="form-select" multiple size="12" id="recipientSelect">
+                                <% applicants.forEach(a => { %>
+                                <option value="<%= a.id %>">
+                                    <%= a.firstname %> <%= a.lastname %> - <%= a.election_level %> (<%= a.position_role %>) - <%= a.phone_number %>
+                                </option>
+                                <% }); %>
+                            </select>
+                            <small class="text-muted">Total: <%= applicants.length %> applicants</small>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h5>2. Choose Delivery Method</h5>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Send Via</label>
+                            <div class="form-check-group">
+                                <label class="me-4">
+                                    <input type="radio" name="method" value="email" class="form-check-input" onclick="toggleMethod('email')" required>
+                                    📧 Email
+                                </label>
+                                <label>
+                                    <input type="radio" name="method" value="sms" class="form-check-input" onclick="toggleMethod('sms')" required>
+                                    📱 SMS (InTouch Gateway)
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="emailSubject" style="display:none">
+                            <label class="form-label">Email Subject</label>
+                            <input type="text" name="subject" class="form-control" id="subjectInput" placeholder="Enter email subject">
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h5>3. Compose Message</h5>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Message Content</label>
+                            <textarea 
+                                name="message" 
+                                class="form-control message-textarea" 
+                                rows="8" 
+                                required 
+                                placeholder="Type your message here...
+
+You can use:
+{name} - Applicant's full name
+{position} - Position applied for
+{level} - Election level"
+                            ></textarea>
+                            <small class="text-muted">💡 Tip: Keep SMS messages under 160 characters for single SMS delivery</small>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn-submit-lg">Send Notification 📤</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleFilters() {
+        const type = document.getElementById('filterType').value;
+        const filterCriteria = document.getElementById('filterCriteria');
+        const specificRecipients = document.getElementById('specificRecipients');
+        const recipientSelect = document.getElementById('recipientSelect');
+        
+        filterCriteria.style.display = type === 'filter' ? 'block' : 'none';
+        specificRecipients.style.display = type === 'specific' ? 'block' : 'none';
+        
+        // Only require selection if specific filtering is chosen
+        recipientSelect.required = type === 'specific';
+    }
+
+    function toggleMethod(method) {
+        const div = document.getElementById('emailSubject');
+        const inp = document.getElementById('subjectInput');
+        
+        if (method === 'email') {
+            div.style.display = 'block';
+            inp.required = true;
+        } else {
+            div.style.display = 'none';
+            inp.required = false;
+        }
+    }
+
+    // Placeholder for future AJAX filtering if needed
+    function updateApplicantList() {
+        // This function would typically implement AJAX to dynamically filter the recipientSelect list
+        // based on the selected Level/Position, but based on the provided EJS, it is currently
+        // unimplemented and serves as a placeholder.
+        console.log("Applicant list update triggered, but logic is currently a placeholder.");
+    }
+</script>

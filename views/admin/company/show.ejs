@@ -1,0 +1,227 @@
+<div class="row mb-4">
+  <div class="col">
+    <h1 style="font-size: 32px;"><%= company.company_name %></h1>
+  </div>
+  <div class="col-auto">
+    <div class="btn-group">
+      <a href="/companies/all" class="btn btn-secondary">Back to List</a>
+      <a href="/company-edit/<%= company.company_id %>" class="btn btn-primary"
+        >Edit</a>
+      <button
+        type="button"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal<%= company.company_id %>"
+      >
+        Delete
+      </button>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal<%= company.company_id %>" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirm Deletion</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete <%= company.company_name %>?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <form action="/companies/delete/<%= company.company_id %>?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Business Basic Info</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless">
+          <tr>
+            <th>Company Name:</th>
+            <td><%= company.company_name %></td>
+          </tr>
+          <tr>
+            <th>Company TIN:</th>
+            <td><%= company.company_tin %></td>
+          </tr>
+          <tr>
+            <th>Telephone:</th>
+            <td><%= company.company_phone || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Business Activity:</th>
+            <td><%= company.business_activity || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Email Address:</th>
+            <td><%= company.company_email || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Website:</th>
+            <td>
+              <% if (company.company_website) { %>
+              <a href="<%= company.company_website %>" target="_blank">
+                <%= company.company_website %>
+              </a>
+              <% } else { %> N/A <% } %>
+            </td>
+          </tr>
+          <tr>
+            <th>Business Activity:</th>
+            <td ><%= company.business_activity %></td>
+          </tr>
+          <tr>
+            <th>Company Type / Ownership:</th>
+            <td><%= company.company_type || 'N/A' %> / <b><%= company.ownership_name || 'N/A' %></b></td>
+          </tr>
+          <tr>
+            <th>Other Registration:</th>
+            <td>
+              <%= company.registration_type!== 'TIN' ? company.registration_type+'('+company.registration_number+')' : "N/A" %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">More business info+</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless">
+          <tr>
+            <th>Business Size:</th>
+            <td><%= company.business_size %></td>
+          </tr>
+          <tr>
+            <th>Membership Category:</th>
+            <td><%= company.category_name %></td>
+          </tr>
+          <tr>
+            <th>Sales Reporting</th>
+            <td><%= company.sales_reporting %></td>
+          </tr>
+          <tr>
+            <th>In Association:</th>
+            <td><%= company.has_association ? 'Yes' : 'No' %></td>
+          </tr>
+          <tr>
+            <th>Association:</th>
+            <td><%= company.assoc_name || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Cluster Name:</th>
+            <td><%= company.cluster_name || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Employee Numbers:</th>
+            <td>Permanent (<%= company.permanent_employees %>), Casual(<%= company.casual_employees %>)</td>
+          </tr>
+          <tr>
+            <th>Business Scope:</th>
+            <td><%= company.business_scope %></td>
+          </tr>
+          <tr>
+            <th>Regions (Local/Foreign):</th>
+            <td>
+              <%= company.business_scope === 'local' ? company.local_places: company.int_countries %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0">Representative Info</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless">
+          <tr>
+            <th style="width: 40%">Full Name:</th>
+            <td><%= company.firstname %> <%= company.lastname %></td>
+          </tr>
+          <tr>
+            <th style="width: 40%">Gender:</th>
+            <td><%= company.gender === 'M' ? "Male": "Female" %></td>
+          </tr>
+          <tr>
+            <th style="width: 40%">Birthday</th>
+            <td><%= new Date(company.birthday).toLocaleDateString() %></td>
+          </tr>
+          <tr>
+            <th>Phone Number:</th>
+            <td><%= company.rep_telephone || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td><%= company.rep_email || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>National ID/Passport:</th>
+            <td><%= company.national_id || company.passport_number %></td>
+          </tr>
+          <tr>
+            <th>Area of Interest:</th>
+            <td><%= company.areas_of_interest || 'N/A' %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-dark text-white">
+        <h3 class="mb-0">Business Location+</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless">
+          <tr>
+            <th style="width: 50%">Province / District:</th>
+            <td><%= company.province_name %> / <%= company.district_name %></td>
+          </tr>
+          <tr>
+            <th>Sector / Cell :</th>
+            <td><%= company.sector_name %> / <%= company.cell_name %></td>
+          </tr>
+          <tr>
+            <th>Village/Isibo/Street Name:</th>
+            <td><%= company.village_name %> / <%= company.street_zone %></td>
+          </tr>
+        </table><hr>
+        <table class="table table-borderless">
+          <tr>
+            <th>Preferred Language:</th>
+            <td><%= company.preferred_language || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th style="width: 50%"> Registration Status:</th>
+            <td>
+              <%= company.is_approved ? 'Approved' : 'Pending' %></td>
+          </tr>
+          <tr>
+            <th>Registration Date:</th>
+            <td><%= new Date(company.created_at).toLocaleDateString() %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

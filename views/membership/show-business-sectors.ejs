@@ -1,0 +1,153 @@
+<div class="row mb-4">
+  <div class="col">
+    <h1><%= business.business_name %></h1>
+  </div>
+  <div class="col-auto">
+    <div class="btn-group">
+      <a href="/businesses" class="btn btn-secondary">Back to List</a>
+      <a href="/businesses/<%= business.id %>/edit" class="btn btn-primary"
+        >Edit</a
+      >
+      <button
+        type="button"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Business Information</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless">
+          <tr>
+            <th style="width: 40%">Business Name:</th>
+            <td><%= business.business_name %></td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td><%= business.business_email || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Website:</th>
+            <td>
+              <% if (business.business_website) { %>
+              <a href="<%= business.business_website %>" target="_blank">
+                <%= business.business_website %>
+              </a>
+              <% } else { %> N/A <% } %>
+            </td>
+          </tr>
+          <tr>
+            <th>Business Activity:</th>
+            <td><%= business.business_activity %></td>
+          </tr>
+          <tr>
+            <th>TIN:</th>
+            <td><%= business.tin || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>PSF Member:</th>
+            <td><%= business.psf_member ? 'Yes' : 'No' %></td>
+          </tr>
+          <tr>
+            <th>Registration Date:</th>
+            <td><%= new Date(business.created_at).toLocaleDateString() %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0">Representative Information</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless">
+          <tr>
+            <th style="width: 40%">Name:</th>
+            <td><%= business.representative_names %></td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td><%= business.representative_email || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Primary Phone:</th>
+            <td><%= business.telephone1 || 'N/A' %></td>
+          </tr>
+          <tr>
+            <th>Secondary Phone:</th>
+            <td><%= business.telephone2 || 'N/A' %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-info text-white">
+        <h3 class="mb-0">Location Information</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless">
+          <tr>
+            <th style="width: 40%">District:</th>
+            <td><%= business.district %></td>
+          </tr>
+          <tr>
+            <th>Sector:</th>
+            <td><%= business.sector %></td>
+          </tr>
+          <tr>
+            <th>Cell:</th>
+            <td><%= business.cell %></td>
+          </tr>
+          <tr>
+            <th>Village:</th>
+            <td><%= business.village %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-4">
+    <div class="card h-100">
+      <div class="card-header bg-warning">
+        <h3 class="mb-0">Classification Information</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless">
+          <tr>
+            <th style="width: 40%">Cluster:</th>
+            <td><%= business.cluster %></td>
+          </tr>
+          <tr>
+            <th>Specialized Cluster:</th>
+            <td><%= business.specialized_cluster %></td>
+          </tr>
+          <tr>
+            <th>Permanent Employees:</th>
+            <td><%= business.permanent_employees %></td>
+          </tr>
+          <tr>
+            <th>Casual Employees:</th>
+            <td><%= business.casual_employees %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

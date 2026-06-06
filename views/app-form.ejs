@@ -1,0 +1,541 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: Georgia, Montserrat, Hervetica;
+        background: #f8f9fa;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    .app-header {
+        background: linear-gradient(135deg, #2ecc71 0%, #ff8c00 100%);
+        color: #fff;
+        padding: 25px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 32px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    
+    .title {
+        font-size: 22px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .vote-icon {
+        font-size: 28px;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0%,
+        100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+    }
+    
+    .contact-section {
+        padding: 40px 0;
+    }
+    
+    .section-title-box {
+        margin-bottom: 30px;
+    }
+    
+    .section-tagline {
+        font-size: 32px;
+        font-weight: bold;
+        color: #2ecc71;
+        margin-bottom: 10px;
+    }
+    
+    .kinyarwanda-subtitle {
+        font-size: 18px;
+        color: #888;
+        font-style: italic;
+        margin-bottom: 20px;
+    }
+    
+    .section {
+        background: #fff;
+        padding: 30px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        border-left: 4px solid #2ecc71;
+    }
+    
+    .section h4 {
+        color: #2ecc71;
+        margin-bottom: 25px;
+        font-size: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #ff8c00;
+    }
+    
+    .cst-form-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        display: block;
+        font-size: 15px;
+    }
+    
+    .cst-red {
+        color: #dc3545;
+        font-weight: bold;
+    }
+    
+    .optional-label {
+        color: #888;
+        font-size: 13px;
+        font-weight: normal;
+    }
+    
+    .input-text,
+    .form-select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+    
+    .input-text:focus,
+    .form-select:focus {
+        border-color: #2ecc71;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+    }
+    
+    .form-check-group {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 10px 0;
+    }
+    
+    .form-check-group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 8px 15px;
+        border-radius: 6px;
+        transition: background 0.3s;
+    }
+    
+    .form-check-group label:hover {
+        background: #f0f0f0;
+    }
+    
+    .form-check-input {
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+    }
+    
+    .btn-submit {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        color: #fff;
+        border: none;
+        padding: 15px 50px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
+    }
+    
+    .row-gutter-10 {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+    
+    .row-gutter-10 > [class*="col-"] {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    
+    @media (max-width: 768px) {
+        .form-check-group {
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .section {
+            padding: 20px;
+        }
+    
+        .section h4 {
+            font-size: 18px;
+        }
+    }
+</style>
+<section class="contact-section pt-6">
+    <div class="container">
+        <div class="row">
+            <div class="section-title-box text-center">
+                <div class="section-tagline">Candidate Application Form</div>
+                <div class="kinyarwanda-subtitle">Ifishi yo Kwiyandikisha nk'Umukandida</div>
+                <hr>
+            </div>
+            <div class="col-lg-12">
+                <form action="/applicants/submit" method="POST" enctype="multipart/form-data" id="appForm" class="contact-form">
+                    <div class="section">
+                        <h4>Step 1: Select Election Level / Hitamo urwego rw'amatora</h4>
+                        <div class="row row-gutter-10">
+                            <div class="col-12 mb-3">
+                                <label class="cst-form-label">Choose Election Level&nbsp;<span class="cst-red">*</span></label>
+                                <div class="form-check-group">
+                                    <label class="me-3">
+                                        <input type="radio" name="election_level" value="District" class="form-check-input" onclick="showRoleSelection()" required> District / Urwego rw'akarere
+                                    </label>
+                                    <label class="me-3">
+                                        <input type="radio" name="election_level" value="Province" class="form-check-input" onclick="showRoleSelection()" required> Province / Urwego rw'intara
+                                    </label>
+                                    <label class="me-3">
+                                        <input type="radio" name="election_level" value="Chamber" class="form-check-input" onclick="showRoleSelection()" required> Chamber
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="election_level" value="National" class="form-check-input" onclick="showRoleSelection()" required> National / Urwego rw'igihugu
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section" id="roleSection" style="display:none">
+                        <h4>Step 2: Select Position / Hitamo umwanya</h4>
+                        <div class="row row-gutter-10">
+                            <div class="col-12 mb-3">
+                                <label class="cst-form-label">Choose Position&nbsp;<span class="cst-red">*</span></label>
+                                <div class="form-check-group">
+                                    <label class="me-3">
+                                        <input type="radio" name="position_role" value="Chairperson" class="form-check-input" onclick="showSpecificLevelAndForm()" required> Chairperson / Perezida
+                                    </label>
+                                    <label class="me-3">
+                                        <input type="radio" name="position_role" value="First Vice Chairperson" class="form-check-input" onclick="showSpecificLevelAndForm()" required> First Vice Chairperson / Visi Perezida wa 1
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="position_role" value="Second Vice Chairperson" class="form-check-input" onclick="showSpecificLevelAndForm()" required> Second Vice Chairperson / Visi Perezida wa 2
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section" id="specificLevelSection" style="display:none">
+                        <h4>Step 3: Specify Your Level</h4>
+                        <div class="row row-gutter-10">
+                            <div class="col-12 col-lg-6 mb-3" id="chamberField" style="display:none">
+                                <label for="chamberSelect" class="cst-form-label">Select Chamber / Hitamo Ishami&nbsp;<span class="cst-red">*</span></label>
+                                <select name="chamber_selected" id="chamberSelect" class="input-text">
+                                    <option value="">Select / Hitamo</option>
+                                    <option value="Agriculture">Agriculture / Ubuhinzi</option>
+                                    <option value="Service">Service / Serivisi</option>
+                                    <option value="Trade">Trade / Ubucuruzi</option>
+                                    <option value="Industry">Industry / Inganda</option>
+                                    <option value="Specialized">Specialized</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3" id="provinceField" style="display:none">
+                                <label for="provinceSelect" class="cst-form-label">Select Province / Hitamo Intara&nbsp;<span class="cst-red">*</span></label>
+                                <select name="province_selected" id="provinceSelect" class="input-text">
+                                    <option value="">Select Province / Hitamo Intara</option>
+                                    <option value="Eastern">Eastern / Iburasirazuba</option>
+                                    <option value="Western">Western / Iburengerazuba</option>
+                                    <option value="Northern">Northern / Amajyaruguru</option>
+                                    <option value="Southern">Southern / Amajyepfo</option>
+                                    <option value="Kigali City">Kigali City / Umujyi wa Kigali</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3" id="districtField" style="display:none">
+                                <label for="districtSelect" class="cst-form-label">Select District / Hitamo Akarere&nbsp;<span class="cst-red">*</span></label>
+                                <select name="district_selected" id="districtSelect" class="input-text">
+                                    <option value="">Select / Hitamo</option>
+                                    <% districts.forEach(d => { %>
+                                        <option value="<%= d %>"><%= d %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="mainFormSections" style="display:none">
+                        <div class="section">
+                            <h4>Candidate Identification / Ibiranga Umukandida</h4>
+                            <div class="row row-gutter-10">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="firstname" class="cst-form-label">First Name / Izina rya mbere&nbsp;<span class="cst-red">*</span></label>
+                                    <input type="text" name="firstname" id="firstname" class="input-text" required>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="lastname" class="cst-form-label">Last Name / Izina rya nyuma&nbsp;<span class="cst-red">*</span></label>
+                                    <input type="text" name="lastname" id="lastname" class="input-text" required>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="gender" class="cst-form-label">Gender / Igitsina&nbsp;<span class="cst-red">*</span></label>
+                                    <select name="gender" id="gender" class="input-text" required>
+                                        <option value="">Select / Hitamo</option>
+                                        <option value="Male">Male / Gabo</option>
+                                        <option value="Female">Female / Gore</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="national_id" class="cst-form-label">National ID Number / Nomero y'Indangamuntu&nbsp;<span class="cst-red">*</span></label>
+                                    <input type="text" name="national_id" id="national_id" class="input-text" required>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="nid_photo" class="cst-form-label">National ID Copy / Kopi y'Indangamuntu &nbsp;<span class="cst-red">*</span></span></label>
+                                    <input type="file" name="nid_photo" id="nid_photo" class="input-text" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h4>Company Information / Amakuru ya Company</h4>
+                            <div class="row row-gutter-10">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="company_name" class="cst-form-label">Company Name / Izina rya Company&nbsp;<span class="cst-red">*</span></label>
+                                    <input type="text" name="company_name" id="company_name" class="input-text" required>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="tin_number" class="cst-form-label">TIN Number / Nomero ya TIN&nbsp;<span class="cst-red">*</span></label>
+                                    <input type="text" name="tin_number" id="tin_number" class="input-text" required>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="cst-form-label">Do you have full ownership? / Urayifite yose?&nbsp;<span class="cst-red">*</span></label>
+                                    <div class="form-check-group">
+                                        <label class="me-3">
+                                            <input type="radio" name="full_ownership" value="Yes" class="form-check-input" required> Yes / Yego
+                                        </label>
+                                        <label class="me-3">
+                                            <input type="radio" name="full_ownership" value="No" class="form-check-input" required> No / Oya
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="full_ownership" value="Partial" class="form-check-input" required> Partial / Igice
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="years_in_business" class="cst-form-label">Years in Business / Imyaka mu Bucuruzi&nbsp;<span class="cst-red">*</span></label>
+                                    <select name="years_in_business" id="years_in_business" class="input-text" required>
+                                        <option value="">Select / Hitamo</option>
+                                        <option value="Less than 1 year">Less than 1 year / Munsi y'umwaka</option>
+                                        <option value="1">1 year / Umwaka 1</option>
+                                        <option value="2">2 years / Imyaka 2</option>
+                                        <option value="3">3 years / Imyaka 3</option>
+                                        <option value="4">4 years / Imyaka 4</option>
+                                        <option value="5">5 years / Imyaka 5</option>
+                                        <option value="6">6 years / Imyaka 6</option>
+                                        <option value="7">7 years / Imyaka 7</option>
+                                        <option value="8">8 years / Imyaka 8</option>
+                                        <option value="9">9 years / Imyaka 9</option>
+                                        <option value="10">10 years / Imyaka 10</option>
+                                        <option value="11">11 years / Imyaka 11</option>
+                                        <option value="12">12 years / Imyaka 12</option>
+                                        <option value="13">13 years / Imyaka 13</option>
+                                        <option value="14">14 years / Imyaka 14</option>
+                                        <option value="15">15 years / Imyaka 15</option>
+                                        <option value="16">16 years / Imyaka 16</option>
+                                        <option value="17">17 years / Imyaka 17</option>
+                                        <option value="18">18 years / Imyaka 18</option>
+                                        <option value="19">19 years / Imyaka 19</option>
+                                        <option value="20">20 years / Imyaka 20</option>
+                                        <option value="More than 20 years">More than 20 years / Hejuru y'imyaka 20</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="business_experience" class="cst-form-label">Experience in Business / Uburambe muri ubu bucuruzi&nbsp;<span class="cst-red">*</span></label>
+                                    <input type="text" name="business_experience" id="business_experience" class="input-text" required placeholder="Describe your experience / Sobanura uburambe bwawe">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h4>Contact Details / Aho Waboneka</h4>
+                            <div class="row row-gutter-10">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="email" class="cst-form-label">Email Address / Imeyili <span class="optional-label">(Optional)</span></label>
+                                    <input type="email" name="email" id="email" class="input-text">
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="phone_number" class="cst-form-label">Phone Number / Nimero ya Telefoni&nbsp;<span class="cst-red">*</span></label>
+                                    <input type="tel" name="phone_number" id="phone_number" class="input-text" required placeholder="+250...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h4>Membership Status / Umunyamuryango</h4>
+                            <div class="mb-3">
+                                <label class="cst-form-label">Are you a member? / Uri umunyamuryango?&nbsp;<span class="cst-red">*</span></label>
+                                <div class="form-check-group">
+                                    <label class="me-3">
+                                        <input type="radio" name="is_member" value="Yes" class="form-check-input" onclick="toggleMembership(true)" required> Yes / Yego
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="is_member" value="No" class="form-check-input" onclick="toggleMembership(false)" required> No / Oya
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row row-gutter-10" id="membershipFields" style="display:none">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="membershipSelect" class="cst-form-label">Membership Category / Icyiciro cy'Umunyamuryango&nbsp;<span class="cst-red">*</span></label>
+                                    <select name="membership_type" id="membershipSelect" class="input-text">
+                                        <option value="">Select / Hitamo</option>
+                                        <option value="Golden Circle">Golden Circle</option>
+                                        <option value="Ordinary">Ordinary</option>
+                                        <option value="Indashyikirwa">Indashyikirwa</option>
+                                        <option value="Associate">Associate</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="membership_card" class="cst-form-label">Membership Card / Ikarita y'Umunyamuryango <span class="optional-label">(Optional)</span></label>
+                                    <input type="file" name="membership_card" id="membership_card" class="input-text" accept="image/*,.pdf">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h4>Document Upload / Inyandiko Zishyirwaho</h4>
+                            <div class="row row-gutter-10">
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="cv_resume" class="cst-form-label">CV/Resume (PDF) / Umwirondoro wawe&nbsp;<span class="cst-red">*</span></label>
+                                    <input type="file" name="cv_resume" id="cv_resume" class="input-text" accept="application/pdf" required>
+                                </div>
+                                <div class="col-12 col-lg-6 mb-3">
+                                    <label for="other_document" class="cst-form-label">Other Document (PDF) / Izindi nyandiko <span class="optional-label">(Optional)</span></label>
+                                    <input type="file" name="other_document" id="other_document" class="input-text" accept="application/pdf">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn-submit">Submit Application / Ohereza Ubusabe</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showRoleSelection() {
+        document.getElementById('roleSection').style.display = 'block';
+        document.getElementById('specificLevelSection').style.display = 'none';
+        document.getElementById('mainFormSections').style.display = 'none';
+    }
+
+    function showSpecificLevelAndForm() {
+        const level = document.querySelector('input[name="election_level"]:checked').value;
+        const ch = document.getElementById('chamberField');
+        const pr = document.getElementById('provinceField');
+        const di = document.getElementById('districtField');
+        const chS = document.getElementById('chamberSelect');
+        const prS = document.getElementById('provinceSelect');
+        const diS = document.getElementById('districtSelect');
+        const specificSection = document.getElementById('specificLevelSection');
+
+        // Reset all specific level fields
+        ch.style.display = 'none';
+        pr.style.display = 'none';
+        di.style.display = 'none';
+        chS.required = false;
+        prS.required = false;
+        diS.required = false;
+        chS.value = '';
+        prS.value = '';
+        diS.value = '';
+
+        // Show/Hide specific level selection based on election level
+        if (level === 'Chamber') {
+            specificSection.style.display = 'block';
+            ch.style.display = 'block';
+            chS.required = true;
+        } else if (level === 'Province') {
+            specificSection.style.display = 'block';
+            pr.style.display = 'block';
+            prS.required = true;
+        } else if (level === 'District') {
+            specificSection.style.display = 'block';
+            di.style.display = 'block';
+            diS.required = true;
+        } else if (level === 'National') {
+            specificSection.style.display = 'none';
+        }
+
+        // Always show the rest of the form after level/role are selected
+        document.getElementById('mainFormSections').style.display = 'block';
+    }
+
+    function toggleMembership(show) {
+        const div = document.getElementById('membershipFields');
+        const sel = document.getElementById('membershipSelect');
+
+        div.style.display = show ? 'flex' : 'none';
+        sel.required = show;
+
+        if (!show) {
+            sel.value = '';
+            document.getElementById('membership_card').value = '';
+        }
+    }
+
+    document.getElementById('appForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('/applicants/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✓ Application Submitted Successfully!\n\nUbusabe bwawe bwoherejwe neza!\n\nYour application has been received and will be reviewed shortly.');
+                    this.reset();
+                    // Hide dynamic sections on successful submission
+                    document.getElementById('roleSection').style.display = 'none';
+                    document.getElementById('specificLevelSection').style.display = 'none';
+                    document.getElementById('mainFormSections').style.display = 'none';
+                    document.getElementById('membershipFields').style.display = 'none';
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(err => {
+                alert('Error submitting application. Please try again.');
+                console.error(err);
+            });
+    });
+</script>

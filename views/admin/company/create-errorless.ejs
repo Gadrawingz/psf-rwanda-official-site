@@ -1,0 +1,600 @@
+<style>
+    .loading {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #666;
+    }
+
+    .hidden-field {
+        display: none;
+    }
+
+    .nid-hidden {
+        display: none;
+    }
+
+    .field-disabled {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .auto-filled {
+        background-color: #e3f2fd;
+        border-color: #2196f3;
+    }
+
+    .manual-input {
+        background-color: #fff;
+        border-color: #ced4da;
+    }
+
+    .error-message {
+        color: #d9534f;
+        font-size: 0.9em;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .field-error {
+        border-color: #d9534f !important;
+        box-shadow: 0 0 0 0.2rem rgba(217, 83, 79, 0.25);
+    }
+
+    .alert {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-dismissible .btn-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.75rem 1.25rem;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+</style>
+<div class="row mb-4">
+    <div class="col">
+        <h1>Register New Company</h1>
+    </div>
+    <div class="col-auto">
+        <a href="/companies/all" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+
+<% if (typeof error !=='undefined' && error && error.length> 0) { %>
+<div class="alert alert-danger alert-dismissible" role="alert">
+    <strong>Error:</strong>
+    <%= error %>
+    <button type="button" class="btn-close" onclick="this.parentElement.style.display='none'" aria-label="Close">&times;</button>
+</div>
+<% } %>
+
+<% if (typeof success !=='undefined' && success && success.length> 0) { %>
+<div class="alert alert-success alert-dismissible" role="alert">
+    <strong>Success:</strong><%= success %>
+    <button type="button" class="btn-close" onclick="this.parentElement.style.display='none'" aria-label="Close">&times;</button>
+</div>
+<% } %>
+
+
+<div class="card">
+  <div class="card-body" style="border: 1.5px solid rgb(8, 103, 44);">
+    <form id="companyMembershipForm" action="/companies/create" method="POST">
+      <h4 class="mb-3" style="border-bottom: solid gray 1.5px; padding-bottom: 5px">Main business
+        info</h4>
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="company_name" class="form-label"><strong>Company
+                Name*</strong></label>
+            <input type="text" class="form-control" id="company_name" name="company_name" required>
+          </div>
+        </div>
+
+        <!-- TIN / Company Code Field -->
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="company_tin" class="form-label"><strong>TIN / Company
+                Code*</strong></label>
+            <input type="number" class="form-control" id="company_tin" name="company_tin" required>
+            <div class="form-text">This will auto-fill number when TIN is selected</div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="business_activity" class="form-label"><strong>Business
+                Activity*</strong></label>
+            <input type="text" class="form-control" id="business_activity" name="business_activity" required>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="company_phone" class="form-label"><strong>Company
+                Phone*</strong></label>
+            <input type="tel" class="form-control" id="company_phone" name="company_phone" placeholder="2507XXXXXXXX" required>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="company_email" class="form-label"><strong>Company
+                Email</strong></label>
+            <input type="email" class="form-control" id="company_email" name="company_email" placeholder="name@xample.com">
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="company_website" class="form-label"><strong>Company
+                Website</strong></label>
+            <input type="text" class="form-control" id="company_website" name="company_website" placeholder="example.com">
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="company_type_id" class="form-label"><strong>Company
+                Type*</strong></label>
+            <select class="form-select" aria-label="Default select" name="company_type_id" id="company_type_id" required>
+              <option value="" selected>-- Select type --</option>
+              <option value="1">SME</option>
+              <option value="2">Cooperative</option>
+              <option value="3">Large Enterprise</option>
+              <option value="4">Public</option>
+              <option value="5">Private</option>
+              <option value="6">NGO</option>
+              <option value="7">Partly State-owned</option>
+              <option value="8">Sole Trader</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="ownership_id" class="form-label"><strong>Ownership*</strong></label>
+            <select class="form-select" aria-label="Default select" name="ownership_id" id="ownership_id" required>
+              <option value="" selected>-- Select ownership type --</option>
+              <option value="1">Private</option>
+              <option value="2">Public</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="financial_system" class="form-label"><strong>Core Financial
+                System*</strong></label>
+            <select class="form-select" aria-label="Default select" name="financial_system" id="financial_system" required>
+              <option value="" selected>-- Select Financial System --</option>
+              <option value="EBM">EBM</option>
+              <option value="ACCOUNTING">Accounting Software</option>
+              <option value="MANUAL">Manual Processes</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <hr class="mb-2" style="border: 0.2px solid rgba(149, 98, 3, 0.397);">
+      </hr>
+      <div class="row mb-4">
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label class="form-label" for=""><strong>Business Size*</strong></label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="business_size" id="size_micro" value="Micro" checked>
+                <label class="form-check-label" for="size_micro">Micro</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="business_size" id="size_small" value="Small">
+                <label class="form-check-label" for="size_small">Small</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="business_size" id="size_medium" value="Medium">
+                <label class="form-check-label" for="size_medium">Medium</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="business_size" id="size_large" value="Large">
+                <label class="form-check-label" for="size_large">Large</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label class="form-label"><strong>Permanent Employees*</strong></label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="permanent_employees" id="perm_1_3" value="1-3" checked>
+                <label class="form-check-label" for="perm_1_3">1-3</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="permanent_employees" id="perm_4_30" value="4-30">
+                <label class="form-check-label" for="perm_4_30">4-30</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="permanent_employees" id="perm_30_100" value="30-100">
+                <label class="form-check-label" for="perm_30_100">30-100</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="permanent_employees" id="perm_more_100" value="More than 100">
+                <label class="form-check-label" for="perm_more_100">More than
+                  100</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label class="form-label"><strong>Casual Employees*</strong></label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="casual_employees" id="casual_1_3" value="1-3" checked>
+                <label class="form-check-label" for="casual_1_3">1-3</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="casual_employees" id="casual_4_30" value="4-30">
+                <label class="form-check-label" for="casual_4_30">4-30</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="casual_employees" id="casual_30_100" value="30-100">
+                <label class="form-check-label" for="casual_30_100">30-100</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="casual_employees" id="casual_more_100" value="More than 100">
+                <label class="form-check-label" for="casual_more_100">More than
+                  100</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="mb-3" style="border-bottom: solid gray 1.5px; padding-bottom: 5px">Business
+        Location info</h4>
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="provinceSelect" class="form-label"><strong>Province*</strong></label>
+            <select class="form-select" aria-label="Default select" name="province_id" id="provinceSelect" required>
+              <option value="">-- Select Province --</option>
+              <% provinces.forEach(province=> { %>
+              <option value="<%= province.province_id %>">
+                <%= province.province_name %>
+              </option>
+              <% }); %>
+            </select>
+            <span id="provinceLoading" class="loading" style="display: none;">Loading...</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="districtSelect" class="form-label"><strong>District*</strong></label>
+            <select class="form-select" aria-label="Default select" name="district_id" id="districtSelect" disabled>
+              <option value="">-- Select District --</option>
+            </select>
+            <span id="districtLoading" class="loading" style="display: none;">Loading...</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="sectorSelect" class="form-label"><strong>Sector*</strong></label>
+            <select class="form-select" aria-label="Default select" name="sector_id" id="sectorSelect" disabled required>
+              <option value="">-- Select Sector --</option>
+            </select>
+            <span id="sectorLoading" class="loading" style="display: none;">Loading...</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="cellSelect" class="form-label"><strong>Cell*</strong></label>
+            <select class="form-select" aria-label="Default select" name="cell_id" id="cellSelect" disabled required>
+              <option value="">-- Select Cell --</option>
+            </select>
+            <span id="cellLoading" class="loading" style="display: none;">Loading...</span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="villageSelect" class="form-label"><strong>Village*</strong></label>
+            <select class="form-select" aria-label="Default select" name="village_id" id="villageSelect" disabled required>
+              <option value="">-- Select Village --</option>
+            </select>
+            <span id="villageLoading" class="loading" style="display: none;">Loading...</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="street_zone" class="form-label"><strong>Isibo/Street Name
+                (optional)</strong></label>
+            <input type="text" class="form-control" id="street_zone" name="street_zone" />
+          </div>
+        </div>
+      </div>
+
+
+      <h4 class="mb-3" style="border-bottom: solid gray 1.5px; padding-bottom: 5px">Business
+        Representative Info
+      </h4>
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="firstname" class="form-label"><strong>First Name*</strong></label>
+            <input type="text" class="form-control" id="firstname" name="firstname" required>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="lastname" class="form-label"><strong>Last Name*</strong></label>
+            <input type="text" class="form-control" id="lastname" name="lastname" required>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="birthday" class="form-label"><strong>Birth Date*</strong></label>
+            <input type="date" class="form-control" id="birthday" name="birthday" required>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="gender" class="form-label"><strong>Select Gender*</strong></label>
+            <select class="form-select" aria-label="Default select" name="gender" id="gender" required>
+              <option value="" selected>Select gender</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="telephone" class="form-label"><strong>Phone Number*</strong></label>
+            <input type="tel" class="form-control" id="telephone" name="telephone" placeholder="2507XXXXXXXX" required>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="rep_email" class="form-label"><strong>Email Address</strong></label>
+            <input type="email" class="form-control" id="rep_email" name="rep_email" placeholder="name@xample.com">
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="nationality" class="form-label"><strong>Nationality (Citizenship)*</strong></label>
+            <select class="form-select <%= (typeof errors !== 'undefined' && errors.nationality) ? 'field-error' : '' %>" name="nationality" id="nationality" required>
+              <option value="">-- Select Nationality --</option>
+              <option value="Rwandan" <%=(typeof oldData !=='undefined' && oldData &&
+                                                oldData.nationality==='Rwandan' ) ? 'selected' : '' %>>Rwandan</option>
+              <option value="Non-Rwandan" <%=(typeof oldData !=='undefined' && oldData &&
+                                                oldData.nationality==='Non-Rwandan Citizen' ) ? 'selected' : '' %>>Non-Rwandan
+              </option>
+            </select>
+            <% if (typeof errors !=='undefined' && errors.nationality) { %>
+            <span class="error-message">
+              <%= errors.nationality %>
+            </span>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="col-md-4 nid-hidden" id="nationalIdGroup">
+          <div class="mb-3">
+            <label for="national_id" class="form-label"><strong>National
+                ID*</strong></label>
+            <input type="text" class="form-control" id="national_id" name="national_id" maxlength="16" pattern="[0-9]{16}" title="National ID must be 16 digits (numbers only)" required>
+            <div class="error-message" id="nationalIdError"></div>
+          </div>
+        </div>
+
+        <div class="col-md-4 nid-hidden" id="passportGroup">
+          <div class="mb-3">
+            <label for="passport_number" class="form-label"><strong>Passport
+                Number*</strong></label>
+            <input type="text" class="form-control" id="passport_number" name="passport_number" minlength="6" maxlength="12" pattern="[A-Z0-9]{6,12}" title="Passport must be 6-12 characters (uppercase letters and numbers)" required>
+            <div class="error-message" id="passportError"></div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="has_insurance" class="form-label"><strong>Health Coverage(insurance) Status*</strong></label>
+            <select class="form-select" aria-label="Default select" name="has_insurance" id="has_insurance" required>
+              <option value="" selected>-- Select option --</option>
+              <option value="1">Yes, Insured</option>
+              <option value="0">No, Uninsured</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="preferred_language" class="form-label"><strong>Preferred
+                Language*</strong></label>
+            <select class="form-select" aria-label="Default select" name="preferred_language" id="preferred_language" required>
+              <option value="" selected>-- Select Language --</option>
+              <option value="kinyarwanda">Kinyarwanda</option>
+              <option value="kiswahili">Kiswahili (Swahili)</option>
+              <option value="english">English</option>
+              <option value="french">French</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="mb-3">
+            <label for="areas_of_interest" class="form-label"><strong>Main Areas of
+                Interest*</strong></label>
+            <select class="form-select" aria-label="Default select" name="areas_of_interest" id="areas_of_interest" required>
+              <option value="" selected>-- Select Area of Interest --</option>
+              <optgroup label="PSF Services">
+                <option value="exhibitions">Exhibitions</option>
+                <option value="recommendations">Recommendations (Quitus/REMA)</option>
+                <option value="advocacy">Proactive Advocacy</option>
+                <option value="business_research">Business Research</option>
+                <option value="capacity_building">Trainings & Capacity Building</option>
+                <option value="trade_missions">Trade Missions</option>
+                <option value="access_to_market">Access to Market & Linkages</option>
+                <option value="business_clinic">Business Clinic and Advisory</option>
+                <option value="medical_scheme">Access to Medical Scheme</option>
+                <option value="networking">Networking(B2B, B2C & B2G)</option>
+              </optgroup>
+              <optgroup label="Other interests">
+                <option value="Others">Others</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="mb-3" style="border-bottom: solid gray 1.5px; padding-bottom: 5px">Additional
+        Info</h4>
+      <div class="row mb-4">
+
+        <!-- Registration Type Selection -->
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="registration_type" class="form-label"><strong>Registration
+                Type*</strong></label>
+            <select class="form-select" aria-label="Select registration type" name="registration_type" id="registration_type" required>
+              <option value="TIN" selected>TIN (Default)</option>
+              <option value="Patent">Patent</option>
+              <option value="RCA Number">RCA Number</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Registration Number Field -->
+        <div class="col-md-6" id="registration_number_container">
+          <div class="mb-3">
+            <label for="registration_number" class="form-label" id="registration_number_label">
+              <strong>TIN Number*</strong>
+            </label>
+            <input type="text" class="form-control auto-filled" id="registration_number" name="registration_number" readonly>
+            <div class="form-text" id="registration_help_text">
+              Auto-filled from TIN field above
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="mb-3">
+              <label for="business_scope" class="form-label"><strong>Select Business
+                  Scope*</strong></label>
+              <select class="form-select" aria-label="Default select" name="business_scope" id="business_scope" required>
+                <option value="international">International</option>
+                <option value="local">Local</option>
+              </select>
+              <span class="error-message" id="business_scope_error"></span>
+            </div>
+        </div>
+  
+        <div class="col-md-6 hidden-field" id="local_places_field">
+            <div class="mb-3">
+              <label for="local_places" class="form-label"><span style="font-weight: bolder;">Local
+                  Places (optional)</span></label>
+              <input type="text" class="form-control" id="local_places" name="local_places" placeholder="Nyanza, Kayonza, Burera,...">
+              <span class="error-message" id="local_places_error"></span>
+            </div>
+        </div>
+  
+        <div class="col-md-6 hidden-field" id="int_countries_field">
+            <div class="mb-3">
+              <label for="int_countries" class="form-label"><span style="font-weight: bolder;">International
+                  Countries*</span></label>
+              <input type="text" class="form-control" id="int_countries" placeholder="Uganda, Ghana,.." name="int_countries" required/>
+              <span class="error-message" id="int_countries_error"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="" class="form-label"><strong>Membership Status*</strong></label>
+            <div class="col-12">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="membership_status" id="member_new" value="New" checked>
+                <label class="form-check-label" for="member_new">New Member</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="membership_status" id="member_exist" value="Exist">
+                <label class="form-check-label" for="member_exist">Existing</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="membership_category" class="form-label"><strong>Membership
+                Category*</strong></label>
+            <select class="form-select" aria-label="Default select" name="membership_category" id="membership_category" required>
+              <option value="" selected>-- Select Category --</option>
+              <!-- Options will be dynamically populated by JavaScript -->
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="x" class="form-label"><strong>Relationship with Associations*</strong></label>
+            <div class="col-12">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="has_association" id="has_ass_no" value="0" checked>
+                    <label class="form-check-label" for="has_ass_no">Not a Member</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="has_association" id="has_ass_yes" value="1">
+                    <label class="form-check-label" for="has_ass_yes">Partner to associations</label>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Association Selection (Initially Hidden) -->
+        <div class="col-md-6" id="association_select_container" style="display: none;">
+          <div class="mb-3">
+            <label for="association_id" class="form-label">Select association*</label>
+            <select class="form-select" aria-label="Select association" name="association_id" id="association_id">
+              <option value="" selected>-- Select association --</option>
+            </select>
+            <div class="spinner-border spinner-border-sm text-primary mt-2" role="status" id="association_loader" style="display: none;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="../admin/js/membership.js"></script>

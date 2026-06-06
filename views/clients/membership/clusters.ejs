@@ -29,10 +29,10 @@
                         <tr>
                             <th>N<sup>o</sup></th>
                             <th>Association Name</th>
-                            <th>Cruster</th>
-                            <th>Leader Name (Position)</th>
+                            <th>Cluster</th>
+                            <th>Leader Name / Position</th>
                             <th>Company Name</th>
-                            <th>Telephone (Email)</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     
@@ -41,17 +41,14 @@
                         <% data.forEach(row => { %>
                         <tr>
                             <td>#</td>
-                            <td><%= row.association %></td>
+                            <td><%= row.assoc_name %></td>
                             <td><%= row.cluster_name; %></td>
                             <td>
                                 <%= row.leader_name; %><br>
                                 <%= row.leader_position; %>
                             </td>
                             <td><%= row.company; %></td>
-                            <td>
-                                <%= row.telephone; %><br>
-                                <%= row.email; %>
-                            </td>
+                            <td><%= row.email; %></td>
                         </tr>
                         <% }) %>
                     </tbody>

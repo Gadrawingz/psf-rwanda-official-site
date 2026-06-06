@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%# @gadrawingz powered SEO %>
+        <title><%- internals.title %> | PSF</title>
+        <meta name="description" content="<%- internals.description %>">
+        <!-- google font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
+        <!-- plugins css -->
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/reey-font/stylesheet.css">
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/font-awesome/css/all.min.css">
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/animate/animate.min.css">
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/flaticon/css/flaticon_towngov.css">
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/owl-carousel/owl.carousel.min.css">
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/swiper/swiper-bundle.min.css">
+        <link rel="stylesheet"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/vendor/youtube-popup/youtube-popup.css">
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/css/custom.css">
+        <link rel="stylesheet" type="text/css"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/css/style.css">
+        <!-- favicons Icons -->
+        <link rel="apple-touch-icon" sizes="180x180"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/cropped-psf-logo.png">
+        <link rel="icon" type="image/png" sizes="16x16"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/logo/cropped-psf-logo.png">
+        <link rel="manifest"
+            href="<%= internals.has3RouteSegments ? '../../':'' %>clients/images/favicons/site.webmanifest">
+</head>
+
+<!-- Start Top banner -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rwanda UCI 2025 Business Banner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .banner-container {
+            width: 100%;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #2d5a3d 0%, #4a7c59 50%, #e67e22 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #FFF;
+        }
+
+        .banner-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 120px;
+        }
+
+        .section {
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .section-left {
+            background: rgba(45, 90, 61, 0.95);
+            border-right: 3px solid #e67e22;
+        }
+
+        .section-right {
+            background: rgba(230, 126, 34, 0.95);
+        }
+
+        .headline {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .text {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+
+        .hashtags {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #b8e6c1;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .banner-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-left {
+                border-right: none;
+                border-bottom: 3px solid #e67e22;
+            }
+
+            .section {
+                padding: 18px;
+                min-height: 100px;
+            }
+
+            .headline {
+                font-size: 1rem;
+            }
+
+            .text {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section {
+                padding: 16px;
+            }
+
+            .headline {
+                font-size: 0.95rem;
+            }
+
+            .text {
+                font-size: 0.75rem;
+            }
+
+            .cta-button {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+    <div class="banner-container">
+        <div class="banner-content">
+            <div class="section section-left">
+                <div class="headline">Welcome to Rwanda for the World Tour! 🇷🇼</div>
+                <div class="text">
+                    PSF welcomes delegates, athletes, and visitors to Kigali for the 2025 UCI Road World Championships🚴, held from <strong>September 21-28, 2025</strong>.
+                </div>
+                <div class="hashtags">#UCI2025 #PSF #VisitRwanda</div>
+            </div>
+
+            <div class="section section-right">
+                <div class="headline">Rwanda-Slovenia Business Forum 🤝</div>
+                <div class="text">
+                    Connect with <strong>Slovenian companies</strong> to explore green tech partnerships, trade
+                    opportunities, and direct B2B meetings.
+                </div>
+                <a href="https://obrazci.gzs.si/rwanda-slovenian-business-forum/" class="cta-button" target="_blank">
+                    📋 Register Now
+                </a>
+            </div>
+        </div>
+    </div>

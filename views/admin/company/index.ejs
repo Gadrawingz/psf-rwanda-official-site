@@ -1,0 +1,88 @@
+<div class="row mb-4">
+  <div class="col">
+    <h1 style="font-size: 34px; font-weight: bolder;">Registered Companies</h1>
+  </div>
+  <div class="col-auto">
+    <a href="/companies/create" class="btn btn-success">Register New Company</a>
+  </div>
+</div>
+
+<% if (searchTerm) { %>
+  <div class="alert alert-info">
+    Search results for: "<%= searchTerm %>"
+    <a href="/companies" class="btn btn-sm btn-outline-dark float-end">Clear Search</a>
+  </div>
+<% } %>
+
+<% let g = 0; if (companies.length === 0) { %>
+  <div class="alert alert-warning">
+    No companies(businesses) found.
+  </div>
+<% } else { %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>N<sup>O</sup></th>
+          <th>Company Name</th>
+          <th>TIN N<sup>o</sup></th>
+          <th>Representative</th>
+          <th>Contact</th>
+          <th>Location</th>
+          <th>Business Activity</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% companies.forEach(company=> { %>
+          <tr>
+            <td><%= (g+=1) %></td>
+            <td><%= company.company_name %></td>
+            <td><%= company.company_tin %></td>
+            <td><%= company.firstname %> <%= company.lastname %></td>
+            <td>
+              <% if (company.telephone) { %>
+                <%= company.telephone %><br>
+              <% } %>
+              <% if (company.rep_email) { %>
+                <small><%= company.rep_email %></small>
+              <% } %>
+            </td>
+            <td><%= company.province_name %>, <%= company.district_name %>, <%= company.sector_name %></td>
+            <td><%= company.business_activity %></td>
+            <td class="text-center">
+              <div class="btn-group btn-group-sm">
+                <a href="/companies/<%= company.company_id %>" class="btn btn-info">View</a>
+                <a href="/company-edit/<%= company.company_id %>" class="btn btn-primary">Edit</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= company.company_id %>">
+                  Delete
+                </button>
+              </div>
+              
+              <!-- Delete Modal -->
+              <div class="modal fade" id="deleteModal<%= company.company_id %>" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Confirm Deletion</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete <%= company.company_name %>?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <form action="/companies/delete/<%= company.company_id %>?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+<% } %>

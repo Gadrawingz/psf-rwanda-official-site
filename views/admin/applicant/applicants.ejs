@@ -1,0 +1,510 @@
+<style>
+.admin-nav {
+    display: flex;
+    gap: 15px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08)
+}
+
+.admin-nav .btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s
+}
+
+.admin-nav .btn-primary {
+    background: #2ecc71;
+    border: none;
+    color: #fff
+}
+
+.admin-nav .btn-primary:hover,
+.admin-nav .btn-primary.active {
+    background: #27ae60;
+    transform: translateY(-2px)
+}
+
+.admin-nav .btn-success {
+    background: #ff8c00;
+    border: none;
+    color: #fff
+}
+
+.admin-nav .btn-success:hover,
+.admin-nav .btn-success.active {
+    background: #e67e00;
+    transform: translateY(-2px)
+}
+
+.stats-container,
+.filter-section,
+.export-section,
+.table-container,
+.notification-form {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px
+}
+
+.stats-container h4,
+.filter-section h4,
+.export-section h4,
+.table-container h4,
+.notification-form h4 {
+    color: #2ecc71;
+    margin-bottom: 20px;
+    font-weight: bold
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+    transition: transform 0.3s
+}
+
+.stat-card:hover {
+    transform: translateY(-5px)
+}
+
+.stat-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    opacity: 0.9
+}
+
+.stat-number {
+    font-size: 42px;
+    font-weight: bold;
+    margin: 15px 0
+}
+
+.stat-breakdown {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3)
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 14px
+}
+
+.stat-card-sm {
+    background: linear-gradient(135deg, #ff8c00, #e67e00);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(255, 140, 0, 0.3)
+}
+
+.stat-card-sm h6 {
+    margin-bottom: 10px;
+    opacity: 0.9
+}
+
+.stat-number-sm {
+    font-size: 32px;
+    font-weight: bold
+}
+
+.filter-section .form-select,
+.filter-section .form-label {
+    margin-bottom: 10px
+}
+
+.btn-excel {
+    background: #217346;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-block
+}
+
+.btn-excel:hover {
+    background: #1a5c37;
+    transform: translateY(-2px);
+    color: #fff
+}
+
+.btn-pdf {
+    background: #dc3545;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-block
+}
+
+.btn-pdf:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    color: #fff
+}
+
+.applicants-table {
+    font-size: 14px
+}
+
+.applicants-table thead {
+    background: #2ecc71;
+    color: #fff
+}
+
+.applicants-table th {
+    padding: 15px 10px;
+    font-weight: 600;
+    white-space: nowrap
+}
+
+.applicants-table td {
+    padding: 12px 10px;
+    vertical-align: middle
+}
+
+.applicants-table tbody tr:hover {
+    background: #f8f9fa
+}
+
+.badge {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600
+}
+
+.notification-form .section {
+    background: #f8f9fa;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border-left: 4px solid #ff8c00
+}
+
+.notification-form h5 {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 18px
+}
+
+.form-check-group {
+    display: flex;
+    gap: 20px;
+    padding: 10px 0
+}
+
+.form-check-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s
+}
+
+.form-check-group label:hover {
+    border-color: #2ecc71;
+    background: #f0f9f4
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer
+}
+
+.message-textarea {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 14px;
+    transition: border 0.3s
+}
+
+.message-textarea:focus {
+    border-color: #2ecc71;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1)
+}
+
+.btn-submit-lg {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: #fff;
+    border: none;
+    padding: 18px 60px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3)
+}
+
+.btn-submit-lg:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4)
+}
+
+.success-card {
+    background: #fff;
+    padding: 60px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: center
+}
+
+.success-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounceIn 0.8s
+}
+
+.success-details {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 20px 0
+}
+
+.success-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+        opacity: 0
+    }
+
+    50% {
+        transform: scale(1.1)
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-nav {
+        flex-direction: column
+    }
+
+    .stat-card {
+        margin-bottom: 15px
+    }
+
+    .table-responsive {
+        overflow-x: auto
+    }
+
+    .applicants-table {
+        font-size: 12px
+    }
+
+    .applicants-table th,
+    .applicants-table td {
+        padding: 8px 5px
+    }
+
+    .success-card {
+        padding: 30px
+    }
+
+    .success-actions {
+        flex-direction: column
+    }
+}   
+</style>
+
+<div class="container-fluid my-4">
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="admin-nav">
+                <a href="/app-admin/applicants" class="btn btn-primary active">View Applicants</a>
+                <a href="/app-admin/feedback" class="btn btn-success">Send Notifications</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="stats-container">
+                <h4 class="mb-3">📊 Statistics by Election Level & Position</h4>
+                <div class="row">
+                    <%
+                        const levelStats = { District: {}, Province: {}, Chamber: {}, National: {} };
+                        stats.forEach(s => {
+                            if (!levelStats[s.election_level][s.position_role]) {
+                                levelStats[s.election_level][s.position_role] = 0;
+                            }
+                            levelStats[s.election_level][s.position_role] = s.count;
+                        });
+
+                        Object.keys(levelStats).forEach(level => {
+                            const total = Object.values(levelStats[level]).reduce((a, b) => a + b, 0);
+                    %>
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-card">
+                            <h5 class="stat-title"><%= level %></h5>
+                            <div class="stat-number"><%= total %></div>
+                            <div class="stat-breakdown">
+                                <% Object.keys(levelStats[level]).forEach(pos => { %>
+                                <div class="stat-item">
+                                    <span><%= pos %>:</span>
+                                    <strong><%= levelStats[level][pos] %></strong>
+                                </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="filter-section">
+                <h4 class="mb-3">🔍 Filter Applicants</h4>
+                <form method="GET" action="/app-admin/applicants" class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Election Level</label>
+                        <select name="level" class="form-select">
+                            <option value="">All Levels</option>
+                            <option value="District" <%= selectedLevel === 'District' ? 'selected' : '' %>>District</option>
+                            <option value="Province" <%= selectedLevel === 'Province' ? 'selected' : '' %>>Province</option>
+                            <option value="Chamber" <%= selectedLevel === 'Chamber' ? 'selected' : '' %>>Chamber</option>
+                            <option value="National" <%= selectedLevel === 'National' ? 'selected' : '' %>>National</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Position</label>
+                        <select name="position" class="form-select">
+                            <option value="">All Positions</option>
+                            <option value="Chairperson" <%= selectedPosition === 'Chairperson' ? 'selected' : '' %>>Chairperson</option>
+                            <option value="First Vice Chairperson" <%= selectedPosition === 'First Vice Chairperson' ? 'selected' : '' %>>First Vice Chairperson</option>
+                            <option value="Second Vice Chairperson" <%= selectedPosition === 'Second Vice Chairperson' ? 'selected' : '' %>>Second Vice Chairperson</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary mt-4">Apply Filter</button>
+                        <a href="/app-admin/applicants" class="btn btn-secondary mt-4 ms-2">Clear</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="export-section">
+                <h4 class="mb-3">📥 Export Data</h4>
+                <a href="/app-admin/export/excel?level=<%= selectedLevel %>&position=<%= selectedPosition %>" class="btn btn-excel">📊 Export to Excel</a>
+                <a href="/app-admin/export/pdf?level=<%= selectedLevel %>&position=<%= selectedPosition %>" class="btn btn-pdf ms-2">📄 Export to PDF</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="table-container">
+                <h4 class="mb-3">📋 Applicants List <span class="badge bg-success"><%= applicants.length %> Records</span></h4>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered applicants-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Gender</th>
+                                <th>National ID</th>
+                                <th>Company</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Member</th>
+                                <th>Membership</th>
+                                <th>Election Level</th>
+                                <th>Position</th>
+                                <th>Specific</th>
+                                <th>Years in Business</th>
+                                <th>Ownership</th>
+                                <th>Applied Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (applicants.length === 0) { %>
+                            <tr>
+                                <td colspan="15" class="text-center py-4">No applications found</td>
+                            </tr>
+                            <% } else { %>
+                            <% applicants.forEach(a => { %>
+                            <tr>
+                                <td><%= a.id %></td>
+                                <td><strong><%= a.firstname %> <%= a.lastname %></strong></td>
+                                <td><%= a.gender %></td>
+                                <td><%= a.national_id %></td>
+                                <td><%= a.company_name %></td>
+                                <td><%= a.phone_number %></td>
+                                <td><%= a.email || 'N/A' %></td>
+                                <td>
+                                    <span class="badge <%= a.is_member === 'Yes' ? 'bg-success' : 'bg-secondary' %>">
+                                        <%= a.is_member %>
+                                    </span>
+                                </td>
+                                <td><%= a.membership_type || '-' %></td>
+                                <td>
+                                    <span class="badge bg-primary">
+                                        <%= a.election_level %>
+                                    </span>
+                                </td>
+                                <td><%= a.position_role %></td>
+                                <td>
+                                    <% if (a.chamber_selected) { %>
+                                        Chamber: <%= a.chamber_selected %>
+                                    <% } else if (a.province_selected) { %>
+                                        Province: <%= a.province_selected %>
+                                    <% } else if (a.district_selected) { %>
+                                        District: <%= a.district_selected %>
+                                    <% } else { %>
+                                        National
+                                    <% } %>
+                                </td>
+                                <td><%= a.years_in_business %></td>
+                                <td><%= a.full_ownership %></td>
+                                <td><%= new Date(a.created_at).toLocaleString() %></td>
+                            </tr>
+                            <% }); %>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

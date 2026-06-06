@@ -1,0 +1,47 @@
+<hr />
+<div class="row mb-4">
+  <div class="col">
+    <h1 style="font-size: 30px; padding: 4px;">Registered Business sectors</h1>
+  </div>
+  <!--<div class="col-auto">
+        <a href="/business-sectors/create" class="btn btn-success">Register New</a>
+    </div>-->
+</div>
+<!-- Row start -->
+<div class="row">
+  <div class="col-sm-12 col-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- Row start -->
+        <form action="/business-sectors/create" method="POST">
+          <div class="row">
+            <div class="col-xxl-12 col-sm-8 col-12">
+              <!-- Row start -->
+              <div class="row">
+                <div class="col-sm-6 col-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="sector_name">Sector Name</label>
+                    <input type="text" class="form-control" placeholder="Name..." id="sector_name" name="sector_name" required>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                  <div class="mb-3">
+                    <label class="form-label" for="sector_description">Description</label>
+                    <input type="text" class="form-control" id="sector_description" name="sector_description" required>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-12">
+                  <div class="mb-3">
+                    <input type="submit" class="btn btn-success" value="Save" name="submit">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- Row end -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Row end -->

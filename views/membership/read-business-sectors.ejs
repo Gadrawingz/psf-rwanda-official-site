@@ -1,0 +1,54 @@
+<hr />
+<div class="row mb-4">
+  <div class="col">
+    <h1 style="font-size: 30px; padding: 4px">Registered Business sectors</h1>
+  </div>
+  <div class="col-auto">
+    <!--<a href="/business-sectors/create" class="btn btn-success">Register New</a>-->
+    <a href="#" class="btn btn-success">Register New</a>
+  </div>
+</div>
+
+<% let num=0; if (sectors.length===0) { %>
+<div class="alert alert-warning">No sectors found.</div>
+<% } else { %>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Sector Name</th>
+        <th>Description</th>
+        <th class="text-center" style="width: 20px">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sectors.forEach(sector=> { %>
+      <tr>
+        <td>
+          <b> <%= num+=1; %> </b>
+        </td>
+        <td><%= sector.sector_name %></td>
+        <td><%= sector.sector_description %></td>
+        <td class="text-right">
+          <div class="btn-group btn-group-sm text-center">
+            <a
+              href="#"
+              class="btn btn-primary"
+              >Edit</a
+            >
+            <!--<a
+              href="/business-sectors/delete/<%= sector.sector_id %>"
+              onclick="return confirm('Do you want to delete this record?')"
+              class="btn btn-danger"
+              >Delete</a
+            >-->
+          </div>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  
+</div>
+<% } %>

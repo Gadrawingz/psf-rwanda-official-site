@@ -135,7 +135,7 @@ router.get('/cluster/(:slug)', async(req, res) => {
                 if (!error) {
                     // Return associations
                     let clusterName = `${rows[0].cluster_name}`;
-                    con.query("SELECT * FROM associations WHERE cluster_name='"+clusterName+"' ORDER BY cluster_name ASC", async (error2, rows2) => {
+                    con.query("SELECT a.assoc_id, a.assoc_name, a.leader_name, a.leader_position, a.company, a.email, c.cluster_id, c.cluster_name FROM associations a LEFT JOIN clusters c ON c.cluster_id = a.cluster_id WHERE c.cluster_name='"+clusterName+"' ORDER BY c.cluster_name ASC", async (error2, rows2) => {
                         res.render("clients/membership/clusters", { data: rows2, internals });
                     });
                 } else {

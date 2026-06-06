@@ -1,0 +1,1371 @@
+<!--
+<title>Company Registration Form - User Guide</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+-->
+<style>
+  :root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    --light-bg: #f8f9fa;
+    --dark-bg: #343a40;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .navbar {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .hero-section {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .hero-section p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary-color) transparent;
+  }
+
+  .sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sidebar::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 3px;
+  }
+
+  .nav-link {
+    color: #666;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.375rem;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+
+  .nav-link:hover {
+    background-color: var(--light-bg);
+    color: var(--secondary-color);
+    padding-left: 1.5rem;
+  }
+
+  .nav-link.active {
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: 500;
+  }
+
+  .section-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    margin-bottom: 2rem;
+    border: 1px solid #e9ecef;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .section-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .section-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px 12px 0 0;
+    margin: -1px -1px 0 -1px;
+  }
+
+  .section-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .section-header .section-icon {
+    font-size: 1.8rem;
+    margin-right: 0.75rem;
+    opacity: 0.9;
+  }
+
+  .content-section {
+    padding: 2rem;
+  }
+
+  .field-group {
+    background: var(--light-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--secondary-color);
+  }
+
+  .field-title {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .required-indicator {
+    color: var(--danger-color);
+    font-weight: bold;
+  }
+
+  .field-description {
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  .example-box {
+    background: #e8f5e8;
+    border: 1px solid #c3e6c3;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.75rem 0;
+  }
+
+  .example-box .example-label {
+    font-weight: 600;
+    color: var(--success-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .format-box {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.75rem 0;
+  }
+
+  .format-box .format-label {
+    font-weight: 600;
+    color: var(--warning-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .alert-custom {
+    border-radius: 8px;
+    border: none;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .alert-info-custom {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    color: #0d47a1;
+  }
+
+  .alert-warning-custom {
+    background: linear-gradient(135deg, #fff3e0, #ffcc02);
+    color: #e65100;
+  }
+
+  .alert-success-custom {
+    background: linear-gradient(135deg, #e8f5e8, #81c784);
+    color: #2e7d32;
+  }
+
+  .options-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .options-list li {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .options-list li:hover {
+    background: var(--light-bg);
+    border-color: var(--secondary-color);
+  }
+
+  .option-name {
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+
+  .option-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+
+  .troubleshooting-item {
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .problem-title {
+    color: var(--danger-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .solution-title {
+    color: var(--success-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .back-to-top:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--secondary-color);
+    z-index: 1000;
+    transition: width 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .hero-section h1 {
+      font-size: 2rem;
+    }
+
+    .hero-section p {
+      font-size: 1rem;
+    }
+
+    .sidebar {
+      position: static;
+      height: auto;
+      margin-bottom: 2rem;
+    }
+
+    .content-section {
+      padding: 1rem;
+    }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <i class="fas fa-building me-2"></i>
+        Company Registration Guide
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#overview">Overview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#troubleshooting">Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/companies/create" target="_blank">
+              <i class="fas fa-external-link-alt me-1"></i>
+              Registration Form
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h1 class="fade-in">Company Registration Form</h1>
+          <p class="fade-in">Complete step-by-step guide to successfully register your business</p>
+        </div>
+        <div class="col-lg-4 text-end">
+          <div class="d-none d-lg-block">
+            <i class="fas fa-clipboard-list" style="font-size: 8rem; opacity: 0.2;"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar Navigation -->
+      <div class="col-lg-3">
+        <div class="sidebar">
+          <nav class="nav flex-column">
+            <a class="nav-link active" href="#overview">
+              <i class="fas fa-info-circle me-2"></i>Overview
+            </a>
+            <a class="nav-link" href="#before-start">
+              <i class="fas fa-list-check me-2"></i>Before You Start
+            </a>
+            <a class="nav-link" href="#business-info">
+              <i class="fas fa-building me-2"></i>Business Information
+            </a>
+            <a class="nav-link" href="#business-size">
+              <i class="fas fa-users me-2"></i>Business Size
+            </a>
+            <a class="nav-link" href="#location">
+              <i class="fas fa-map-marker-alt me-2"></i>Location
+            </a>
+            <a class="nav-link" href="#representative">
+              <i class="fas fa-user-tie me-2"></i>Representative
+            </a>
+            <a class="nav-link" href="#additional">
+              <i class="fas fa-cog me-2"></i>Additional Info
+            </a>
+            <a class="nav-link" href="#features">
+              <i class="fas fa-magic me-2"></i>Smart Features
+            </a>
+            <a class="nav-link" href="#validation">
+              <i class="fas fa-check-circle me-2"></i>Validation
+            </a>
+            <a class="nav-link" href="#troubleshooting">
+              <i class="fas fa-question-circle me-2"></i>Troubleshooting
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-9">
+        <div class="content-section">
+
+          <!-- Overview Section -->
+          <section id="overview" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-info-circle section-icon"></i>Overview</h2>
+            </div>
+            <div class="content-section">
+              <p class="lead">This comprehensive guide will help you complete the company registration form step by step. The form is designed to collect all necessary information about your business and its representative for successful registration.</p>
+
+              <div class="alert alert-info-custom">
+                <i class="fas fa-lightbulb me-2"></i>
+                <strong>Tip:</strong> The form includes smart features that automatically load relevant options and validate your input in real-time to ensure accuracy.
+              </div>
+            </div>
+          </section>
+
+          <!-- Before You Start Section -->
+          <section id="before-start" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-list-check section-icon"></i>Before You Start</h2>
+            </div>
+            <div class="content-section">
+              <div class="alert alert-warning-custom">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Important:</strong> Gather all required information before starting to ensure smooth completion.
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-building me-2"></i>Company Information
+                    </div>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check text-success me-2"></i>Company TIN Number</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Official company name</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Contact details</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Registration documents</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Business activity description</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-user-tie me-2"></i>Representative Information
+                    </div>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check text-success me-2"></i>National ID or Passport</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Personal contact information</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Birth date</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Personal details</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-map-marker-alt me-2"></i>Location Information
+                    </div>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check text-success me-2"></i>Complete business address</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Province and District</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Sector and Cell</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Village information</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Business Information Section -->
+          <section id="business-info" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-building section-icon"></i>Main Business Information</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="field-group">
+                <div class="field-title">Company Name <span class="required-indicator">*</span></div>
+                <div class="field-description">Enter the official registered name of your company exactly as it appears on your registration documents.</div>
+                <div class="example-box">
+                  <div class="example-label"><i class="fas fa-lightbulb me-2"></i>Example:</div>
+                  <code>Rwanda Tech Solutions Ltd</code>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">TIN / Company Code <span class="required-indicator">*</span></div>
+                <div class="field-description">Enter your 9-digit Tax Identification Number provided by Rwanda Revenue Authority (RRA).</div>
+                <div class="format-box">
+                  <div class="format-label"><i class="fas fa-info-circle me-2"></i>Format:</div>
+                  <code>9 digits (e.g., 123456789)</code>
+                </div>
+                <div class="alert alert-info-custom">
+                  <i class="fas fa-magic me-2"></i>
+                  <strong>Smart Feature:</strong> This will automatically fill the registration number field if TIN is selected as registration type.
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Business Activity <span class="required-indicator">*</span></div>
+                <div class="field-description">Describe what your business does. Be specific about your main products or services.</div>
+                <div class="example-box">
+                  <div class="example-label"><i class="fas fa-lightbulb me-2"></i>Examples:</div>
+                  <ul class="mb-0">
+                    <li>Software development and IT consulting</li>
+                    <li>Agricultural produce wholesale</li>
+                    <li>Construction and real estate</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Company Phone <span class="required-indicator">*</span></div>
+                <div class="field-description">Enter your business phone number. The system accepts multiple formats and will automatically format it correctly.</div>
+                <div class="format-box">
+                  <div class="format-label"><i class="fas fa-phone me-2"></i>Accepted Formats:</div>
+                  <ul class="mb-0">
+                    <li><code>2507XXXXXXXX</code> (12 digits)</li>
+                    <li><code>07XXXXXXXX</code> (converts automatically)</li>
+                  </ul>
+                </div>
+                <div class="example-box">
+                  <div class="example-label"><i class="fas fa-lightbulb me-2"></i>Examples:</div>
+                  <code>250788123456</code>, <code>250732987654</code>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Company Type <span class="required-indicator">*</span></div>
+                <div class="field-description">Choose the type that best describes your business structure.</div>
+                <ul class="options-list">
+                  <li>
+                    <div class="option-name">SME</div>
+                    <div class="option-description">Small and Medium Enterprises</div>
+                  </li>
+                  <li>
+                    <div class="option-name">Cooperative</div>
+                    <div class="option-description">Member-owned business organization</div>
+                  </li>
+                  <li>
+                    <div class="option-name">Large Enterprise</div>
+                    <div class="option-description">Companies with significant scale</div>
+                  </li>
+                  <li>
+                    <div class="option-name">Private</div>
+                    <div class="option-description">Privately owned companies</div>
+                  </li>
+                  <li>
+                    <div class="option-name">NGO</div>
+                    <div class="option-description">Non-Governmental Organizations</div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Business Size Section -->
+          <section id="business-size" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-users section-icon"></i>Business Size & Employees</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="field-group">
+                    <div class="field-title">Business Size <span class="required-indicator">*</span></div>
+                    <ul class="options-list">
+                      <li>
+                        <div class="option-name">Micro</div>
+                        <div class="option-description">Very small businesses, typically family-run</div>
+                      </li>
+                      <li>
+                        <div class="option-name">Small</div>
+                        <div class="option-description">Small businesses with limited employees</div>
+                      </li>
+                      <li>
+                        <div class="option-name">Medium</div>
+                        <div class="option-description">Mid-sized companies with moderate workforce</div>
+                      </li>
+                      <li>
+                        <div class="option-name">Large</div>
+                        <div class="option-description">Large corporations with extensive operations</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="field-group">
+                    <div class="field-title">Permanent Employees <span class="required-indicator">*</span></div>
+                    <div class="field-description">Choose the range that matches your full-time staff.</div>
+                    <ul class="options-list">
+                      <li>
+                        <div class="option-name">1-3</div>
+                        <div class="option-description">Micro businesses</div>
+                      </li>
+                      <li>
+                        <div class="option-name">4-30</div>
+                        <div class="option-description">Small businesses</div>
+                      </li>
+                      <li>
+                        <div class="option-name">30-100</div>
+                        <div class="option-description">Medium businesses</div>
+                      </li>
+                      <li>
+                        <div class="option-name">More than 100</div>
+                        <div class="option-description">Large businesses</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="field-group">
+                    <div class="field-title">Casual Employees <span class="required-indicator">*</span></div>
+                    <div class="field-description">Select the range for your part-time/temporary workers.</div>
+                    <ul class="options-list">
+                      <li>
+                        <div class="option-name">1-3</div>
+                        <div class="option-description">Minimal casual workforce</div>
+                      </li>
+                      <li>
+                        <div class="option-name">4-30</div>
+                        <div class="option-description">Small casual workforce</div>
+                      </li>
+                      <li>
+                        <div class="option-name">30-100</div>
+                        <div class="option-description">Medium casual workforce</div>
+                      </li>
+                      <li>
+                        <div class="option-name">More than 100</div>
+                        <div class="option-description">Large casual workforce</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Location Section -->
+          <section id="location" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-map-marker-alt section-icon"></i>Business Location</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="alert alert-info-custom">
+                <i class="fas fa-arrow-right me-2"></i>
+                <strong>Important:</strong> Fill these fields in order: Province → District → Sector → Cell → Village
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Location Hierarchy <span class="required-indicator">*</span></div>
+                <div class="field-description">Each level automatically loads the next level's options based on your selection.</div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="badge bg-primary me-3">1</div>
+                      <div>
+                        <strong>Province</strong>
+                        <div class="text-muted small">Kigali, Northern, Southern, Eastern, Western</div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="badge bg-primary me-3">2</div>
+                      <div>
+                        <strong>District</strong>
+                        <div class="text-muted small">Loads after province selection</div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="badge bg-primary me-3">3</div>
+                      <div>
+                        <strong>Sector</strong>
+                        <div class="text-muted small">Loads after district selection</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="badge bg-primary me-3">4</div>
+                      <div>
+                        <strong>Cell</strong>
+                        <div class="text-muted small">Loads after sector selection</div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="badge bg-primary me-3">5</div>
+                      <div>
+                        <strong>Village</strong>
+                        <div class="text-muted small">Loads after cell selection</div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="badge bg-secondary me-3">6</div>
+                      <div>
+                        <strong>Street/Zone</strong>
+                        <div class="text-muted small">Optional - Enter manually</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-warning-custom">
+                <i class="fas fa-clock me-2"></i>
+                <strong>Tip:</strong> Wait for each dropdown to load completely before making your selection. You'll see a loading indicator while options are being fetched.
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Representative Section -->
+          <section id="representative" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-user-tie section-icon"></i>Business Representative</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="field-group">
+                <div class="field-title">Personal Information <span class="required-indicator">*</span></div>
+                <div class="field-description">Enter the legal name and details as they appear on official documents.</div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <strong>First Name & Last Name:</strong>
+                    <div class="text-muted">Must match official identification documents</div>
+                  </div>
+                  <div class="col-md-6">
+                    <strong>Birth Date:</strong>
+                    <div class="text-muted">Representative must be 18 years or older</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Nationality Selection <span class="required-indicator">*</span></div>
+                <div class="field-description">This selection determines which identification field will appear.</div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="alert alert-success-custom">
+                      <h6><i class="fas fa-flag me-2"></i>Rwandan Citizen</h6>
+                      <ul class="mb-0">
+                        <li>Shows National ID field</li>
+                        <li>Hides Passport field</li>
+                        <li>16-digit ID number required</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="alert alert-info-custom">
+                      <h6><i class="fas fa-globe me-2"></i>Non-Rwandan</h6>
+                      <ul class="mb-0">
+                        <li>Shows Passport field</li>
+                        <li>Hides National ID field</li>
+                        <li>6-12 character passport required</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Contact Information</div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <strong>Phone Number <span class="required-indicator">*</span></strong>
+                    <div class="format-box">
+                      <div class="format-label">Format:</div>
+                      <code>2507XXXXXXXX</code> or <code>07XXXXXXXX</code>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <strong>Email Address (Optional)</strong>
+                    <div class="text-muted">Used for individual communications</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Areas of Interest <span class="required-indicator">*</span></div>
+                <div class="field-description">Select the main PSF service area you're interested in:</div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <h6 class="text-primary">PSF Services:</h6>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Exhibitions (Imurikagurisha)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Business Research (Ubushakashatsi ku bijyanye na Business)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Capacity Building (Kuboana Amahugurwa mu bintu bitandukanye)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Trade Missions (Misiyo zijyanye n'ubucuruzi)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Market Access (Kubona isoko ry'ibicuruzwa)</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="text-primary">Additional Services:</h6>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Advocacy (Ubuvugizi muri Business)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Business Clinic (Uburyo bwo kuvuza abanyamuryango)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Medical Scheme (Ubwishingzi mu kuvuza banyamuryango ba psf)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Networking (Kwihuza n'abandi bo muri Business)</li>
+                      <li><i class="fas fa-check-circle text-success me-2"></i>Others (Ibindi)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Additional Information Section -->
+          <section id="additional" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-cog section-icon"></i>Additional Information</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="field-group">
+                <div class="field-title">Registration Type <span class="required-indicator">*</span></div>
+                <div class="field-description">Choose how your business is registered:</div>
+                <ul class="options-list">
+                  <li>
+                    <div class="option-name">TIN (Default)</div>
+                    <div class="option-description">Most common - uses Tax Identification Number</div>
+                  </li>
+                  <li>
+                    <div class="option-name">Patent</div>
+                    <div class="option-description">For businesses with patent registration</div>
+                  </li>
+                  <li>
+                    <div class="option-name">RCA Number</div>
+                    <div class="option-description">Rwanda Cooperative Agency number</div>
+                  </li>
+                  <li>
+                    <div class="option-name">Other</div>
+                    <div class="option-description">Any other registration type</div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Business Scope <span class="required-indicator">*</span></div>
+                <div class="field-description">Choose your business operational scope:</div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="alert alert-info-custom">
+                      <h6><i class="fas fa-globe me-2"></i>International</h6>
+                      <ul class="mb-0">
+                        <li>Business operates across borders</li>
+                        <li>Shows "International Countries" field</li>
+                        <li>List countries where you operate</li>
+                      </ul>
+                      <div class="example-box mt-2">
+                        <div class="example-label">Example:</div>
+                        <code>"Uganda, Kenya, Tanzania, DRC"</code>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="alert alert-success-custom">
+                      <h6><i class="fas fa-map me-2"></i>Local</h6>
+                      <ul class="mb-0">
+                        <li>Business operates within Rwanda only</li>
+                        <li>Shows "Local Places" field (optional)</li>
+                        <li>List specific locations within Rwanda</li>
+                      </ul>
+                      <div class="example-box mt-2">
+                        <div class="example-label">Example:</div>
+                        <code>"Nyanza, Kayonza, Burera"</code>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">Membership Status <span class="required-indicator">*</span></div>
+                <div class="field-description">Choose your current relationship with PSF:</div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="alert alert-warning-custom">
+                      <h6><i class="fas fa-user-plus me-2"></i>Not a Member</h6>
+                      <p>New to PSF membership</p>
+                      <strong>Available Categories:</strong>
+                      <ul class="mb-0">
+                        <li>Golden Circle</li>
+                        <li>Indashyikirwa Membership</li>
+                        <li>Ordinary Membership</li>
+                        <li>Associate Membership</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="alert alert-info-custom">
+                      <h6><i class="fas fa-user-check me-2"></i>A Member</h6>
+                      <p>Already a PSF member</p>
+                      <strong>Available Categories:</strong>
+                      <ul class="mb-0">
+                        <li>Renewal - Golden Circle</li>
+                        <li>Renewal - Indashyikirwa Membership</li>
+                        <li>Renewal - Ordinary Membership</li>
+                        <li>Renewal - Associate Membership</li>
+                        <li>Upgrade Membership</li>]
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Smart Features Section -->
+          <section id="features" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-magic section-icon"></i>Smart Form Features</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-download text-primary me-2"></i>Auto-Loading Fields
+                    </div>
+                    <div class="field-description">These fields automatically load content based on your selections:</div>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-arrow-right text-success me-2"></i>District loads when Province is selected</li>
+                      <li><i class="fas fa-arrow-right text-success me-2"></i>Sector loads when District is selected</li>
+                      <li><i class="fas fa-arrow-right text-success me-2"></i>Cell loads when Sector is selected</li>
+                      <li><i class="fas fa-arrow-right text-success me-2"></i>Village loads when Cell is selected</li>
+                      <li><i class="fas fa-arrow-right text-success me-2"></i>Associations load when "Partner" is selected</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-edit text-warning me-2"></i>Auto-Filling Fields
+                    </div>
+                    <div class="field-description">These fields automatically populate based on other inputs:</div>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-arrow-right text-warning me-2"></i>Registration Number auto-fills when TIN is selected</li>
+                      <li><i class="fas fa-arrow-right text-warning me-2"></i>Phone formatting automatically corrects format</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">
+                  <i class="fas fa-eye text-info me-2"></i>Show/Hide Fields
+                </div>
+                <div class="field-description">Fields that appear or disappear based on your selections:</div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="alert alert-light border">
+                      <h6>ID Fields</h6>
+                      <small>Based on nationality</small>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="alert alert-light border">
+                      <h6>Scope Fields</h6>
+                      <small>Based on business scope</small>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="alert alert-light border">
+                      <h6>Association Fields</h6>
+                      <small>Based on partnership status</small>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="alert alert-light border">
+                      <h6>Membership Categories</h6>
+                      <small>Based on membership status</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Validation Section -->
+          <section id="validation" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-check-circle section-icon"></i>Form Validation</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="alert alert-info-custom">
+                <i class="fas fa-shield-alt me-2"></i>
+                <strong>Real-time Validation:</strong> The form validates your input as you type and provides immediate feedback.
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-asterisk text-danger me-2"></i>Required Fields
+                    </div>
+                    <div class="field-description">All fields marked with an asterisk (*) must be completed before submission.</div>
+                    <div class="alert alert-warning-custom">
+                      <i class="fas fa-exclamation-triangle me-2"></i>
+                      The form will highlight missing required fields in red and prevent submission until completed.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-check-double text-success me-2"></i>Format Validation
+                    </div>
+                    <div class="field-description">The form automatically validates:</div>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-phone text-primary me-2"></i>Phone numbers (Rwanda format)</li>
+                      <li><i class="fas fa-envelope text-primary me-2"></i>Email addresses</li>
+                      <li><i class="fas fa-id-card text-primary me-2"></i>National ID (16 digits)</li>
+                      <li><i class="fas fa-passport text-primary me-2"></i>Passport (6-12 characters)</li>
+                      <li><i class="fas fa-hashtag text-primary me-2"></i>TIN (9 digits)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <div class="field-title">
+                  <i class="fas fa-exclamation-circle text-warning me-2"></i>Visual Feedback
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="alert alert-danger">
+                      <h6>Error State</h6>
+                      <ul class="mb-0">
+                        <li>Red border on field</li>
+                        <li>Error message below</li>
+                        <li>Submit button disabled</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="alert alert-warning">
+                      <h6>Warning State</h6>
+                      <ul class="mb-0">
+                        <li>Yellow border on field</li>
+                        <li>Format reminder</li>
+                        <li>Helpful suggestions</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="alert alert-success">
+                      <h6>Success State</h6>
+                      <ul class="mb-0">
+                        <li>Green border on field</li>
+                        <li>Checkmark indicator</li>
+                        <li>Ready for submission</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Troubleshooting Section -->
+          <section id="troubleshooting" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-question-circle section-icon"></i>Common Issues & Solutions</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="troubleshooting-item">
+                <div class="problem-title">
+                  <i class="fas fa-times-circle me-2"></i>Problem: Location dropdowns not loading
+                </div>
+                <div class="solution-title">
+                  <i class="fas fa-lightbulb me-2"></i>Solutions:
+                </div>
+                <ul>
+                  <li>Ensure you've selected the previous level first</li>
+                  <li>Wait a few seconds for loading to complete</li>
+                  <li>Check your internet connection</li>
+                  <li>Refresh the page if needed</li>
+                </ul>
+              </div>
+
+              <div class="troubleshooting-item">
+                <div class="problem-title">
+                  <i class="fas fa-times-circle me-2"></i>Problem: Phone number not accepted
+                </div>
+                <div class="solution-title">
+                  <i class="fas fa-lightbulb me-2"></i>Solutions:
+                </div>
+                <ul>
+                  <li>Use format: <code>2507XXXXXXXX</code> (12 digits)</li>
+                  <li>Or: <code>07XXXXXXXX</code> (system converts automatically)</li>
+                  <li>Remove spaces, dashes, or other characters</li>
+                </ul>
+              </div>
+
+              <div class="troubleshooting-item">
+                <div class="problem-title">
+                  <i class="fas fa-times-circle me-2"></i>Problem: ID number validation errors
+                </div>
+                <div class="solution-title">
+                  <i class="fas fa-lightbulb me-2"></i>Solutions:
+                </div>
+                <ul>
+                  <li><strong>National ID:</strong> Exactly 16 numbers, no letters or spaces</li>
+                  <li><strong>Passport:</strong> 6-12 characters, uppercase letters and numbers only</li>
+                  <li>Double-check your document for the correct format</li>
+                </ul>
+              </div>
+
+              <div class="troubleshooting-item">
+                <div class="problem-title">
+                  <i class="fas fa-times-circle me-2"></i>Problem: Form won't submit
+                </div>
+                <div class="solution-title">
+                  <i class="fas fa-lightbulb me-2"></i>Solutions:
+                </div>
+                <ul>
+                  <li>Check for red-highlighted fields (validation errors)</li>
+                  <li>Ensure all required fields (*) are completed</li>
+                  <li>Scroll up to check for error messages</li>
+                  <li>Wait for any loading processes to complete</li>
+                </ul>
+              </div>
+
+              <div class="alert alert-success-custom">
+                <h5><i class="fas fa-phone me-2"></i>Need More Help?</h5>
+                <p class="mb-2">If you continue to experience issues:</p>
+                <ul class="mb-0">
+                  <li>Try refreshing the page and starting over</li>
+                  <li>Clear your browser cache if problems persist</li>
+                  <li>Try a different browser (Chrome, Firefox, Edge)</li>
+                  <li>Ensure JavaScript is enabled in your browser</li>
+                  <li>Contact system administrator for technical support</li>
+                </ul>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Final Steps Section -->
+          <section id="final-steps" class="section-card fade-in">
+            <div class="section-header">
+              <h2><i class="fas fa-flag-checkered section-icon"></i>Final Steps</h2>
+            </div>
+            <div class="content-section">
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-search text-primary me-2"></i>Before Submitting
+                    </div>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check text-success me-2"></i>Review all sections for accuracy</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Verify contact information</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Check location details are correct</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Confirm representative information matches ID</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Ensure business information matches registration documents</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="field-group">
+                    <div class="field-title">
+                      <i class="fas fa-paper-plane text-success me-2"></i>After Submission
+                    </div>
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check text-success me-2"></i>You should receive a confirmation message</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Note any reference numbers provided</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Keep records of submitted information</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Wait for processing confirmation</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Check email for updates</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center mt-4">
+                <a href="/companies/create" class="btn btn-primary btn-lg me-3" target="_blank">
+                  <i class="fas fa-edit me-2"></i>Start Registration
+                </a>
+                <button class="btn btn-outline-secondary btn-lg" onclick="window.print()">
+                  <i class="fas fa-print me-2"></i>Print Guide
+                </button>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-4 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Company Registration System</h5>
+          <p class="text-muted">Complete guide for successful business registration</p>
+        </div>
+        <div class="col-md-6 text-end">
+          <p class="text-muted mb-0">Need help? Contact support</p>
+          <small class="text-muted">Last updated: <%= new Date().toLocaleDateString() %></small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Active navigation highlighting
+    function updateActiveNav() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (pageYOffset >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Progress bar
+    function updateProgressBar() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    }
+
+    // Back to top button
+    function toggleBackToTop() {
+      const backToTop = document.getElementById('backToTop');
+      if (window.pageYOffset > 300) {
+        backToTop.style.display = 'flex';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    }
+
+    // Fade in animation
+    function handleScrollAnimations() {
+      const elements = document.querySelectorAll('.fade-in');
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('visible');
+        }
+      });
+    }
+
+    // Event listeners
+    window.addEventListener('scroll', () => {
+      updateActiveNav();
+      updateProgressBar();
+      toggleBackToTop();
+      handleScrollAnimations();
+    });
+
+    document.getElementById('backToTop').addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Initial animations
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.querySelectorAll('.fade-in').forEach((el, index) => {
+          setTimeout(() => {
+            el.classList.add('visible');
+          }, index * 100);
+        });
+      }, 300);
+    });
+
+    // Print styles
+    window.addEventListener('beforeprint', () => {
+      document.body.classList.add('printing');
+    });
+
+    window.addEventListener('afterprint', () => {
+      document.body.classList.remove('printing');
+    });
+  </script>
+
+  <style media="print">
+    .navbar,
+    .sidebar,
+    .back-to-top,
+    .progress-bar,
+    footer {
+      display: none !important;
+    }
+
+    .col-lg-9 {
+      width: 100% !important;
+    }
+
+    .section-card {
+      break-inside: avoid;
+      margin-bottom: 1rem !important;
+    }
+
+    .hero-section {
+      background: #2c3e50 !important;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .section-header {
+      background: #3498db !important;
+      -webkit-print-color-adjust: exact;
+    }
+</style>

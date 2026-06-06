@@ -1,0 +1,272 @@
+<!-- views/location-form.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        select:disabled {
+            background-color: #f5f5f5;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .loading {
+            display: inline-block;
+            margin-left: 10px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Location Selection Form</h1>
+    
+    <form id="locationForm" action="/submit-location" method="POST">
+        <div class="form-group">
+            <label for="provinceSelect">Province:</label>
+            <select id="provinceSelect" name="province" required>
+                <option value="">-- Select Province --</option>
+                <% provinces.forEach(province => { %>
+                    <option value="<%= province.province_id %>"><%= province.province_name %></option>
+                <% }); %>
+            </select>
+            <span id="provinceLoading" class="loading" style="display: none;">Loading...</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="districtSelect">District:</label>
+            <select id="districtSelect" name="district" disabled required>
+                <option value="">-- Select District --</option>
+            </select>
+            <span id="districtLoading" class="loading" style="display: none;">Loading...</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="sectorSelect">Sector:</label>
+            <select id="sectorSelect" name="sector" disabled required>
+                <option value="">-- Select Sector --</option>
+            </select>
+            <span id="sectorLoading" class="loading" style="display: none;">Loading...</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="cellSelect">Cell:</label>
+            <select id="cellSelect" name="cell" disabled required>
+                <option value="">-- Select Cell --</option>
+            </select>
+            <span id="cellLoading" class="loading" style="display: none;">Loading...</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="villageSelect">Village:</label>
+            <select id="villageSelect" name="village" disabled required>
+                <option value="">-- Select Village --</option>
+            </select>
+            <span id="villageLoading" class="loading" style="display: none;">Loading...</span>
+        </div>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all the select elements
+            const provinceSelect = document.getElementById('provinceSelect');
+            const districtSelect = document.getElementById('districtSelect');
+            const sectorSelect = document.getElementById('sectorSelect');
+            const cellSelect = document.getElementById('cellSelect');
+            const villageSelect = document.getElementById('villageSelect');
+            
+            // Get all loading indicators
+            const provinceLoading = document.getElementById('provinceLoading');
+            const districtLoading = document.getElementById('districtLoading');
+            const sectorLoading = document.getElementById('sectorLoading');
+            const cellLoading = document.getElementById('cellLoading');
+            const villageLoading = document.getElementById('villageLoading');
+            
+            // Helper function to fetch data from API
+            async function fetchData(url) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    return [];
+                }
+            }
+            
+            // Helper function to populate a select element
+            function populateSelect(selectElement, data, defaultOption = '-- Select --') {
+                // Clear existing options except the first one
+                selectElement.innerHTML = `<option value="">${defaultOption}</option>`;
+                
+                // Add new options
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    
+                    // Extract the correct ID and name based on the select element
+                    let id, name;
+                    
+                    if (selectElement === districtSelect) {
+                        id = item.district_id;
+                        name = item.district_name;
+                    } else if (selectElement === sectorSelect) {
+                        id = item.sector_id;
+                        name = item.sector_name;
+                    } else if (selectElement === cellSelect) {
+                        id = item.cell_id;
+                        name = item.cell_name;
+                    } else if (selectElement === villageSelect) {
+                        id = item.village_id;
+                        name = item.village_name;
+                    }
+                    
+                    option.value = id;
+                    option.textContent = name;
+                    selectElement.appendChild(option);
+                });
+                
+                // Enable the select
+                selectElement.disabled = false;
+            }
+            
+            // Helper function to reset dependent dropdowns
+            function resetDependentDropdowns(startIndex) {
+                const dropdowns = [districtSelect, sectorSelect, cellSelect, villageSelect];
+                const defaultTexts = ['-- Select District --', '-- Select Sector --', '-- Select Cell --', '-- Select Village --'];
+                
+                for (let i = startIndex; i < dropdowns.length; i++) {
+                    dropdowns[i].innerHTML = `<option value="">${defaultTexts[i]}</option>`;
+                    dropdowns[i].disabled = true;
+                }
+            }
+            
+            // Event listener for province selection
+            provinceSelect.addEventListener('change', async function() {
+                const provinceId = this.value;
+                
+                // Reset all dependent dropdowns
+                resetDependentDropdowns(0);
+                
+                if (!provinceId) return;
+                
+                // Show loading indicator
+                districtLoading.style.display = 'inline-block';
+                
+                // Fetch districts for the selected province
+                const districts = await fetchData(`/api/districts/${provinceId}`);
+                
+                // Hide loading indicator
+                districtLoading.style.display = 'none';
+                
+                // Populate district dropdown
+                populateSelect(districtSelect, districts, '-- Select District --');
+            });
+            
+            // Event listener for district selection
+            districtSelect.addEventListener('change', async function() {
+                const districtId = this.value;
+                
+                // Reset dependent dropdowns
+                resetDependentDropdowns(1);
+                
+                if (!districtId) return;
+                
+                // Show loading indicator
+                sectorLoading.style.display = 'inline-block';
+                
+                // Fetch sectors for the selected district
+                const sectors = await fetchData(`/api/sectors/${districtId}`);
+                
+                // Hide loading indicator
+                sectorLoading.style.display = 'none';
+                
+                // Populate sector dropdown
+                populateSelect(sectorSelect, sectors, '-- Select Sector --');
+            });
+            
+            // Event listener for sector selection
+            sectorSelect.addEventListener('change', async function() {
+                const sectorId = this.value;
+                
+                // Reset dependent dropdowns
+                resetDependentDropdowns(2);
+                
+                if (!sectorId) return;
+                
+                // Show loading indicator
+                cellLoading.style.display = 'inline-block';
+                
+                // Fetch cells for the selected sector
+                const cells = await fetchData(`/api/cells/${sectorId}`);
+                
+                // Hide loading indicator
+                cellLoading.style.display = 'none';
+                
+                // Populate cell dropdown
+                populateSelect(cellSelect, cells, '-- Select Cell --');
+            });
+            
+            // Event listener for cell selection
+            cellSelect.addEventListener('change', async function() {
+                const cellId = this.value;
+                
+                // Reset dependent dropdowns
+                resetDependentDropdowns(3);
+                
+                if (!cellId) return;
+                
+                // Show loading indicator
+                villageLoading.style.display = 'inline-block';
+                
+                // Fetch villages for the selected cell
+                const villages = await fetchData(`/api/villages/${cellId}`);
+                
+                // Hide loading indicator
+                villageLoading.style.display = 'none';
+                
+                // Populate village dropdown
+                populateSelect(villageSelect, villages, '-- Select Village --');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -353,7 +353,7 @@
     font-weight: bolder!important;
     color: var(--green-dark);
     margin-bottom: 5px;
-    border-bottom: 2px solid var(--orange-lower);
+    border-bottom: 1px solid var(--orange-lowest);
 }
 
 .cst-red {

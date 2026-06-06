@@ -1,0 +1,1049 @@
+<style>
+    .loading {
+        display: inline-block;
+        margin-left: 10px;
+        font-style: italic;
+        color: #666;
+    }
+
+    .hidden-field {
+        display: none;
+    }
+
+    .nid-hidden {
+        display: none;
+    }
+
+    .field-disabled {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .auto-filled {
+        background-color: #e3f2fd;
+        border-color: #2196f3;
+    }
+
+    .manual-input {
+        background-color: #fff;
+        border-color: #ced4da;
+    }
+
+    .error-message {
+        color: #d9534f;
+        font-size: 0.9em;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .field-error {
+        border-color: #d9534f !important;
+        box-shadow: 0 0 0 0.2rem rgba(217, 83, 79, 0.25);
+    }
+
+    .alert {
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-dismissible .btn-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.75rem 1.25rem;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .validation-errors {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 0.375rem;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .validation-errors h5 {
+        color: #721c24;
+        margin-bottom: 0.75rem;
+    }
+
+    .validation-errors ul {
+        margin-bottom: 0;
+        padding-left: 1.25rem;
+    }
+
+    .validation-errors li {
+        color: #721c24;
+        margin-bottom: 0.25rem;
+    }
+</style>
+
+<div class="row mb-4">
+    <div class="col">
+        <h1 style="font-size: 34px; font-weight: bolder;">Register new company</h1>
+    </div>
+    <div class="col-auto">
+        <a href="/companies/all" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+
+
+<!-- Add this to your membership form template -->
+<!-- Flash Messages Section -->
+<div class="flash-messages-container">
+    <!-- Success Messages -->
+    <% if (typeof success !== 'undefined' && success.length > 0) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong>Success!</strong> <%= success %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+
+    <!-- Error Messages -->
+    <% if (typeof errorMessages !== 'undefined' && errorMessages.length > 0) { %>
+        <% errorMessages.forEach(function(error) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Error!</strong> <%= error %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% }); %>
+    <% } %>
+
+    <!-- Validation Errors -->
+    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <h5><i class="fas fa-ban me-2"></i>Please fix the following errors:</h5>
+            <ul class="mb-0">
+                <% errors.forEach(function(error) { %>
+                    <li><%= error %></li>
+                <% }); %>
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+</div>
+
+
+
+
+<div class="card">
+    <div class="card-body" style="border: 1.5px solid rgb(8, 103, 44);">
+        <form id="companyMembershipForm" action="/companies/create" method="POST">
+            
+            <!-- MAIN BUSINESS INFO SECTION -->
+            <h4 class="mb-3" style="border-bottom: solid gray 1.5px; padding-bottom: 5px">Main Business Info</h4>
+            <div class="row mb-4">
+                <!-- Company Name -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="company_name" class="form-label"><strong>Company Name*</strong></label>
+                        <input type="text" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.company_name) ? 'field-error' : '' %>" 
+                               id="company_name" 
+                               name="company_name" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.company_name) ? oldData.company_name : '' %>" autocomplete="off"
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.company_name) { %>
+                            <% errors.company_name.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- TIN / Company Code -->
+                <!--
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="company_tin" class="form-label"><strong>TIN / Company Code*</strong></label>
+                        <input type="number" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.company_tin) ? 'field-error' : '' %>" 
+                               id="company_tin" 
+                               name="company_tin" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.company_tin) ? oldData.company_tin : '' %>" autocomplete="off"
+                               required>
+                        --<div class="form-text">This will auto-fill number when TIN is selected</div>--
+                        <% if (typeof errors !== 'undefined' && errors.company_tin) { %>
+                            <% errors.company_tin.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>-->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="company_tin" class="form-label"><strong>TIN / Company Code*</strong></label>
+                        <input type="number"
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.company_tin) ? 'field-error' : '' %>"
+                               id="company_tin"
+                               name="company_tin"
+                               value="<%= (typeof oldData !== 'undefined' && oldData.company_tin) ? oldData.company_tin : '' %>" autocomplete="off"
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.company_tin) { %>
+                            <div class="error-messages-container"> <% errors.company_tin.forEach(errorMsg => { %>
+                                    <span class="error-message"><%= errorMsg %></span>
+                                <% }) %>
+                            </div>
+                        <% } else { %>
+                            <div class="error-messages-container"></div> <% } %>
+                    </div>
+                </div>
+
+                <!-- Business Activity -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="business_activity" class="form-label"><strong>Business Activity*</strong></label>
+                        <input type="text" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.business_activity) ? 'field-error' : '' %>" 
+                               id="business_activity" 
+                               name="business_activity" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.business_activity) ? oldData.business_activity : '' %>" autocomplete="off"
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.business_activity) { %>
+                            <% errors.business_activity.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Company Phone -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="company_phone" class="form-label"><strong>Company Phone*</strong></label>
+                        <input type="tel" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.company_phone) ? 'field-error' : '' %>" 
+                               id="company_phone" 
+                               name="company_phone" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.company_phone) ? oldData.company_phone : '' %>"
+                               placeholder="2507XXXXXXXX" autocomplete="off"
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.company_phone) { %>
+                            <% errors.company_phone.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Company Email -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="company_email" class="form-label"><strong>Company Email</strong></label>
+                        <input type="email" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.company_email) ? 'field-error' : '' %>" 
+                               id="company_email" 
+                               name="company_email" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.company_email) ? oldData.company_email : '' %>"
+                               placeholder="name@example.com" autocomplete="off">
+                        <% if (typeof errors !== 'undefined' && errors.company_email) { %>
+                            <% errors.company_email.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Company Website -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="company_website" class="form-label"><strong>Company Website</strong></label>
+                        <input type="text" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.company_website) ? 'field-error' : '' %>" 
+                               id="company_website" 
+                               name="company_website" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.company_website) ? oldData.company_website : '' %>"
+                               placeholder="example.com" autocomplete="off">
+                        <% if (typeof errors !== 'undefined' && errors.company_website) { %>
+                            <% errors.company_website.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Company Type -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="company_type_id" class="form-label"><strong>Company Type*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.company_type_id) ? 'field-error' : '' %>" 
+                                name="company_type_id" 
+                                id="company_type_id"
+                                required>
+                            <option value="">-- Select type --</option>
+                            <option value="1" <%= (typeof oldData !== 'undefined' && oldData.company_type_id === '1') ? 'selected' : '' %>>SME</option>
+                            <option value="2" <%= (typeof oldData !== 'undefined' && oldData.company_type_id === '2') ? 'selected' : '' %>>Cooperative</option>
+                            <option value="3" <%= (typeof oldData !== 'undefined' && oldData.company_type_id === '3') ? 'selected' : '' %>>Large Enterprise</option>
+                            <option value="4" <%= (typeof oldData !== 'undefined' && oldData.company_type_id === '4') ? 'selected' : '' %>>Public</option>
+                            <option value="5" <%= (typeof oldData !== 'undefined' && oldData.company_type_id === '5') ? 'selected' : '' %>>Private</option>
+                            <option value="6" <%= (typeof oldData !== 'undefined' && oldData.company_type_id === '6') ? 'selected' : '' %>>NGO</option>
+                            <option value="7" <%= (typeof oldData !== 'undefined' && oldData.company_type_id === '7') ? 'selected' : '' %>>Partly State-owned</option>
+                            <option value="8" <%= (typeof oldData !== 'undefined' && oldData.company_type_id === '8') ? 'selected' : '' %>>Sole Trader</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.company_type_id) { %>
+                            <% errors.company_type_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Ownership -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="ownership_id" class="form-label"><strong>Ownership*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.ownership_id) ? 'field-error' : '' %>" 
+                                name="ownership_id" 
+                                id="ownership_id" 
+                                required>
+                            <option value="">-- Select ownership type --</option>
+                            <option value="1" <%= (typeof oldData !== 'undefined' && oldData.ownership_id === '1') ? 'selected' : '' %>>Private</option>
+                            <option value="2" <%= (typeof oldData !== 'undefined' && oldData.ownership_id === '2') ? 'selected' : '' %>>Public</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.ownership_id) { %>
+                            <% errors.ownership_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Sales reporting tools / Financial System -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="sales_reporting" class="form-label"><strong>Sales Reporting (Transaction Tracking)*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.sales_reporting) ? 'field-error' : '' %>" 
+                                name="sales_reporting" 
+                                id="sales_reporting" 
+                                required>
+                            <option value="">-- Select Below --</option>
+                            <option value="EBM" <%= (typeof oldData !== 'undefined' && oldData.sales_reporting === 'EBM') ? 'selected' : '' %>>EBM (Electronic Billing Machine)</option>
+                            <option value="MANUAL" <%= (typeof oldData !== 'undefined' && oldData.sales_reporting === 'MANUAL') ? 'selected' : '' %>>Manual/Paper Records</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.sales_reporting) { %>
+                            <% errors.sales_reporting.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-2" style="border: 0.2px solid rgba(149, 98, 3, 0.397);"></hr>
+
+            <!-- BUSINESS SIZE AND EMPLOYEES SECTION -->
+            <div class="row mb-4">
+                <!-- Business Size -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Business Size*</strong></label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="business_size" id="size_micro" value="Micro" 
+                                   <%= (typeof oldData !== 'undefined' && oldData.business_size === 'Micro') ? 'checked' : (!oldData ? 'checked' : '') %>>
+                            <label class="form-check-label" for="size_micro">Micro</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="business_size" id="size_small" value="Small"
+                                   <%= (typeof oldData !== 'undefined' && oldData.business_size === 'Small') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="size_small">Small</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="business_size" id="size_medium" value="Medium"
+                                   <%= (typeof oldData !== 'undefined' && oldData.business_size === 'Medium') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="size_medium">Medium</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="business_size" id="size_large" value="Large"
+                                   <%= (typeof oldData !== 'undefined' && oldData.business_size === 'Large') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="size_large">Large</label>
+                        </div>
+                        <% if (typeof errors !== 'undefined' && errors.business_size) { %>
+                            <% errors.business_size.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Permanent Employees -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Permanent Employees*</strong></label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="permanent_employees" id="perm_1_3" value="1-3"
+                                   <%= (typeof oldData !== 'undefined' && oldData.permanent_employees === '1-3') ? 'checked' : (!oldData ? 'checked' : '') %>>
+                            <label class="form-check-label" for="perm_1_3">1-3</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="permanent_employees" id="perm_4_30" value="4-30"
+                                   <%= (typeof oldData !== 'undefined' && oldData.permanent_employees === '4-30') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="perm_4_30">4-30</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="permanent_employees" id="perm_30_100" value="30-100"
+                                   <%= (typeof oldData !== 'undefined' && oldData.permanent_employees === '30-100') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="perm_30_100">30-100</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="permanent_employees" id="perm_more_100" value="More than 100"
+                                   <%= (typeof oldData !== 'undefined' && oldData.permanent_employees === 'More than 100') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="perm_more_100">More than 100</label>
+                        </div>
+                        <% if (typeof errors !== 'undefined' && errors.permanent_employees) { %>
+                            <% errors.permanent_employees.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Casual Employees -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Casual Employees*</strong></label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="casual_employees" id="casual_1_3" value="1-3"
+                                   <%= (typeof oldData !== 'undefined' && oldData.casual_employees === '1-3') ? 'checked' : (!oldData ? 'checked' : '') %>>
+                            <label class="form-check-label" for="casual_1_3">1-3</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="casual_employees" id="casual_4_30" value="4-30"
+                                   <%= (typeof oldData !== 'undefined' && oldData.casual_employees === '4-30') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="casual_4_30">4-30</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="casual_employees" id="casual_30_100" value="30-100"
+                                   <%= (typeof oldData !== 'undefined' && oldData.casual_employees === '30-100') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="casual_30_100">30-100</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="casual_employees" id="casual_more_100" value="More than 100"
+                                   <%= (typeof oldData !== 'undefined' && oldData.casual_employees === 'More than 100') ? 'checked' : '' %>>
+                            <label class="form-check-label" for="casual_more_100">More than 100</label>
+                        </div>
+                        <% if (typeof errors !== 'undefined' && errors.casual_employees) { %>
+                            <% errors.casual_employees.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUSINESS LOCATION SECTION -->
+            <h4 class="mb-3" style="border-bottom: solid gray 1.5px; padding-bottom: 5px">Business Location Info</h4>
+            <div class="row mb-4">
+                <!-- Province -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="provinceSelect" class="form-label"><strong>Province*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.province_id) ? 'field-error' : '' %>" 
+                                name="province_id" 
+                                id="provinceSelect" 
+                                required>
+                            <option value="">-- Select Province --</option>
+                            <% provinces.forEach(province => { %>
+                            <option value="<%= province.province_id %>" 
+                                    <%= (typeof oldData !== 'undefined' && oldData.province_id == province.province_id) ? 'selected' : '' %>>
+                                <%= province.province_name %>
+                            </option>
+                            <% }); %>
+                        </select>
+                        <span id="provinceLoading" class="loading" style="display: none;">Loading...</span>
+                        <% if (typeof errors !== 'undefined' && errors.province_id) { %>
+                            <% errors.province_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- District -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="districtSelect" class="form-label"><strong>District*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.district_id) ? 'field-error' : '' %>" 
+                                name="district_id" 
+                                id="districtSelect" 
+                                disabled>
+                            <option value="">-- Select District --</option>
+                        </select>
+                        <span id="districtLoading" class="loading" style="display: none;">Loading...</span>
+                        <% if (typeof errors !== 'undefined' && errors.district_id) { %>
+                            <% errors.district_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Sector -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="sectorSelect" class="form-label"><strong>Sector*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.sector_id) ? 'field-error' : '' %>" 
+                                name="sector_id" 
+                                id="sectorSelect" 
+                                disabled 
+                                required>
+                            <option value="">-- Select Sector --</option>
+                        </select>
+                        <span id="sectorLoading" class="loading" style="display: none;">Loading...</span>
+                        <% if (typeof errors !== 'undefined' && errors.sector_id) { %>
+                            <% errors.sector_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Cell -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="cellSelect" class="form-label"><strong>Cell*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.cell_id) ? 'field-error' : '' %>" 
+                                name="cell_id" 
+                                id="cellSelect" 
+                                disabled 
+                                required>
+                            <option value="">-- Select Cell --</option>
+                        </select>
+                        <span id="cellLoading" class="loading" style="display: none;">Loading...</span>
+                        <% if (typeof errors !== 'undefined' && errors.cell_id) { %>
+                            <% errors.cell_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Village -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="villageSelect" class="form-label"><strong>Village*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.village_id) ? 'field-error' : '' %>" 
+                                name="village_id" 
+                                id="villageSelect" 
+                                disabled 
+                                required>
+                            <option value="">-- Select Village --</option>
+                        </select>
+                        <span id="villageLoading" class="loading" style="display: none;">Loading...</span>
+                        <% if (typeof errors !== 'undefined' && errors.village_id) { %>
+                            <% errors.village_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Street Zone -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="street_zone" class="form-label"><strong>Isibo/Street Name (optional)</strong></label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="street_zone" 
+                               name="street_zone" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.street_zone) ? oldData.street_zone : '' %>">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUSINESS REPRESENTATIVE SECTION -->
+            <h4 class="mb-3" style="border-bottom: solid gray 1.5px; padding-bottom: 5px">Business Representative Info</h4>
+            <div class="row mb-4">
+                <!-- First Name -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="firstname" class="form-label"><strong>First Name*</strong></label>
+                        <input type="text" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.firstname) ? 'field-error' : '' %>" 
+                               id="firstname" 
+                               name="firstname" autocomplete="off"
+                               value="<%= (typeof oldData !== 'undefined' && oldData.firstname) ? oldData.firstname : '' %>"
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.firstname) { %>
+                            <% errors.firstname.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label"><strong>Last Name*</strong></label>
+                        <input type="text" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.lastname) ? 'field-error' : '' %>" 
+                               id="lastname" 
+                               name="lastname" autocomplete="off"
+                               value="<%= (typeof oldData !== 'undefined' && oldData.lastname) ? oldData.lastname : '' %>"
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.lastname) { %>
+                            <% errors.lastname.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Birth Date -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="birthday" class="form-label"><strong>Birth Date*</strong></label>
+                        <input type="date" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.birthday) ? 'field-error' : '' %>" 
+                               id="birthday" 
+                               name="birthday" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.birthday) ? oldData.birthday : '' %>"
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.birthday) { %>
+                            <% errors.birthday.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="gender" class="form-label"><strong>Select Gender*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.gender) ? 'field-error' : '' %>" 
+                            name="gender" 
+                                id="gender" 
+                                required>
+                            <option value="">Select gender</option>
+                            <option value="M" <%= (typeof oldData !== 'undefined' && oldData.gender === 'M') ? 'selected' : '' %>>Male</option>
+                            <option value="F" <%= (typeof oldData !== 'undefined' && oldData.gender === 'F') ? 'selected' : '' %>>Female</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.gender) { %>
+                            <% errors.gender.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="telephone" class="form-label"><strong>Phone Number*</strong></label>
+                        <input type="tel" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.telephone) ? 'field-error' : '' %>" 
+                               id="telephone" 
+                               name="telephone" autocomplete="off"
+                               value="<%= (typeof oldData !== 'undefined' && oldData.telephone) ? oldData.telephone : '' %>"
+                               placeholder="2507XXXXXXXX" 
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.telephone) { %>
+                            <% errors.telephone.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Email Address -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="rep_email" class="form-label"><strong>Email Address</strong></label>
+                        <input type="email" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.rep_email) ? 'field-error' : '' %>" 
+                               id="rep_email" 
+                               name="rep_email" autocomplete="off"
+                               value="<%= (typeof oldData !== 'undefined' && oldData.rep_email) ? oldData.rep_email : '' %>"
+                               placeholder="name@example.com">
+                        <% if (typeof errors !== 'undefined' && errors.rep_email) { %>
+                            <% errors.rep_email.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Nationality -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="nationality" class="form-label"><strong>Nationality (Citizenship)*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.nationality) ? 'field-error' : '' %>" 
+                                name="nationality" 
+                                id="nationality" 
+                                required>
+                            <option value="">-- Select Nationality --</option>
+                            <option value="Rwandan" <%= (typeof oldData !== 'undefined' && oldData.nationality === 'Rwandan') ? 'selected' : '' %>>Rwandan</option>
+                            <option value="Non-Rwandan" <%= (typeof oldData !== 'undefined' && oldData.nationality === 'Non-Rwandan') ? 'selected' : '' %>>Non-Rwandan</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.nationality) { %>
+                            <% errors.nationality.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- National ID (Hidden by default) -->
+                <div class="col-md-4 nid-hidden" id="nationalIdGroup">
+                    <div class="mb-3">
+                        <label for="national_id" class="form-label"><strong>National ID*</strong></label>
+                        <input type="text" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.national_id) ? 'field-error' : '' %>" 
+                               id="national_id" 
+                               name="national_id" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.national_id) ? oldData.national_id : '' %>"
+                               maxlength="16" 
+                               pattern="[0-9]{16}" 
+                               title="National ID must be 16 digits (numbers only)">
+                        <% if (typeof errors !== 'undefined' && errors.national_id) { %>
+                            <% errors.national_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                        <div class="error-message" id="nationalIdError"></div>
+                    </div>
+                </div>
+
+                <!-- Passport Number (Hidden by default) -->
+                <div class="col-md-4 nid-hidden" id="passportGroup">
+                    <div class="mb-3">
+                        <label for="passport_number" class="form-label"><strong>Passport Number*</strong></label>
+                        <input type="text" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.passport_number) ? 'field-error' : '' %>" 
+                               id="passport_number" 
+                               name="passport_number" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.passport_number) ? oldData.passport_number : '' %>"
+                               minlength="6" 
+                               maxlength="12" 
+                               pattern="[A-Z0-9]{6,12}" 
+                               title="Passport must be 6-12 characters (uppercase letters and numbers)">
+                        <% if (typeof errors !== 'undefined' && errors.passport_number) { %>
+                            <% errors.passport_number.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                        <div class="error-message" id="passportError"></div>
+                    </div>
+                </div>
+
+                <!-- Health Insurance -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="has_insurance" class="form-label"><strong>Health Coverage (Insurance) Status*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.has_insurance) ? 'field-error' : '' %>" 
+                                name="has_insurance" 
+                                id="has_insurance" 
+                                required>
+                            <option value="">-- Select option --</option>
+                            <option value="1" <%= (typeof oldData !== 'undefined' && oldData.has_insurance === '1') ? 'selected' : '' %>>Yes, Insured</option>
+                            <option value="0" <%= (typeof oldData !== 'undefined' && oldData.has_insurance === '0') ? 'selected' : '' %>>No, Uninsured</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.has_insurance) { %>
+                            <% errors.has_insurance.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Preferred Language -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="preferred_language" class="form-label"><strong>Preferred Language*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.preferred_language) ? 'field-error' : '' %>" 
+                                name="preferred_language" 
+                                id="preferred_language" 
+                                required>
+                            <option value="">-- Select Language --</option>
+                            <option value="kinyarwanda" <%= (typeof oldData !== 'undefined' && oldData.preferred_language === 'kinyarwanda') ? 'selected' : '' %>>Kinyarwanda</option>
+                            <option value="kiswahili" <%= (typeof oldData !== 'undefined' && oldData.preferred_language === 'kiswahili') ? 'selected' : '' %>>Kiswahili (Swahili)</option>
+                            <option value="english" <%= (typeof oldData !== 'undefined' && oldData.preferred_language === 'english') ? 'selected' : '' %>>English</option>
+                            <option value="french" <%= (typeof oldData !== 'undefined' && oldData.preferred_language === 'french') ? 'selected' : '' %>>French</option>
+                            <option value="other" <%= (typeof oldData !== 'undefined' && oldData.preferred_language === 'other') ? 'selected' : '' %>>Other</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.preferred_language) { %>
+                            <% errors.preferred_language.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Areas of Interest -->
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="areas_of_interest" class="form-label"><strong>Main Areas of Interest*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.areas_of_interest) ? 'field-error' : '' %>" 
+                                name="areas_of_interest" 
+                                id="areas_of_interest" 
+                                required>
+                            <option value="">-- Select Area of Interest --</option>
+                            <optgroup label="PSF Services">
+                                <option value="exhibitions" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'exhibitions') ? 'selected' : '' %>>Exhibitions</option>
+                                <option value="recommendations" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'recommendations') ? 'selected' : '' %>>Recommendations (Quitus/REMA)</option>
+                                <option value="advocacy" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'advocacy') ? 'selected' : '' %>>Proactive Advocacy</option>
+                                <option value="business_research" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'business_research') ? 'selected' : '' %>>Business Research</option>
+                                <option value="capacity_building" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'capacity_building') ? 'selected' : '' %>>Trainings & Capacity Building</option>
+                                <option value="trade_missions" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'trade_missions') ? 'selected' : '' %>>Trade Missions</option>
+                                <option value="access_to_market" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'access_to_market') ? 'selected' : '' %>>Access to Market & Linkages</option>
+                                <option value="business_clinic" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'business_clinic') ? 'selected' : '' %>>Business Clinic and Advisory</option>
+                                <option value="medical_scheme" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'medical_scheme') ? 'selected' : '' %>>Access to Medical Scheme</option>
+                                <option value="networking" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'networking') ? 'selected' : '' %>>Networking(B2B, B2C & B2G)</option>
+                            </optgroup>
+                            <optgroup label="Other interests">
+                                <option value="Others" <%= (typeof oldData !== 'undefined' && oldData.areas_of_interest === 'Others') ? 'selected' : '' %>>Others</option>
+                            </optgroup>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.areas_of_interest) { %>
+                            <% errors.areas_of_interest.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADDITIONAL INFO SECTION -->
+            <h4 class="mb-3" style="border-bottom: solid gray 1.5px; padding-bottom: 5px">Additional Info</h4>
+            <div class="row mb-4">
+                <!-- Registration Type -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="registration_type" class="form-label"><strong>Registration Type*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.registration_type) ? 'field-error' : '' %>" 
+                                name="registration_type" 
+                                id="registration_type" 
+                                required>
+                            <option value="TIN" <%= (typeof oldData !== 'undefined' && oldData.registration_type === 'TIN') ? 'selected' : (!oldData ? 'selected' : '') %>>TIN (Default)</option>
+                            <option value="Patent" <%= (typeof oldData !== 'undefined' && oldData.registration_type === 'Patent') ? 'selected' : '' %>>Patent</option>
+                            <option value="RCA Number" <%= (typeof oldData !== 'undefined' && oldData.registration_type === 'RCA Number') ? 'selected' : '' %>>RCA Number</option>
+                            <option value="Other" <%= (typeof oldData !== 'undefined' && oldData.registration_type === 'Other') ? 'selected' : '' %>>Other</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.registration_type) { %>
+                            <% errors.registration_type.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Registration Number -->
+                <div class="col-md-6" id="registration_number_container">
+                    <div class="mb-3">
+                        <label for="registration_number" class="form-label" id="registration_number_label">
+                            <strong>TIN Number*</strong>
+                        </label>
+                        <input type="text" 
+                               class="form-control auto-filled <%= (typeof errors !== 'undefined' && errors.registration_number) ? 'field-error' : '' %>" 
+                               id="registration_number" 
+                               name="registration_number" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.registration_number) ? oldData.registration_number : '' %>"
+                               readonly>
+                        <div class="form-text" id="registration_help_text">Auto-filled from TIN field above</div>
+                        <% if (typeof errors !== 'undefined' && errors.registration_number) { %>
+                            <% errors.registration_number.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Business Scope -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="business_scope" class="form-label"><strong>Select Business Scope*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.business_scope) ? 'field-error' : '' %>" 
+                                name="business_scope" 
+                                id="business_scope" 
+                                required>
+                            <option value="international" <%= (typeof oldData !== 'undefined' && oldData.business_scope === 'international') ? 'selected' : (!oldData ? 'selected' : '') %>>International</option>
+                            <option value="local" <%= (typeof oldData !== 'undefined' && oldData.business_scope === 'local') ? 'selected' : 'selected' %>>Local</option>
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.business_scope) { %>
+                            <% errors.business_scope.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Local Places (Hidden by default) -->
+                <div class="col-md-6 hidden-field" id="local_places_field">
+                    <div class="mb-3">
+                        <label for="local_places" class="form-label"><strong>Local Places (optional)</strong></label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="local_places" 
+                               name="local_places" autocomplete="off"
+                               value="<%= (typeof oldData !== 'undefined' && oldData.local_places) ? oldData.local_places : '' %>"
+                               placeholder="Nyanza, Kayonza, Burera,...">
+                        <span class="error-message" id="local_places_error"></span>
+                    </div>
+                </div>
+
+                <!-- International Countries (Hidden by default) -->
+                <div class="col-md-6 hidden-field" id="int_countries_field">
+                    <div class="mb-3">
+                        <label for="int_countries" class="form-label"><strong>International Countries*</strong></label>
+                        <input type="text" 
+                               class="form-control <%= (typeof errors !== 'undefined' && errors.int_countries) ? 'field-error' : '' %>" 
+                               id="int_countries" 
+                               name="int_countries" 
+                               value="<%= (typeof oldData !== 'undefined' && oldData.int_countries) ? oldData.int_countries : '' %>"
+                               placeholder="Uganda, Ghana,.." 
+                               required>
+                        <% if (typeof errors !== 'undefined' && errors.int_countries) { %>
+                            <% errors.int_countries.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Membership Status -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Membership Status*</strong></label>
+                        <div class="col-12">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="membership_status" id="member_new" value="New"
+                                       <%= (typeof oldData !== 'undefined' && oldData.membership_status === 'New') ? 'checked' : (!oldData ? 'checked' : 'checked') %>>
+                                <label class="form-check-label" for="member_new">Not a Member</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="membership_status" id="member_exist" value="Exist"
+                                       <%= (typeof oldData !== 'undefined' && oldData.membership_status === 'Exist') ? 'checked' : '' %>>
+                                <label class="form-check-label" for="member_exist">A Member</label>
+                            </div>
+                        </div>
+                        <% if (typeof errors !== 'undefined' && errors.membership_status) { %>
+                            <% errors.membership_status.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Membership Category -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="membership_category" class="form-label"><strong>Membership Category*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.membership_category) ? 'field-error' : '' %>" 
+                                name="membership_category" 
+                                id="membership_category" 
+                                required>
+                            <option value="">-- Select Category --</option>
+                            <!-- Options will be dynamically populated by JavaScript -->
+                        </select>
+                        <% if (typeof errors !== 'undefined' && errors.membership_category) { %>
+                            <% errors.membership_category.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Association Relationship -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Relationship with Associations*</strong></label>
+                        <div class="col-12">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="has_association" id="has_ass_no" value="0"
+                                    <%= (typeof oldData !== 'undefined' && oldData.has_association === '0') ? 'checked' : (!oldData || !oldData.has_association ? 'checked' : '') %>>
+                                <label class="form-check-label" for="has_ass_no">Not a Partner</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="has_association" id="has_ass_yes" value="1"
+                                    <%= (typeof oldData !== 'undefined' && oldData.has_association === '1') ? 'checked' : '' %>>
+                                <label class="form-check-label" for="has_ass_yes">Partner to associations</label>
+                            </div>
+                        </div>
+                        <% if (typeof errors !== 'undefined' && errors.has_association) { %>
+                            <% errors.has_association.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Association Selection (Initially Hidden) -->
+                <div class="col-md-6" id="association_select_container" style="display: none;">
+                    <div class="mb-3">
+                        <label for="association_id" class="form-label"><strong>Select Association*</strong></label>
+                        <select class="form-select <%= (typeof errors !== 'undefined' && errors.association_id) ? 'field-error' : '' %>" 
+                                name="association_id" 
+                                id="association_id">
+                            <option value="">-- Select association --</option>
+                        </select>
+                        <div class="spinner-border spinner-border-sm text-primary mt-2" role="status" id="association_loader" style="display: none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <% if (typeof errors !== 'undefined' && errors.association_id) { %>
+                            <% errors.association_id.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- PSF Association Contributor (Initially Hidden) -->
+                <div class="col-md-6" id="psf_contributor_container" style="display: none;">
+                    <div class="mb-3">
+                        <label class="form-label"><strong>Contributor to PSF Association*</strong></label>
+                        <div class="col-12">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="assoc_contributor" id="contributor_no" value="0"
+                                    <%= (typeof oldData !== 'undefined' && oldData.assoc_contributor === '0') ? 'checked' : (!oldData || !oldData.assoc_contributor ? 'checked' : '') %>>
+                                <label class="form-check-label" for="contributor_no">No, I am not</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="assoc_contributor" id="contributor_yes" value="1"
+                                    <%= (typeof oldData !== 'undefined' && oldData.assoc_contributor === '1') ? 'checked' : '' %>>
+                                <label class="form-check-label" for="contributor_yes">Yes I am</label>
+                            </div>
+                        </div>
+                        <% if (typeof errors !== 'undefined' && errors.assoc_contributor) { %>
+                            <% errors.assoc_contributor.forEach(errorMsg => { %>
+                                <span class="error-message"><%= errorMsg %></span>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-save"></i> Register
+                </button>
+                <a href="/companies/all" class="btn btn-secondary btn-lg ms-2">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="../admin/js/membership.js"></script>

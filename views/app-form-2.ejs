@@ -1,0 +1,206 @@
+<section class="contact-section pt-6">
+    <div class="container">
+        <div class="row">
+            <div class="section-title-box text-center">
+                <div class="section-tagline">Candidate Application Form</div>
+                <hr>
+            </div>
+
+            <div class="col-lg-12">
+                <form action="/applicants/submit" method="POST" enctype="multipart/form-data" id="appForm" class="contact-form">
+                    
+                    <div class="section">
+                        <h4>Candidate Identification</h4>
+                        <div class="row row-gutter-10">
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="firstname" class="cst-form-label">First Name&nbsp;<span class="cst-red">*</span></label>
+                                <input type="text" name="firstname" id="firstname" class="input-text" required>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="lastname" class="cst-form-label">Last Name&nbsp;<span class="cst-red">*</span></label>
+                                <input type="text" name="lastname" id="lastname" class="input-text" required>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="gender" class="cst-form-label">Gender&nbsp;<span class="cst-red">*</span></label>
+                                <select name="gender" id="gender" class="input-text" required>
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="national_id" class="cst-form-label">National ID&nbsp;<span class="cst-red">*</span></label>
+                                <input type="text" name="national_id" id="national_id" class="input-text" required>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="company_name" class="cst-form-label">Company Name&nbsp;<span class="cst-red">*</span></label>
+                                <input type="text" name="company_name" id="company_name" class="input-text" required>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="tin_number" class="cst-form-label">TIN Number&nbsp;<span class="cst-red">*</span></label>
+                                <input type="text" name="tin_number" id="tin_number" class="input-text" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="passport_photo" class="cst-form-label">Passport Photo&nbsp;<span class="cst-red">*</span></label>
+                                <input type="file" name="passport_photo" id="passport_photo" class="input-text" accept="image/*" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>Contact Details</h4>
+                        <div class="row row-gutter-10">
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="email" class="cst-form-label">Email&nbsp;<span class="cst-red">*</span></label>
+                                <input type="email" name="email" id="email" class="input-text" required>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="phone_number" class="cst-form-label">Phone Number&nbsp;<span class="cst-red">*</span></label>
+                                <input type="tel" name="phone_number" id="phone_number" class="input-text" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>Membership Status</h4>
+                        <div class="mb-3">
+                            <label class="cst-form-label">Are you a member?&nbsp;<span class="cst-red">*</span></label>
+                            <div class="form-check-group">
+                                <label class="me-3"><input type="radio" name="is_member" value="Yes" class="form-check-input" onclick="toggleMembership(true)" required> Yes</label>
+                                <label><input type="radio" name="is_member" value="No" class="form-check-input" onclick="toggleMembership(false)" required> No</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mb-3" id="membershipType" style="display:none">
+                            <label for="membershipSelect" class="cst-form-label">In which category?&nbsp;<span class="cst-red">*</span></label>
+                            <select name="membership_type" id="membershipSelect" class="input-text">
+                                <option value="">Select</option>
+                                <option value="Golden Circle">Golden Circle</option>
+                                <option value="Ordinary">Ordinary</option>
+                                <option value="Indashyikirwa">Indashyikirwa</option>
+                                <option value="Associate">Associate</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>Document Upload</h4>
+                        <div class="row row-gutter-10">
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="cv_resume" class="cst-form-label">CV/Resume (PDF)&nbsp;<span class="cst-red">*</span></label>
+                                <input type="file" name="cv_resume" id="cv_resume" class="input-text" accept="application/pdf" required>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3">
+                                <label for="other_document" class="cst-form-label">Other Document (PDF)</label>
+                                <input type="file" name="other_document" id="other_document" class="input-text" accept="application/pdf">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>Position Selection</h4>
+                        <div class="row row-gutter-10">
+                            <div class="col-12 mb-3">
+                                <label for="positionSelect" class="cst-form-label">Position to Apply For&nbsp;<span class="cst-red">*</span></label>
+                                <select name="position_to_apply_for" id="positionSelect" class="input-text" onchange="showPositionFields()" required>
+                                    <option value="">Select Position</option>
+                                    <option value="PSF Chairperson">PSF Chairperson</option>
+                                    <option value="Chamber Chairperson">Chamber Chairperson</option>
+                                    <option value="Province Chairperson">Province Chairperson</option>
+                                    <option value="District Chairperson">District Chairperson</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3" id="chamberField" style="display:none">
+                                <label for="chamberSelect" class="cst-form-label">Select Chamber&nbsp;<span class="cst-red">*</span></label>
+                                <select name="chamber_selected" id="chamberSelect" class="input-text">
+                                    <option value="">Select</option>
+                                    <option value="Agriculture">Agriculture</option>
+                                    <option value="Service">Service</option>
+                                    <option value="Trade">Trade</option>
+                                    <option value="Industry">Industry</option>
+                                    <option value="Specialized">Specialized</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3" id="provinceField" style="display:none">
+                                <label for="provinceSelect" class="cst-form-label">Select Province&nbsp;<span class="cst-red">*</span></label>
+                                <select name="province_selected" id="provinceSelect" class="input-text">
+                                    <option value="">Select Province</option>
+                                    <option value="Eastern">Eastern</option>
+                                    <option value="Western">Western</option>
+                                    <option value="Northern">Northern</option>
+                                    <option value="Southern">Southern</option>
+                                    <option value="Kigali City">Kigali City</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6 mb-3" id="districtField" style="display:none">
+                                <label for="districtSelect" class="cst-form-label">Select District&nbsp;<span class="cst-red">*</span></label>
+                                <select name="district_selected" id="districtSelect" class="input-text">
+                                    <option value="">Select</option>
+                                    <% districts.forEach(d => { %>
+                                    <option value="<%= d %>"><%= d %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-12 text-center">
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function toggleMembership(show) {
+        const div = document.getElementById('membershipType');
+        const sel = document.getElementById('membershipSelect');
+        
+        div.style.display = show ? 'block' : 'none';
+        sel.required = show;
+        
+        // Clear value if hidden
+        if (!show) {
+            sel.value = '';
+        }
+    }
+
+    function showPositionFields() {
+        const pos = document.getElementById('positionSelect').value;
+        
+        const ch = document.getElementById('chamberField');
+        const chS = document.getElementById('chamberSelect');
+        const pr = document.getElementById('provinceField');
+        const prS = document.getElementById('provinceSelect');
+        const di = document.getElementById('districtField');
+        const diS = document.getElementById('districtSelect');
+
+        const fieldsToReset = [
+            { div: ch, select: chS },
+            { div: pr, select: prS },
+            { div: di, select: diS }
+        ];
+
+        // 1. Reset all conditional fields
+        fieldsToReset.forEach(field => {
+            field.div.style.display = 'none';
+            field.select.required = false;
+            field.select.value = '';
+        });
+
+        // 2. Show the relevant field
+        if (pos === 'Chamber Chairperson') {
+            ch.style.display = 'block';
+            chS.required = true;
+        } else if (pos === 'Province Chairperson') {
+            pr.style.display = 'block';
+            prS.required = true;
+        } else if (pos === 'District Chairperson') {
+            di.style.display = 'block';
+            diS.required = true;
+        }
+    }
+</script>

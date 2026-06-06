@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSF Retreat 2026 – Submit an Idea</title>
+<link rel="icon" type="image/png" href="/clients/images/logo/cropped-psf-logo.png">
+<style>
+  :root {
+    --psf-green: #10b95c;
+    --psf-green-dark: #05963d;
+    --psf-green-dim: #d1fae5;
+    --psf-orange: #f97316;
+    --psf-orange-dim: #ffedd5;
+    --ink: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --surface: #f9fafb;
+    --white: #ffffff;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--surface); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* TOP BAR */
+  .top-bar { background: linear-gradient(135deg, var(--psf-green-dark) 0%, var(--psf-green) 60%, #34d399 100%); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; box-shadow: 0 2px 12px rgba(16,185,129,.25); }
+  .top-bar .brand { display: flex; align-items: center; gap: 12px; color: var(--white); text-decoration: none; }
+  .top-bar .brand img { height: 38px; width: auto; }
+  .top-bar .brand-text { font-size: 15px; font-weight: 700; letter-spacing: .3px; line-height: 1.2; }
+  .top-bar .brand-text span { font-size: 11px; font-weight: 500; opacity: .85; display: block; }
+  .top-bar .badge { background: var(--psf-orange); color: var(--white); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase; }
+
+  /* HERO */
+  .hero { background: var(--white); border-bottom: 1px solid var(--border); padding: 36px 24px 28px; text-align: center; }
+  .hero .event-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--psf-orange); background: var(--psf-orange-dim); padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(20px, 4vw, 32px); font-weight: 800; color: var(--ink); line-height: 1.2; margin-bottom: 8px; }
+  .hero h1 span { color: var(--psf-green); }
+  .hero .sub { font-size: 14px; color: var(--muted); max-width: 560px; margin: 0 auto 18px; line-height: 1.6; }
+  .hero .meta-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .meta-chip { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--psf-green-dark); background: var(--psf-green-dim); padding: 6px 14px; border-radius: 20px; }
+
+  /* MAIN */
+  .main { flex: 1; max-width: 980px; width: 100%; margin: 28px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 330px; gap: 24px; align-items: start; }
+
+  /* CARD */
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.05); }
+  .card-header { padding: 16px 22px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .card-header .icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+  .icon-green { background: var(--psf-green-dim); }
+  .icon-orange { background: var(--psf-orange-dim); }
+  .card-header h2 { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .card-header p { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .card-body { padding: 22px; }
+
+  /* FORM */
+  .form-row { margin-bottom: 16px; }
+  .form-row label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+  .form-row label .req { color: var(--psf-orange); margin-left: 2px; }
+  .form-row label .hint { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 4px; }
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 13px; font-family: var(--font); font-size: 14px; color: var(--ink); background: var(--white); transition: border-color .2s, box-shadow .2s; outline: none; appearance: none; }
+  input:focus, select:focus, textarea:focus { border-color: var(--psf-green); box-shadow: 0 0 0 3px rgba(16,185,129,.12); }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7280' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+  textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* PANEL SELECTOR */
+  .panel-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .panel-option { display: flex; align-items: flex-start; gap: 10px; padding: 11px 13px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color .2s, background .2s; }
+  .panel-option:hover { border-color: var(--psf-green); background: var(--psf-green-dim); }
+  .panel-option input[type="radio"] { margin-top: 3px; accent-color: var(--psf-green); flex-shrink: 0; }
+  .panel-option.selected { border-color: var(--psf-green); background: var(--psf-green-dim); }
+  .panel-option .po-title { font-size: 13px; font-weight: 700; color: var(--ink); }
+  .panel-option .po-desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+  /* CHAR COUNTER */
+  .char-row { display: flex; justify-content: flex-end; }
+  .char-count { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .char-count.warn { color: var(--psf-orange); }
+
+  /* SUBMIT BTN */
+  .btn-submit { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--psf-green-dark), var(--psf-green)); color: var(--white); border: none; border-radius: var(--radius-sm); font-family: var(--font); font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: .3px; transition: opacity .2s, transform .1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn-submit:hover { opacity: .9; }
+  .btn-submit:active { transform: scale(.99); }
+  .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+  /* NOTICES */
+  .notice { padding: 11px 15px; border-radius: var(--radius-sm); font-size: 13px; line-height: 1.5; margin-bottom: 16px; display: flex; gap: 10px; align-items: flex-start; }
+  .notice-blue { background: #eff6ff; color: #1e40af; border-left: 3px solid #3b82f6; }
+  .notice-orange { background: var(--psf-orange-dim); color: #92400e; border-left: 3px solid var(--psf-orange); }
+  .notice-red { background: #fef2f2; color: #991b1b; border-left: 3px solid #ef4444; }
+
+  /* DEBUG BOX */
+  #debug-box { background: #1e1e2e; color: #a6e3a1; border-radius: var(--radius-sm); padding: 12px 14px; font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.6; margin-bottom: 14px; display: none; white-space: pre-wrap; word-break: break-all; max-height: 180px; overflow-y: auto; }
+  #debug-box .debug-label { color: #cba6f7; font-weight: 700; margin-bottom: 4px; display: block; }
+  #debug-box .debug-err { color: #f38ba8; }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .agenda-day { margin-bottom: 14px; }
+  .agenda-day:last-child { margin-bottom: 0; }
+  .day-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--psf-green-dark); background: var(--psf-green-dim); padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+  .agenda-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .agenda-item:last-child { border-bottom: none; }
+  .agenda-time { color: var(--muted); font-size: 11px; font-weight: 600; white-space: nowrap; min-width: 88px; padding-top: 1px; }
+  .agenda-act { color: var(--ink); line-height: 1.4; }
+  .agenda-act.highlight { font-weight: 700; color: var(--psf-green-dark); }
+  .team-block { margin-bottom: 13px; }
+  .team-block:last-child { margin-bottom: 0; }
+  .team-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--psf-orange); margin-bottom: 5px; }
+  .team-member { font-size: 12px; color: var(--ink); padding: 3px 0; display: flex; align-items: flex-start; gap: 5px; line-height: 1.4; }
+  .team-member::before { content: '·'; color: var(--psf-green); font-weight: 900; flex-shrink: 0; }
+  .team-member .org { font-size: 11px; color: var(--muted); }
+
+  /* SUCCESS */
+  #success-screen { display: none; text-align: center; padding: 48px 24px; }
+  #success-screen .big-icon { font-size: 52px; margin-bottom: 14px; }
+  #success-screen h2 { font-size: 22px; font-weight: 800; color: var(--psf-green-dark); margin-bottom: 8px; }
+  #success-screen p { font-size: 14px; color: var(--muted); max-width: 380px; margin: 0 auto 22px; line-height: 1.6; }
+  .btn-reset { padding: 10px 24px; border: 2px solid var(--psf-green); background: transparent; color: var(--psf-green-dark); border-radius: var(--radius-sm); font-family: var(--font); font-size: 14px; font-weight: 700; cursor: pointer; transition: background .2s; }
+  .btn-reset:hover { background: var(--psf-green-dim); }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 18px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); background: var(--white); }
+  footer strong { color: var(--psf-green-dark); }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .main { grid-template-columns: 1fr; margin: 18px auto; }
+    .two-col { grid-template-columns: 1fr; }
+    .hero { padding: 24px 16px 20px; }
+    .card-body { padding: 16px; }
+    .top-bar .badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <a href="/" class="brand">
+    <img src="/clients/images/logo/cropped-psf-logo.png" alt="PSF Logo" onerror="this.style.display='none'">
+    <div class="brand-text">
+      Private Sector Federation
+      <span>psf.org.rw</span>
+    </div>
+  </a>
+  <span class="badge">Umwiherero 2026</span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="event-label">🏛️ May 2026 · Gako, Rwanda</div>
+  <h1>PSF <span>Annual Retreat</span> — Share Your Ideas</h1>
+  <p class="sub">Use this form to submit ideas, recommendations, and proposals ahead of or during the PSF Retreat 2026. All submissions go directly to the Coordination Team.</p>
+  <div class="meta-row">
+    <span class="meta-chip">📅 29–31 May 2026</span>
+    <span class="meta-chip">📍 Gako, Rwanda</span>
+    <span class="meta-chip">🤝 PSF &amp; Government Joint Retreat</span>
+  </div>
+</section>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- FORM -->
+  <div>
+    <div class="card">
+      <div class="card-header">
+        <div class="icon icon-green">💡</div>
+        <div>
+          <h2>Idea Submission Form</h2>
+          <p>All fields marked * are required</p>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div id="form-screen">
+          <div class="notice notice-blue">
+            ℹ️ <span>You may write in English or Kinyarwanda. All submissions are reviewed by the Retreat Secretariat before being presented in sessions.</span>
+          </div>
+
+          <form id="idea-form" novalidate>
+
+            <!-- PERSONAL INFO -->
+            <div class="two-col">
+              <div class="form-row">
+                <label>Full Name <span class="req">*</span></label>
+                <input type="text" name="full_name" id="full_name" placeholder="First and last name" required>
+              </div>
+              <div class="form-row">
+                <label>Organisation / Institution <span class="req">*</span></label>
+                <input type="text" name="organisation" id="organisation" placeholder="PSF / MINICOM / RDB…" required>
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div class="form-row">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" name="email" id="email" placeholder="name@organisation.rw" required>
+              </div>
+              <div class="form-row">
+                <label>Phone Number <span class="hint">(optional)</span></label>
+                <input type="tel" name="phone" id="phone" placeholder="+250 7XX XXX XXX">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label>Your Role at the Retreat <span class="req">*</span></label>
+              <select name="role" id="role" required>
+                <option value="">— Select your role —</option>
+                <option value="participant">Participant / Delegate</option>
+                <option value="facilitator">Facilitator / Speaker / Panelist</option>
+                <option value="coordination_team">Coordination Team Member</option>
+                <option value="observer">Observer / Guest</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- SESSION -->
+            <div class="form-row">
+              <label>Which session does your idea relate to? <span class="req">*</span></label>
+              <div class="panel-grid" id="panel-grid">
+                <label class="panel-option">
+                  <input type="radio" name="panel" value="panel_1" required>
+                  <div>
+                    <div class="po-title">Session I — Business Regulations &amp; PSF Operations</div>
+                    <div class="po-desc">Laws and regulations governing the business environment and PSF's mandate</div>
+                  </div>
+                </label>
+                <label class="panel-option">
+                  <input type="radio" name="panel" value="panel_2">
+                  <div>
+                    <div class="po-title">Session II — Quality Services &amp; Sustainable Competitiveness</div>
+                    <div class="po-desc">Strategies for service excellence and differentiation in today's economy</div>
+                  </div>
+                </label>
+                <label class="panel-option">
+                  <input type="radio" name="panel" value="panel_3">
+                  <div>
+                    <div class="po-title">Session III — Skills &amp; Transformative Development</div>
+                    <div class="po-desc">Knowledge and skills needed to drive Rwanda's economic transformation</div>
+                  </div>
+                </label>
+                <label class="panel-option">
+                  <input type="radio" name="panel" value="general">
+                  <div>
+                    <div class="po-title">General / Cross-cutting</div>
+                    <div class="po-desc">Idea not specific to a single session, or covers multiple themes</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- IDEA -->
+            <div class="form-row">
+              <label>Type of Contribution <span class="req">*</span></label>
+              <select name="idea_type" id="idea_type" required>
+                <option value="">— Select type —</option>
+                <option value="recommendation">Recommendation</option>
+                <option value="problem">Problem Statement</option>
+                <option value="initiative">New Initiative / Proposal</option>
+                <option value="policy">Policy Suggestion</option>
+                <option value="collaboration">Collaboration Opportunity</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label>Idea Title <span class="req">*</span></label>
+              <input type="text" name="idea_title" id="idea_title" placeholder="A short, clear title for your idea…" maxlength="120" required>
+            </div>
+
+            <div class="form-row">
+              <label>Full Description <span class="req">*</span> <span class="hint">minimum 30 characters</span></label>
+              <textarea name="idea_body" id="idea_body" placeholder="Describe your idea in detail. Include context, the problem it solves, and how it could be implemented…" maxlength="2000" required></textarea>
+              <div class="char-row"><span class="char-count" id="body-count">0 / 2000</span></div>
+            </div>
+
+            <div class="form-row">
+              <label>Expected Impact <span class="hint">(optional)</span></label>
+              <textarea name="expected_impact" id="expected_impact" placeholder="What outcome or benefit do you expect if this idea is adopted?…" maxlength="800" style="min-height:80px;"></textarea>
+              <div class="char-row"><span class="char-count" id="impact-count">0 / 800</span></div>
+            </div>
+
+            <div class="form-row">
+              <label>Priority Level <span class="req">*</span></label>
+              <select name="priority" id="priority" required>
+                <option value="">— Select priority —</option>
+                <option value="high">High — Urgent / Should be addressed immediately</option>
+                <option value="medium">Medium — Important but not immediately urgent</option>
+                <option value="low">Low — Long-term consideration</option>
+              </select>
+            </div>
+
+            <!-- CONSENT -->
+            <div class="form-row" style="display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;">
+              <input type="checkbox" name="consent" id="consent" style="width:auto;margin-top:3px;accent-color:var(--psf-green);flex-shrink:0;" required>
+              <label for="consent" style="font-size:13px;font-weight:400;color:var(--muted);cursor:pointer;line-height:1.5;">
+                I consent to this idea being used by the PSF Retreat Coordination Team for session preparation, reporting, and follow-up activities.
+              </label>
+            </div>
+
+            <!-- ERROR / DEBUG -->
+            <div id="debug-box"><span class="debug-label">⚠ Submission Debug Info</span><span id="debug-content"></span></div>
+            <div id="form-error" class="notice notice-red" style="display:none;"></div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">
+              <span id="btn-text">✉️ Submit Idea</span>
+              <span id="btn-loading" style="display:none;">⏳ Submitting…</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- SUCCESS -->
+        <div id="success-screen">
+          <div class="big-icon">✅</div>
+          <h2>Idea Submitted Successfully!</h2>
+          <p>Thank you. Your submission has been received and will be reviewed by the PSF Retreat Secretariat.</p>
+          <button class="btn-reset" onclick="resetForm()">Submit Another Idea</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon icon-green">📅</div>
+        <div><h2>Retreat Programme</h2><p>Gahunda y'Umwiherero</p></div>
+      </div>
+      <div class="card-body" style="padding:14px 18px;">
+        <div class="agenda-day">
+          <span class="day-label">Day 1 · Fri 29 May</span>
+          <div class="agenda-item"><span class="agenda-time">15:00–16:00</span><span class="agenda-act">Registration at PSF HQ</span></div>
+          <div class="agenda-item"><span class="agenda-time">16:15–18:00</span><span class="agenda-act">Transfer to &amp; arrival at Gako</span></div>
+          <div class="agenda-item"><span class="agenda-time">18:00–19:00</span><span class="agenda-act">Retreat briefing &amp; orientation</span></div>
+          <div class="agenda-item"><span class="agenda-time">19:00</span><span class="agenda-act">Dinner &amp; rest</span></div>
+        </div>
+        <div class="agenda-day">
+          <span class="day-label">Day 2 · Sat 30 May</span>
+          <div class="agenda-item"><span class="agenda-time">10:00–10:30</span><span class="agenda-act">Official opening ceremony</span></div>
+          <div class="agenda-item"><span class="agenda-time">10:30–11:45</span><span class="agenda-act highlight">Session I — Business Regulations</span></div>
+          <div class="agenda-item"><span class="agenda-time">13:45–15:00</span><span class="agenda-act highlight">Session II — Services &amp; Competitiveness</span></div>
+          <div class="agenda-item"><span class="agenda-time">15:15–16:30</span><span class="agenda-act highlight">Session III — Skills &amp; Development</span></div>
+          <div class="agenda-item"><span class="agenda-time">16:40–18:00</span><span class="agenda-act">Breakout group work</span></div>
+        </div>
+        <div class="agenda-day">
+          <span class="day-label">Day 3 · Sun 31 May</span>
+          <div class="agenda-item"><span class="agenda-time">08:30–09:00</span><span class="agenda-act">Recap of Day 2 discussions</span></div>
+          <div class="agenda-item"><span class="agenda-time">09:00–11:00</span><span class="agenda-act">Group presentations</span></div>
+          <div class="agenda-item"><span class="agenda-time">11:00–11:30</span><span class="agenda-act">Adoption of resolutions</span></div>
+          <div class="agenda-item"><span class="agenda-time">12:00–12:30</span><span class="agenda-act">Closing ceremony</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon icon-orange">🏗️</div>
+        <div><h2>Coordination Teams</h2><p>Retreat Organisation Structure</p></div>
+      </div>
+      <div class="card-body" style="padding:14px 18px;">
+        <div class="team-block">
+          <div class="team-name">Coordination Team</div>
+          <div class="team-member">KARANGWA CASSIEN <span class="org">&nbsp;· MINICOM (Coordinator)</span></div>
+          <div class="team-member">NTAGENGERWA THEONESTE <span class="org">&nbsp;· PSF (Deputy)</span></div>
+        </div>
+        <div class="team-block">
+          <div class="team-name">Secretariat &amp; Programme</div>
+          <div class="team-member">HATEGEKIMANA CYLLILLE <span class="org">&nbsp;· MINECOFIN (Lead)</span></div>
+          <div class="team-member">NDAHIRWA BENJAMIN <span class="org">&nbsp;· PSF</span></div>
+          <div class="team-member">MUGABO MURINDABIGWI Charles <span class="org">&nbsp;· PSF</span></div>
+        </div>
+        <div class="team-block">
+          <div class="team-name">Public &amp; Private Sector Liaison</div>
+          <div class="team-member">MUTAGOMA FELIX <span class="org">&nbsp;· PSF (Lead)</span></div>
+          <div class="team-member">KAYITESI EUGENIE <span class="org">&nbsp;· PSF</span></div>
+        </div>
+        <div class="team-block">
+          <div class="team-name">Communication Team</div>
+          <div class="team-member">WILLIAM BUNINGWIRE <span class="org">&nbsp;· PSF</span></div>
+          <div class="team-member">NSHIMIYIMANA EMMANUEL <span class="org">&nbsp;· MINICOM</span></div>
+        </div>
+        <div class="team-block">
+          <div class="team-name">Logistics &amp; Protocol</div>
+          <div class="team-member">EPHREM KARANGWA <span class="org">&nbsp;· PSF (Lead)</span></div>
+          <div class="team-member">GABIRO CLAUDE <span class="org">&nbsp;· PSF</span></div>
+          <div class="team-member">NICOLE TUYISENGE <span class="org">&nbsp;· PSF</span></div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<footer>
+  © May 2026 · <strong>Private Sector Federation of Rwanda</strong> · Kigali, Rwanda &nbsp;|&nbsp; psf.org.rw
+</footer>
+
+<script>
+  // Panel option visual highlight
+  document.querySelectorAll('.panel-option input[type="radio"]').forEach(function(radioInput) {
+    radioInput.addEventListener('change', function() {
+      document.querySelectorAll('.panel-option').forEach(function(optionEl) { optionEl.classList.remove('selected'); });
+      this.closest('.panel-option').classList.add('selected');
+    });
+  });
+
+  // Character counters
+  function wireCharCount(textareaId, counterId, maxLen) {
+    var textareaEl = document.getElementById(textareaId);
+    var counterEl = document.getElementById(counterId);
+    if (!textareaEl || !counterEl) return;
+    textareaEl.addEventListener('input', function() {
+      var currentLen = textareaEl.value.length;
+      counterEl.textContent = currentLen + ' / ' + maxLen;
+      counterEl.className = 'char-count' + (currentLen > maxLen * 0.85 ? ' warn' : '');
+    });
+  }
+  wireCharCount('idea_body', 'body-count', 2000);
+  wireCharCount('expected_impact', 'impact-count', 800);
+
+  // Show debug info on failure
+  function showDebug(label, detail) {
+    var debugBox = document.getElementById('debug-box');
+    var debugContent = document.getElementById('debug-content');
+    debugContent.innerHTML = '<span class="debug-err">' + label + '\n' + detail + '</span>';
+    debugBox.style.display = 'block';
+  }
+
+  // Form submit handler
+  document.getElementById('idea-form').addEventListener('submit', function(evt) {
+    evt.preventDefault();
+
+    var errorBox = document.getElementById('form-error');
+    var debugBox = document.getElementById('debug-box');
+    errorBox.style.display = 'none';
+    debugBox.style.display = 'none';
+
+    // Validate required text/select fields
+    var requiredFieldIds = ['full_name', 'organisation', 'email', 'role', 'idea_type', 'idea_title', 'idea_body', 'priority'];
+    var hasError = false;
+
+    requiredFieldIds.forEach(function(fieldId) {
+      var fieldEl = document.getElementById(fieldId);
+      if (!fieldEl || !fieldEl.value.trim()) {
+        if (fieldEl) fieldEl.style.borderColor = '#ef4444';
+        hasError = true;
+      } else {
+        fieldEl.style.borderColor = '';
+      }
+    });
+
+    // Validate panel radio
+    var selectedPanel = document.querySelector('input[name="panel"]:checked');
+    if (!selectedPanel) {
+      hasError = true;
+      document.getElementById('panel-grid').style.outline = '2px solid #ef4444';
+      document.getElementById('panel-grid').style.borderRadius = '8px';
+    } else {
+      document.getElementById('panel-grid').style.outline = '';
+    }
+
+    // Validate idea body min length
+    var ideaBodyEl = document.getElementById('idea_body');
+    if (ideaBodyEl.value.trim().length < 30) {
+      ideaBodyEl.style.borderColor = '#ef4444';
+      hasError = true;
+    }
+
+    // Validate consent
+    var consentEl = document.getElementById('consent');
+    if (!consentEl.checked) {
+      consentEl.style.outline = '2px solid #ef4444';
+      hasError = true;
+    } else {
+      consentEl.style.outline = '';
+    }
+
+    if (hasError) {
+      errorBox.innerHTML = '⚠️ Please fill in all required fields (*). Your idea description must be at least 30 characters.';
+      errorBox.style.display = 'flex';
+      return;
+    }
+
+    // Build payload — keys must match exactly what the route expects
+    var payload = {
+      full_name:       document.getElementById('full_name').value.trim(),
+      organisation:    document.getElementById('organisation').value.trim(),
+      email:           document.getElementById('email').value.trim(),
+      phone:           document.getElementById('phone').value.trim(),
+      role:            document.getElementById('role').value,
+      panel:           selectedPanel.value,
+      idea_type:       document.getElementById('idea_type').value,
+      idea_title:      document.getElementById('idea_title').value.trim(),
+      idea_body:       document.getElementById('idea_body').value.trim(),
+      expected_impact: document.getElementById('expected_impact').value.trim(),
+      priority:        document.getElementById('priority').value,
+      submitted_at:    new Date().toISOString()
+    };
+
+    // UI: enter loading state
+    var submitBtn = document.getElementById('submit-btn');
+    document.getElementById('btn-text').style.display = 'none';
+    document.getElementById('btn-loading').style.display = 'inline';
+    submitBtn.disabled = true;
+
+    // POST — URL matches the route exactly: POST /umwiherero/submit
+    fetch('/umwiherero/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(serverResponse) {
+      // Parse JSON regardless of status so we can show server error messages
+      return serverResponse.json().then(function(data) {
+        return { status: serverResponse.status, ok: serverResponse.ok, data: data };
+      });
+    })
+    .then(function(result) {
+      if (result.ok && result.data.ok) {
+        // Success — swap to success screen
+        document.getElementById('form-screen').style.display = 'none';
+        document.getElementById('success-screen').style.display = 'block';
+      } else {
+        // Server responded but reported an error (4xx/5xx with JSON body)
+        var serverMsg = (result.data && result.data.message) ? result.data.message : 'Unknown server error';
+        showDebug('HTTP ' + result.status + ' from /umwiherero/submit:', serverMsg);
+        errorBox.innerHTML = '❌ Submission failed: ' + serverMsg + ' — see debug info above.';
+        errorBox.style.display = 'flex';
+        resetLoadingState();
+      }
+    })
+    .catch(function(networkErr) {
+      // Network failure, CORS block, or JSON parse error
+      showDebug('Network / parse error:', networkErr.toString());
+      errorBox.innerHTML = '❌ Could not reach the server. Check your connection or contact the IT team.';
+      errorBox.style.display = 'flex';
+      resetLoadingState();
+    });
+  });
+
+  function resetLoadingState() {
+    document.getElementById('btn-text').style.display = 'inline';
+    document.getElementById('btn-loading').style.display = 'none';
+    document.getElementById('submit-btn').disabled = false;
+  }
+
+  function resetForm() {
+    document.getElementById('idea-form').reset();
+    document.querySelectorAll('.panel-option').forEach(function(optionEl) { optionEl.classList.remove('selected'); });
+    document.getElementById('body-count').textContent = '0 / 2000';
+    document.getElementById('impact-count').textContent = '0 / 800';
+    document.getElementById('form-error').style.display = 'none';
+    document.getElementById('debug-box').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'none';
+    document.getElementById('form-screen').style.display = 'block';
+    resetLoadingState();
+  }
+</script>
+</body>
+</html>

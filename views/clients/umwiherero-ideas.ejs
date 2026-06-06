@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSF Retreat 2026 — Submitted Ideas</title>
+<link rel="icon" type="image/png" href="/clients/images/logo/cropped-psf-logo.png">
+<style>
+  :root {
+    --psf-green: #10b981; --psf-green-dark: #059669; --psf-green-dim: #d1fae5;
+    --psf-orange: #f97316; --psf-orange-dim: #ffedd5;
+    --ink: #111827; --muted: #6b7280; --border: #e5e7eb;
+    --surface: #f9fafb; --white: #ffffff;
+    --radius: 12px; --radius-sm: 8px;
+    --font: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--surface); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* TOP BAR */
+  .top-bar { background: linear-gradient(135deg, var(--psf-green-dark), var(--psf-green) 60%, #34d399); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 60px; box-shadow: 0 2px 12px rgba(16,185,129,.25); }
+  .brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; }
+  .brand img { height: 34px; width: auto; }
+  .brand-text { font-size: 14px; font-weight: 700; line-height: 1.2; }
+  .brand-text span { font-size: 11px; font-weight: 500; opacity: .8; display: block; }
+  .top-badge { background: var(--psf-orange); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase; }
+
+  /* GATE SCREEN */
+  #gate-screen { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+  .gate-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 32px; max-width: 380px; width: 100%; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,.07); }
+  .gate-icon { font-size: 44px; margin-bottom: 14px; }
+  .gate-card h2 { font-size: 20px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+  .gate-card p { font-size: 13px; color: var(--muted); margin-bottom: 22px; line-height: 1.5; }
+  .gate-input { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 11px 14px; font-family: var(--font); font-size: 16px; font-weight: 700; text-align: center; letter-spacing: 3px; color: var(--ink); outline: none; transition: border-color .2s, box-shadow .2s; margin-bottom: 14px; }
+  .gate-input:focus { border-color: var(--psf-green); box-shadow: 0 0 0 3px rgba(16,185,129,.12); }
+  .gate-input.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.1); }
+  .btn-unlock { width: 100%; padding: 12px; background: linear-gradient(135deg, var(--psf-green-dark), var(--psf-green)); color: #fff; border: none; border-radius: var(--radius-sm); font-family: var(--font); font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity .2s; }
+  .btn-unlock:hover { opacity: .9; }
+  .btn-unlock:disabled { opacity: .6; cursor: not-allowed; }
+  .gate-error { color: #dc2626; font-size: 13px; margin-top: 10px; min-height: 18px; }
+
+  /* IDEAS SCREEN */
+  #ideas-screen { display: none; flex: 1; flex-direction: column; }
+
+  /* TOOLBAR */
+  .toolbar { background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .toolbar-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .toolbar h1 { font-size: 16px; font-weight: 800; color: var(--ink); }
+  .total-badge { background: var(--psf-green-dim); color: var(--psf-green-dark); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .toolbar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .filter-select { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 7px 30px 7px 10px; font-family: var(--font); font-size: 13px; color: var(--ink); background: var(--white); outline: none; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%236b7280' d='M1 1l4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
+  .filter-select:focus { border-color: var(--psf-green); }
+  .search-box { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 7px 12px; font-family: var(--font); font-size: 13px; color: var(--ink); outline: none; width: 180px; }
+  .search-box:focus { border-color: var(--psf-green); }
+
+  /* GRID */
+  .ideas-grid { padding: 20px 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+  /* IDEA CARD */
+  .idea-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.04); display: flex; flex-direction: column; gap: 10px; transition: box-shadow .2s; }
+  .idea-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.09); }
+  .idea-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .idea-title { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.3; flex: 1; }
+  .priority-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+  .priority-dot.high { background: #ef4444; }
+  .priority-dot.medium { background: var(--psf-orange); }
+  .priority-dot.low { background: #22c55e; }
+  .idea-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .tag-panel { background: var(--psf-green-dim); color: var(--psf-green-dark); }
+  .tag-type { background: var(--psf-orange-dim); color: #92400e; }
+  .tag-priority-high { background: #fef2f2; color: #dc2626; }
+  .tag-priority-medium { background: var(--psf-orange-dim); color: #92400e; }
+  .tag-priority-low { background: #f0fdf4; color: #166534; }
+  .idea-body-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .idea-body-text.clamped { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .expand-btn { font-size: 12px; color: var(--psf-green-dark); font-weight: 600; background: none; border: none; cursor: pointer; padding: 0; text-align: left; }
+  .idea-footer { border-top: 1px solid var(--border); padding-top: 10px; display: flex; align-items: center; justify-content: space-between; }
+  .submitter { font-size: 12px; color: var(--ink); font-weight: 600; }
+  .submitter span { font-weight: 400; color: var(--muted); }
+  .sub-date { font-size: 11px; color: var(--muted); }
+
+  /* EMPTY / LOADING */
+  .state-msg { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 14px; }
+  .state-msg .icon { font-size: 36px; margin-bottom: 10px; }
+
+  /* LOCK BUTTON */
+  .btn-lock { font-size: 12px; font-weight: 600; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; cursor: pointer; transition: color .2s; }
+  .btn-lock:hover { color: #dc2626; border-color: #dc2626; }
+
+  footer { text-align: center; padding: 16px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); background: var(--white); }
+  footer strong { color: var(--psf-green-dark); }
+
+  @media (max-width: 600px) {
+    .toolbar { padding: 12px 16px; }
+    .ideas-grid { padding: 14px 16px; }
+    .search-box { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <a href="/" class="brand">
+    <img src="/clients/images/logo/cropped-psf-logo.png" alt="PSF" onerror="this.style.display='none'">
+    <div class="brand-text">Private Sector Federation <span>psf.org.rw</span></div>
+  </a>
+  <span class="top-badge">Retreat Ideas</span>
+</header>
+
+<!-- GATE -->
+<div id="gate-screen">
+  <div class="gate-card">
+    <div class="gate-icon">🔐</div>
+    <h2>Access Required</h2>
+    <p>This page is restricted to PSF Retreat coordination staff. Enter the access code to view submitted ideas.</p>
+    <input type="password" class="gate-input" id="access-code" placeholder="Enter code" autocomplete="off" maxlength="20">
+    <button class="btn-unlock" id="unlock-btn" onclick="unlock()">Unlock →</button>
+    <div class="gate-error" id="gate-error"></div>
+  </div>
+</div>
+
+<!-- IDEAS -->
+<div id="ideas-screen">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <h1>Submitted Ideas</h1>
+      <span class="total-badge" id="total-badge">— ideas</span>
+    </div>
+    <div class="toolbar-right">
+      <input type="text" class="search-box" id="search-box" placeholder="🔍 Search…" oninput="renderCards()">
+      <select class="filter-select" id="filter-panel" onchange="renderCards()">
+        <option value="">All Sessions</option>
+        <option value="panel_1">Session I</option>
+        <option value="panel_2">Session II</option>
+        <option value="panel_3">Session III</option>
+        <option value="general">General</option>
+      </select>
+      <select class="filter-select" id="filter-priority" onchange="renderCards()">
+        <option value="">All Priorities</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <button class="btn-lock" onclick="lock()">🔒 Lock</button>
+    </div>
+  </div>
+  <div class="ideas-grid" id="ideas-grid">
+    <div class="state-msg"><div class="icon">⏳</div>Loading ideas…</div>
+  </div>
+</div>
+
+<footer>© May 2026 · <strong>Private Sector Federation of Rwanda</strong> · psf.org.rw</footer>
+
+<script>
+  var allIdeas = [];
+  var currentCode = '';
+
+  // Allow Enter key on code input
+  document.getElementById('access-code').addEventListener('keydown', function(evt) {
+    if (evt.key === 'Enter') unlock();
+  });
+
+  function unlock() {
+    var codeInput = document.getElementById('access-code');
+    var errorEl = document.getElementById('gate-error');
+    var unlockBtn = document.getElementById('unlock-btn');
+    var enteredCode = codeInput.value.trim();
+
+    if (!enteredCode) {
+      errorEl.textContent = 'Please enter the access code.';
+      codeInput.classList.add('error');
+      return;
+    }
+
+    errorEl.textContent = '';
+    codeInput.classList.remove('error');
+    unlockBtn.disabled = true;
+    unlockBtn.textContent = 'Checking…';
+
+    // Fetch from server — code validated server-side, data only returned if correct
+    fetch('/umwiherero/ideas/data?code=' + encodeURIComponent(enteredCode))
+      .then(function(res) { return res.json().then(function(data) { return { status: res.status, data: data }; }); })
+      .then(function(result) {
+        if (result.status === 401) {
+          errorEl.textContent = '❌ Incorrect access code. Try again.';
+          codeInput.classList.add('error');
+          codeInput.value = '';
+          codeInput.focus();
+          unlockBtn.disabled = false;
+          unlockBtn.textContent = 'Unlock →';
+          return;
+        }
+        if (!result.data.ok) {
+          errorEl.textContent = '⚠️ Server error: ' + result.data.message;
+          unlockBtn.disabled = false;
+          unlockBtn.textContent = 'Unlock →';
+          return;
+        }
+        // Success
+        currentCode = enteredCode;
+        allIdeas = result.data.ideas;
+        document.getElementById('gate-screen').style.display = 'none';
+        document.getElementById('ideas-screen').style.display = 'flex';
+        document.getElementById('ideas-screen').style.flexDirection = 'column';
+        renderCards();
+      })
+      .catch(function(err) {
+        errorEl.textContent = '⚠️ Network error — ' + err.message;
+        unlockBtn.disabled = false;
+        unlockBtn.textContent = 'Unlock →';
+      });
+  }
+
+  function lock() {
+    allIdeas = [];
+    currentCode = '';
+    document.getElementById('access-code').value = '';
+    document.getElementById('gate-error').textContent = '';
+    document.getElementById('ideas-screen').style.display = 'none';
+    document.getElementById('gate-screen').style.display = 'flex';
+    document.getElementById('unlock-btn').disabled = false;
+    document.getElementById('unlock-btn').textContent = 'Unlock →';
+  }
+
+  var panelLabels = { panel_1: 'Session I', panel_2: 'Session II', panel_3: 'Session III', general: 'General' };
+  var typeLabels  = { recommendation: 'Recommendation', problem: 'Problem', initiative: 'Initiative', policy: 'Policy', collaboration: 'Collaboration', other: 'Other' };
+
+  function fmtDate(dtStr) {
+    if (!dtStr) return '';
+    var dt = new Date(dtStr);
+    return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + dt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function renderCards() {
+    var gridEl = document.getElementById('ideas-grid');
+    var searchVal = document.getElementById('search-box').value.toLowerCase().trim();
+    var panelVal  = document.getElementById('filter-panel').value;
+    var prioVal   = document.getElementById('filter-priority').value;
+
+    var filtered = allIdeas.filter(function(idea) {
+      if (panelVal && idea.panel_tag !== panelVal) return false;
+      if (prioVal  && idea.priority   !== prioVal)  return false;
+      if (searchVal) {
+        var haystack = (idea.idea_title + ' ' + idea.idea_body + ' ' + idea.full_name + ' ' + idea.organisation).toLowerCase();
+        if (!haystack.includes(searchVal)) return false;
+      }
+      return true;
+    });
+
+    document.getElementById('total-badge').textContent = filtered.length + ' of ' + allIdeas.length + ' ideas';
+
+    if (filtered.length === 0) {
+      gridEl.innerHTML = '<div class="state-msg"><div class="icon">🔍</div>No ideas match your filters.</div>';
+      return;
+    }
+
+    gridEl.innerHTML = filtered.map(function(idea) {
+      var panelLabel = panelLabels[idea.panel_tag] || idea.panel_tag;
+      var typeLabel  = typeLabels[idea.idea_type]  || idea.idea_type;
+      var prioClass  = 'tag-priority-' + idea.priority;
+      var prioLabel  = idea.priority.charAt(0).toUpperCase() + idea.priority.slice(1) + ' Priority';
+      var bodyId     = 'body-' + idea.idea_id;
+
+      return [
+        '<div class="idea-card">',
+          '<div class="idea-card-top">',
+            '<div class="idea-title">' + esc(idea.idea_title) + '</div>',
+            '<div class="priority-dot ' + esc(idea.priority) + '" title="' + prioLabel + '"></div>',
+          '</div>',
+          '<div class="idea-meta">',
+            '<span class="tag tag-panel">' + esc(panelLabel) + '</span>',
+            '<span class="tag tag-type">' + esc(typeLabel) + '</span>',
+            '<span class="tag ' + prioClass + '">' + prioLabel + '</span>',
+          '</div>',
+          '<div class="idea-body-text clamped" id="' + bodyId + '">' + esc(idea.idea_body) + '</div>',
+          '<button class="expand-btn" onclick="toggleExpand(\'' + bodyId + '\', this)">Read more ↓</button>',
+          (idea.expected_impact ? '<div class="idea-body-text" style="font-size:12px;color:var(--psf-green-dark);"><strong>Impact:</strong> ' + esc(idea.expected_impact.substring(0, 120)) + (idea.expected_impact.length > 120 ? '…' : '') + '</div>' : ''),
+          '<div class="idea-footer">',
+            '<div class="submitter">' + esc(idea.full_name) + ' <span>· ' + esc(idea.organisation) + '</span></div>',
+            '<div class="sub-date">' + fmtDate(idea.submitted_at) + '</div>',
+          '</div>',
+        '</div>'
+      ].join('');
+    }).join('');
+  }
+
+  function toggleExpand(bodyId, btn) {
+    var bodyEl = document.getElementById(bodyId);
+    var isExpanded = !bodyEl.classList.contains('clamped');
+    bodyEl.classList.toggle('clamped', isExpanded);
+    btn.textContent = isExpanded ? 'Read more ↓' : 'Show less ↑';
+  }
+
+  function esc(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>
